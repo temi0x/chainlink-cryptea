@@ -6,9 +6,9 @@ const App = () => {
     <div className="app">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route path="about" element={<About />} />
-          </Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        
         </Routes>
       </BrowserRouter>
     </div>
