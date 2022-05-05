@@ -1,19 +1,18 @@
-import Nav from "./components/Nav";
-import Hero from "./components/Hero";
-import About from "./components/about";
-import Extras from "./components/about/extras";
-import Footer from "./components/Nav/footer";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import About from "./pages/about";
+import Home from "./pages/Home"
 const App = () => {
   return (
-    <div className="app">
-      <Nav />
-      <Hero />
-      <About />
-      <Extras />
-      <Footer />
+    <div className="app w-screen">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        
+        </Routes>
+      </BrowserRouter>
     </div>
-  )
+  );
 }
 
 export default App;

@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom';
+
 function Nav() {
   return (
     <div className="nav relative ml-[30px] z-10">
       <div className="flex flex-row justify-between px-14 pt-5">
-        <div className="text-black text-2xl font-bold">CRYPTEA</div>
+        <Link to="/" className="text-black text-2xl font-bold">CRYPTEA</Link>
         <div className="text-black flex flex-row font-medium text-lg">
-          <div className="text-black pr-4">About</div>
+          <Link to="about" className="text-black pr-4">About</Link>
           <div className="text-black pl-4">Blog</div>
         </div>
         <div className="right">
