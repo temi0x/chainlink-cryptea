@@ -5,7 +5,7 @@ import Extras from "../../components/about/extras";
 
 const Home = () => {
   return (
-    <div className="app">
+    <div className="app w-screen">
       <Nav />
       <Hero />
       <About />

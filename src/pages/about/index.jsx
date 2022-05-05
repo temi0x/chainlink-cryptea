@@ -1,6 +1,6 @@
 const About = () => {
   return (
-  <div className="app">
+  <div className="app w-screen">
     This is a sobo
   </div>
   )

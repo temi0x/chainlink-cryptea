@@ -3,7 +3,7 @@ import About from "./pages/about";
 import Home from "./pages/Home"
 const App = () => {
   return (
-    <div className="app">
+    <div className="app w-screen">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
