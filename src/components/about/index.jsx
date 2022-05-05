@@ -3,9 +3,6 @@ import two from '../../assets/img/two.svg'
 import three from '../../assets/img/three.svg'
 import circle from '../../assets/img/circle.svg'
 import Supported from './supported'
-import Testimonial from './testimonial'
-import Extras from './extras'
-
 
 const About = () => {
 
@@ -65,9 +62,6 @@ const About = () => {
         </div>
 
         <Supported />
-
-        <Testimonial />
-
 
         </div>
     )

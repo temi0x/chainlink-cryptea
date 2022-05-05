@@ -54,7 +54,7 @@ const Hero = () => {
         <div className="right w-1/2 flex justify-center">
           <img
             src={logo}
-            className="App-logo w-auto h-auto"
+            className="App-logo w-auto"
             alt="Showing 5 cryptocurrencies"
           />
         </div>
