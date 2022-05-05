@@ -1,7 +1,15 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/*.{js,jsx,ts,tsx}"
+],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage : {
+          'donation' : "url('./assets/img/donation.png')",
+          'hooge' : "url('./assets/img/hooge.svg')"
+      }
+    },
   },
   plugins: [],
 };

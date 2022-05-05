@@ -3,8 +3,22 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 120vmin;
   pointer-events: none;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(219, 219, 219);
+  border-radius: 20px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
