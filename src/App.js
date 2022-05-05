@@ -2,6 +2,7 @@ import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import About from "./components/about";
 import Extras from "./components/about/extras";
+import Footer from "./components/Nav/footer";
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Hero />
       <About />
       <Extras />
+      <Footer />
     </div>
   )
 }

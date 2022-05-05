@@ -15,7 +15,7 @@ const Supported = () => {
                         alt="ethereum"
                         className="mr-[10px]"
                     />
-                    <span className="text-[#64607D]">Ethereum</span>
+                    <span className="text-[#64607D] font-bold">Ethereum</span>
                 </div>
 
                 <div className="flex justify-between items-center">
@@ -24,7 +24,7 @@ const Supported = () => {
                         alt="polygon"
                         className="mr-[10px]"
                     />
-                    <span className="text-[#64607D]">Polygon</span>
+                    <span className="text-[#64607D] font-bold">Polygon</span>
                 </div>
 
                 <div className="flex justify-between items-center">
@@ -33,7 +33,7 @@ const Supported = () => {
                         alt="avalanche"
                         className="mr-[10px]"
                     />
-                    <span className="text-[#64607D]">Avalanche</span>
+                    <span className="text-[#64607D] font-bold">Avalanche</span>
                 </div>
 
 
