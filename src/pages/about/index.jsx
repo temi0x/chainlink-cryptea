@@ -1,9 +1,12 @@
+import Nav from "../../components/Nav";
+
 const About = () => {
   return (
-  <div className="app w-screen">
-    This is a sobo
-  </div>
-  )
+    <div className="app w-screen">
+      <Nav />
+      About Page comes here
+    </div>
+  );
 };
 
 export default About;
