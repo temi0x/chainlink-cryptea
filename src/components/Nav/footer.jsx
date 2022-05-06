@@ -45,13 +45,13 @@ const Footer = () => {
             Receive tips while you sip tea. Directly, and securely.
           </span>
           <div className="flex items-center mb-4 justify-between mt-[3pc] w-[200px]">
-            <a className="mr-[5px]" href="linkedIn.com">
+            <a className="mr-[5px]" href="https://linkedin.com">
               <img alt="linkedIn" src={linked} />
             </a>
-            <a className="mr-[5px]" href="messenger.com">
+            <a className="mr-[5px]" href="https://messenger.com">
               <img alt="Messenger" src={mess} />
             </a>
-            <a className="mr-[5px]" href="twitter.com">
+            <a className="mr-[5px]" href="https://twitter.com">
               <img alt="Twitter" src={twitt} />
             </a>
           </div>
@@ -60,7 +60,10 @@ const Footer = () => {
           </h3>
           <div className="hidden 2sm:flex items-center justify-between w-[200px]">
             <a className="mr-[5px] block" href="">
-              <button onClick={login} className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
+              <button
+                onClick={login}
+                className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8"
+              >
                 Connect Wallet
               </button>
             </a>
@@ -71,16 +74,13 @@ const Footer = () => {
             </h3>
             <div className="flex-col hidden 2md:flex w-[200px]">
               <a className="mr-[5px] mb-3" href="">
-                {" "}
-                About Us{" "}
+                About Us
               </a>
               <a className="mr-[5px] mb-3" href="">
-                {" "}
-                Careers{" "}
+                Careers
               </a>
               <a className="mr-[5px] mb-3" href="">
-                {" "}
-                Blog{" "}
+                Blog
               </a>
             </div>
           </div>
@@ -90,16 +90,13 @@ const Footer = () => {
           <h3 className="font-bold text-[18px] mb-2">Company</h3>
           <div className="flex flex-col w-[200px] ssm:w-fit">
             <a className="mr-[5px] mb-3" href="">
-              {" "}
-              About Us{" "}
+              About Us
             </a>
             <a className="mr-[5px] mb-3" href="">
-              {" "}
-              Careers{" "}
+              Careers
             </a>
             <a className="mr-[5px] mb-3" href="">
-              {" "}
-              Blog{" "}
+              Blog
             </a>
           </div>
         </div>
@@ -108,10 +105,9 @@ const Footer = () => {
           <h3 className="font-bold text-[18px] mb-2">Join Us</h3>
           <div className="flex items-center justify-between w-[200px]">
             <a className="mr-[5px]" href="">
-              {" "}
               <button className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
                 Connect Wallet
-              </button>{" "}
+              </button>
             </a>
           </div>
         </div>
