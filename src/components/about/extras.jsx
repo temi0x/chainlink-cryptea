@@ -2,8 +2,12 @@
 
 const Extras = () => {
         return (
-            <div className="mt-40 mb-10 h-[660px] w-full bg-cover bg-no-repeat bg-hooge flex justify-center items-center">
-
+            <div className="mt-40 mb-10 h-[660px] mmd:h-fit w-full bg-cover bg-no-repeat flex justify-center items-center relative">
+                <div className="w-full absolute h-full z-[-1]">
+                    <svg width="100%" height="100%" viewBox="0 0 1440 698" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1440 281.43V0L718.5 81L-3 0V281.43C-3 359.089 44.2608 428.931 116.351 457.807L711.063 696.021C715.837 697.933 721.163 697.933 725.937 696.021L1320.65 457.807C1392.74 428.931 1440 359.089 1440 281.43Z" fill="#F5F8FF"/>
+</svg>
+                </div>
                 <div className="text-center w-[300px]">
                 <span className="uppercase text-[#F57059] font-semibold text-[14px]">receive tips easily</span>
 

@@ -7,7 +7,7 @@ import Supported from './supported'
 const About = () => {
 
     return (
-        <div className="mx-[30px] mt-24 px-14" id="about">
+        <div className="mx-[30px] mt-24 px-14 2md:px-4 2md:mx-1" id="about">
             <div className="w-[320px]">
             <span className="uppercase text-[#F57059] font-semibold text-[14px]">receive tips daily</span>
             <h1 className="text-black w-fit font-bold text-[29px] my-1">We have an easy signup process</h1>
@@ -20,9 +20,9 @@ const About = () => {
             </button>
         </div>
 
-        <div className="w-[calc(100% - 6rem)] relative justify-around flex items-center mt-[19rem] ml-24">
+        <div className="w-[calc(100% - 6rem)] md:mt-[10pc] md:flex-wrap sm:w-full sm:ml-0 relative justify-around flex items-center 2sm:overflow-hidden mt-[19rem] ml-24">
 
-            <div className="w-[232px] relative">
+            <div className="w-[232px] md:min-w-[232px] mmd:w-full md:mr-4 relative">
                 <img src={one} alt="step one" className="absolute bottom-[48px] right-0"/>
                 <h4 className="font-bold">Connect wallet</h4>
                 <span className="text-[#64607D]">
@@ -30,7 +30,7 @@ const About = () => {
                 </span>
             </div>
 
-            <div className="w-[240px] relative mt-[-24pc]">
+            <div className="w-[240px] md:min-w-[240px] mmd:w-full mmd:mt-[10pc] relative md:mt-0 mt-[-24pc]">
                 <img src={two} alt="step one" className="absolute bottom-[48px] right-0"/>
                 <h4 className="font-bold">Setup payment link</h4>
                 <span className="text-[#64607D]">
@@ -38,7 +38,7 @@ const About = () => {
                 </span>
             </div>
 
-            <div className="w-[280px] relative mt-[-51pc]">
+            <div className="w-[280px] md:min-w-[280px] mmd:w-full relative md:mt-[10pc] mt-[-51pc]">
             <img src={three} alt="step one" className="absolute bottom-[48px] right-0"/>
                 <h4 className="font-bold">Receive payments</h4>
                 <span className="text-[#64607D]">
@@ -51,11 +51,11 @@ const About = () => {
         
         <div className="rounded-[14px] mt-[6rem] bg-contain h-[386px] bg-no-repeat m-auto max-w-[800px] bg-donation bg-[rgba(0,0,0,0.5)] bg-blend-color flex flex-col justify-center items-center">
 
-            <h1 className="text-white font-bold text-center mx-auto w-[85%] text-[44px] mb-0 mt-[8px]">Receive donations on another level</h1>
+            <h1 className="text-white font-bold text-center mx-auto w-[85%] text-[44px] mb-0 mt-[8px] mmd:text-[30px]">Receive donations on another level</h1>
 
-            <span className="text-white block text-[20px]">Secure Donations and payments in one platform.</span>
+            <span className="text-white mx-[10px] block text-[20px]">Secure Donations and payments in one platform.</span>
 
-            <button className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-20 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
+            <button className="text-sm mmd:mt-10 hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-20 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
               Connect Wallet
             </button>
 
