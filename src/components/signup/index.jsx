@@ -4,7 +4,7 @@ const signupForm = () => {
   return (
     <form>
       <div className="w-full flex justify-center mt-8">
-        <div className="flex flex-col max-w-[900px] mx-7 items-center justify-center">
+        <div className="flex flex-col w-[900px] mx-7 items-center justify-center">
           <div className="flex flex-row border-b border-[#1B1C31] justify-start w-full">
             <div className="text-[#1B1C31] font-semibold text-xl py-4">
               Signup
@@ -13,16 +13,12 @@ const signupForm = () => {
 
           <div className="username w-full">
             <div className="mt-8">
-              <div
-                name="inputName"
-                className="rounded-md"
-              >
+              <div name="inputName" className="rounded-md">
                 <div className="flex">
-                  
-                    <div className="uppercase absolute max-w-[122px] px-3 py-4 font-bold text-sm sm:text-sm sm:leading-5 focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31]">
-                      <label htmlFor="username">Username</label>
-                    </div>
-                  
+                  <div className="uppercase absolute max-w-[122px] px-3 py-4 font-bold text-sm sm:text-sm sm:leading-5 focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31]">
+                    <label htmlFor="username">Username</label>
+                  </div>
+
                   <input
                     className="rounded-lg border p-3 w-full pl-[122px] focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
                     placeholder="vitalik.eth"
@@ -32,16 +28,12 @@ const signupForm = () => {
                 </div>
               </div>
 
-              <div
-                name="inputDescription"
-                className="rounded-md mt-8"
-              >
+              <div name="inputDescription" className="rounded-md mt-8">
                 <div className="flex">
-               
-                    <div className="uppercase absolute px-3 py-4 max-w-[122px] font-bold text-sm sm:text-sm sm:leading-5 focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31]">
-                      <label htmlFor="desc">Description:</label>
-                    </div>
-                  
+                  <div className="uppercase absolute px-3 py-4 max-w-[122px] font-bold text-sm sm:text-sm sm:leading-5 focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31]">
+                    <label htmlFor="desc">Description:</label>
+                  </div>
+
                   <input
                     className="rounded-lg border pl-[122px] p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
                     placeholder="I created Ethereum"
@@ -53,35 +45,34 @@ const signupForm = () => {
             </div>
           </div>
           <div className="rounded-[5px] border-[#C2C7D6] mt-8 w-full border-2 border-solid overflow-hidden">
-              <div className="flex flex-wrap items-center px-7 justify-between py-4 bg-[#1B1C31] text-white">
-                    <span className="uppercase font-semibold mr-3">
-                      Cryptea Link
-                    </span>
-                    <div className="flex items-center">
-                      <span 
-                      className="mr-2">This is the link which enables other crypto enthusiasts tip you. E.g cryptea.com/vitalik</span>
-                      <img 
-                        src={info}
-                        alt="info"
-                      />
-                      </div>            
+            <div className="flex flex-wrap items-center px-7 justify-between py-4 bg-[#1B1C31] text-white">
+              <span className="uppercase font-semibold mr-3">Cryptea Link</span>
+              <div className="flex items-center">
+                <span className="mr-2 text-sm">
+                  This is the link which enables other crypto enthusiasts tip
+                  you. E.g cryptea.com/vitalik
+                </span>
+                <img src={info} alt="info" />
               </div>
+            </div>
 
             <div className="w-full p-10">
-
-              <label className="font-semibold block mb-2" htmlFor="link">Choose Link Slug</label>
+              <label className="font-semibold block mb-2" htmlFor="link">
+                Choose Link Slug
+              </label>
               <div className="flex items-center ssm:flex-wrap">
-              <input
-                    className="rounded-lg border p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900 ssm:mr-0 mr-10"
-                    placeholder="vitalik"
-                    type="text"
-                    name="link"
-                  />
+                <input
+                  className="rounded-lg border p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900 ssm:mr-0 mr-10"
+                  placeholder="vitalik"
+                  type="text"
+                  name="link"
+                />
 
-              <span className="font-semibold min-w-[200px]">Your Username has been taken</span>
+                <span className="font-semibold min-w-[200px]">
+                  Your Username has been taken
+                </span>
+              </div>
             </div>
-            </div>
-
           </div>
           <div className="flex flex-row justify-end w-full mt-8">
             <button className="hover:bg-[#ff320e] transition-all delay-500 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-10">
