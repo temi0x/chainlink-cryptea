@@ -1,6 +1,6 @@
-import ether from '../../assets/img/ethereum.png'
-import avax from '../../assets/img/avax.png'
-import matic from '../../assets/img/polygon.png'
+import ether from '../../assets/img/ethereum.png';
+import avax from '../../assets/img/avax.png';
+import matic from '../../assets/img/polygon.png';
 
 const Supported = () => {
     return (
@@ -42,4 +42,4 @@ const Supported = () => {
     )
 }
 
-export default Supported
+export default Supported;

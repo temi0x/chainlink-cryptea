@@ -1,8 +1,45 @@
 import logo from "../../img.svg";
 import check from "../../assets/img/tick.svg";
 import "../../App.css";
+import { useMoralis } from "react-moralis";
+import { useEffect } from "react";
 
 const Hero = () => {
+  const {
+    authenticate,
+    isAuthenticated,
+    isAuthenticating,
+    user,
+    account,
+  } = useMoralis();
+
+      useEffect(() => {
+      if (isAuthenticated) {
+        console.log("Logged in user:", user.get("ethAddress"));
+
+      } else {
+        console.log("Not logged in");
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated]);
+
+
+  const login = async () => {
+    if (!isAuthenticated) {
+      await authenticate({ signingMessage: "Welcome to Cryptea" })
+        .then(function (user) {
+          window.location.href = "/signup";
+          console.log("logged in user:", user);
+          console.log(user.get("ethAddress"));
+        })
+        .catch(function (error) {
+          console.log(error);
+          window.location.href = "/";
+        });
+    } else {
+      window.location.href = "/signup";
+    };
+  }
 
   return (
     <div className="app">
@@ -27,7 +64,7 @@ const Hero = () => {
             your decentralized wallet.
           </div>
           <div className="flex justify-center">
-            <button className="text-sm rounded-lg bg-[#1B1C31] mt-6 mx-auto justify-self-center place-self-center object-center text-white font-semibold py-4 px-8">
+            <button onClick={login} className="text-sm rounded-lg bg-[#1B1C31] mt-6 mx-auto justify-self-center place-self-center object-center text-white font-semibold py-4 px-8">
               Connect Wallet
             </button>
           </div>
