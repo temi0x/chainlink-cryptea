@@ -3,8 +3,8 @@ import info from '../../assets/img/info.svg'
 const signupForm = () => {
   return (
     <form>
-      <div className="w-full mt-8">
-        <div className="flex flex-col items-center justify-center mx-12">
+      <div className="w-full flex justify-center mt-8">
+        <div className="flex flex-col max-w-[900px] mx-7 items-center justify-center">
           <div className="flex flex-row border-b border-[#1B1C31] justify-start w-full">
             <div className="text-[#1B1C31] font-semibold text-xl py-4">
               Signup
