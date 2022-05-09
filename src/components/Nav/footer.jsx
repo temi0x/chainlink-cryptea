@@ -1,7 +1,7 @@
 import linked from "../../assets/img/icon0.png";
 import mess from "../../assets/img/icon1.png";
 import twitt from "../../assets/img/icon2.png";
-import hmm from "../../assets/img/icon4.png";
+// import hmm from "../../assets/img/icon4.png";
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
 
@@ -104,8 +104,10 @@ const Footer = () => {
         <div className="w-[220px] 2sm:hidden">
           <h3 className="font-bold text-[18px] mb-2">Join Us</h3>
           <div className="flex items-center justify-between w-[200px]">
-            <a className="mr-[5px]" href="">
-              <button className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
+            <a className="mr-[5px]">
+              <button 
+              onClick={login} 
+              className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
                 Connect Wallet
               </button>
             </a>

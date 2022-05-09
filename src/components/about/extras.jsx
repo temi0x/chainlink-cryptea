@@ -29,7 +29,7 @@ const Extras = () => {
     } else {
       window.location.href = "/signup";
     }
-  };
+  }
 
   return (
     <div className="mt-40 mb-10 h-[660px] mmd:h-fit w-full bg-cover bg-no-repeat flex justify-center items-center relative">
@@ -60,7 +60,9 @@ const Extras = () => {
           And receive tips while you sip tea
         </span>
 
-        <button onCanPlay={login} className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
+        <button 
+         onClick={login}
+         className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
           Connect Wallet
         </button>
       </div>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
-
+import { Button } from "web3uikit";
 function Nav() {
   const {
     authenticate,
@@ -58,6 +58,8 @@ function Nav() {
             >
               Connect Wallet
             </button>
+
+            <Button className="hover:bg-[#ff320e] transition-all delay-500 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-4" type="button" text="Connect Wallet"/>
           </div>
         </div>
       </div>

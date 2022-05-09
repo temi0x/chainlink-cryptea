@@ -4,7 +4,9 @@ import About from "../../components/about";
 import Extras from "../../components/about/extras";
 import Footer from "../../components/Nav/footer";
 
+
 const Home = () => {
+  
   return (
     <div className="app">
       <Nav />

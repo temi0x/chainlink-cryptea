@@ -64,7 +64,9 @@ const Hero = () => {
             your decentralized wallet.
           </div>
           <div className="flex justify-center">
-            <button onClick={login} className="text-sm rounded-lg bg-[#1B1C31] mt-6 mx-auto justify-self-center place-self-center object-center text-white font-semibold py-4 px-8">
+            <button 
+             onClick={login}
+             className="text-sm rounded-lg bg-[#1B1C31] mt-6 mx-auto justify-self-center place-self-center object-center text-white font-semibold py-4 px-8">
               Connect Wallet
             </button>
           </div>
