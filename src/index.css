@@ -16,3 +16,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.buttonConnect>div>button{
+     transition:all .5s;
+      border-radius:.5rem;
+      background-color:rgb(245, 112, 89);
+      padding:.75rem 1rem;
+      justify-self:center;
+      color:#fff;
+}
+
+.buttonConnect>div>button:hover{
+  background-color:#ff320e;
+}
+
+.buttonConnect>div>button span{
+  color:#fff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-family:'Manrope', sans-serif;
+}
+.buttonConnect>div{
+  height:auto;
+}
+.buttonConnect>div>div{
+  z-index:900000000;
+}

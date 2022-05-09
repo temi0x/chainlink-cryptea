@@ -49,7 +49,7 @@ const Hero = () => {
 </svg>
 </div>
 
-      <div className="flex overflow-hidden flex-row justify-between mmd:ml-0 relative ml-[30px] z-20">
+      <div className="flex overflow-hidden flex-row justify-between mmd:ml-0 relative ml-[30px] z-2">
         <div className="sm:mx-auto w-1/2 2md:pl-5 pl-12 3sm:w-[85%] 2md:w-full mt-20">
           <div className="text-black font-semibold text-lg">
             Bridging the Web3 gap
