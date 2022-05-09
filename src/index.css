@@ -28,6 +28,7 @@ code {
 
 .buttonConnect>div>button:hover{
   background-color:#ff320e;
+  border-color:rgb(245, 112, 89);
 }
 
 .buttonConnect>div>button span{
@@ -38,6 +39,7 @@ code {
 }
 .buttonConnect>div{
   height:auto;
+  margin:0px;
 }
 .buttonConnect>div>div{
   z-index:900000000;

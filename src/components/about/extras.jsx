@@ -66,7 +66,7 @@ const Extras = () => {
           Connect Wallet
         </button> */}
 
-        <div className="buttonConnect">
+        <div className="buttonConnect m-auto w-fit">
             <ConnectButton signingMessage="Welcome To Cryptea"  type="button" text="Connect Wallet"/>
             </div>
       </div>

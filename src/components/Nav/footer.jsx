@@ -67,7 +67,7 @@ const Footer = () => {
                 Connect Wallet
               </button> */}
 
-              <div className="buttonConnect">
+              <div className="buttonConnect w-fit">
             <ConnectButton signingMessage="Welcome To Cryptea"  type="button" text="Connect Wallet"/>
             </div>
               
@@ -115,7 +115,7 @@ const Footer = () => {
               className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
                 Connect Wallet
               </button> */}
-              <div className="buttonConnect">
+              <div className="buttonConnect w-fit">
             <ConnectButton signingMessage="Welcome To Cryptea"  type="button" text="Connect Wallet"/>
             </div>
             </a>

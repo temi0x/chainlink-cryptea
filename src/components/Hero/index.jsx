@@ -3,7 +3,7 @@ import check from "../../assets/img/tick.svg";
 import "../../App.css";
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
-
+import { ConnectButton } from "web3uikit"
 const Hero = () => {
   const {
     authenticate,
@@ -64,11 +64,14 @@ const Hero = () => {
             your decentralized wallet.
           </div>
           <div className="flex justify-center">
-            <button 
+            {/* <button 
              onClick={login}
              className="text-sm rounded-lg bg-[#1B1C31] mt-6 mx-auto justify-self-center place-self-center object-center text-white font-semibold py-4 px-8">
               Connect Wallet
-            </button>
+            </button> */}
+            <div className="buttonConnect mt-6">
+            <ConnectButton signingMessage="Welcome To Cryptea"  type="button" text="Connect Wallet"/>
+            </div>
           </div>
               <div className="flex sm:justify-center mt-16">
                 <img 
