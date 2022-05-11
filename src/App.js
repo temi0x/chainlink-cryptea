@@ -6,7 +6,6 @@ import Dash from './pages/dashboard';
 import Notfound from "./pages/error/404";
 const App = () => {
   return (
-    <div className="app">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -16,7 +15,6 @@ const App = () => {
           <Route path="*" element={<Notfound /> }/>
         </Routes>
       </BrowserRouter>
-    </div>
   );
 }
 
