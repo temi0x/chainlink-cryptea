@@ -1,6 +1,41 @@
-import info from '../../assets/img/info.svg'
+import info from '../../assets/img/info.svg';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useMoralis } from 'react-moralis';
 
-const signupForm = () => {
+const SignupForm = () => {
+  const {
+    authenticate,
+    isAuthenticated,
+    isAuthenticating,
+    user,
+    account,
+    enableWeb3,
+    isWeb3Enabled,
+  } = useMoralis();
+
+ useEffect(() => {
+   if (isAuthenticated) {
+     console.log("Logged in user:", user.get("ethAddress"));
+   } else {
+     console.log("Not logged in");
+   }
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+ }, [isAuthenticated]);
+  
+  let { userLink, setUserLink } = useState();
+  let {userDescription, setUserDescription } = useState();
+  let userInfo = [userLink, setUserLink] = useState();
+
+  useEffect(() => {
+    setUserLink(userLink);
+    setUserDescription(userDescription);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo]);
+
+
+
   return (
     <form>
       <div className="w-full flex justify-center mt-8">
@@ -21,7 +56,7 @@ const signupForm = () => {
 
                   <input
                     className="rounded-lg border p-3 w-full pl-[122px] focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
-                    placeholder="vitalik.eth"
+                    placeholder="wagmi.eth"
                     type="text"
                     name="username"
                   />
@@ -38,6 +73,8 @@ const signupForm = () => {
                     className="rounded-lg border pl-[122px] p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
                     placeholder="I created Ethereum"
                     type="text"
+                    value={userDescription}
+                    onChange={(e) => setUserDescription(e.target.value)}
                     name="desc"
                   />
                 </div>
@@ -50,7 +87,7 @@ const signupForm = () => {
               <div className="flex items-center">
                 <span className="mr-2 text-sm">
                   This is the link which enables other crypto enthusiasts tip
-                  you. E.g cryptea.com/vitalik
+                  you. E.g cryptea.com/wagmi
                 </span>
                 <img src={info} alt="info" />
               </div>
@@ -63,8 +100,10 @@ const signupForm = () => {
               <div className="flex items-center ssm:flex-wrap">
                 <input
                   className="rounded-lg border p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900 ssm:mr-0 mr-10"
-                  placeholder="vitalik"
+                  placeholder="wagmi"
                   type="text"
+                  value={userLink}
+                  onChange={(e) => setUserLink(e.target.value)}
                   name="link"
                 />
 
@@ -85,4 +124,4 @@ const signupForm = () => {
   );
 };
 
-export default signupForm;
+export default SignupForm;
