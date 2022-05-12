@@ -23,9 +23,9 @@ const SignupForm = () => {
    // eslint-disable-next-line react-hooks/exhaustive-deps
  }, [isAuthenticated]);
   
-  let { userLink, setUserLink } = useState();
-  let {userDescription, setUserDescription } = useState();
-  let userInfo = [userLink, setUserLink] = useState();
+  let [ userLink, setUserLink ] = useState('');
+  let [userDescription, setUserDescription ] = useState('');
+  let [userInfo, setuserInfo] = useState('');
 
   useEffect(() => {
     setUserLink(userLink);
