@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./pages/about";
 import Home from "./pages/Home";
-import Signup from "./pages/signup";
+import Signup from "./pages/auth/signup";
 import Dash from './pages/dashboard';
 import Notfound from "./pages/error/404";
+import LoginForm from "./pages/auth/login";
 const App = () => {
   return (
       <BrowserRouter>
@@ -11,6 +12,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/dashboard" element={<Dash />}/>
           <Route path="*" element={<Notfound /> }/>
         </Routes>
