@@ -24,12 +24,14 @@ const SignupForm = () => {
  }, [isAuthenticated]);
   
   let [ userLink, setUserLink ] = useState('');
-  let [userDescription, setUserDescription ] = useState('');
+  let [userDescription, setUserDescription] = useState('');
+  let [userEmail, setUserEmail] = useState('');
   let [userInfo, setuserInfo] = useState('');
 
   useEffect(() => {
     setUserLink(userLink);
     setUserDescription(userDescription);
+    setUserEmail(userEmail);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
@@ -75,6 +77,22 @@ const SignupForm = () => {
                     type="text"
                     value={userDescription}
                     onChange={(e) => setUserDescription(e.target.value)}
+                    name="desc"
+                  />
+                </div>
+              </div>
+              <div name="inputEmail" className="rounded-md mt-8">
+                <div className="flex">
+                  <div className="uppercase absolute px-3 py-4 max-w-[122px] font-bold text-sm sm:text-sm sm:leading-5 focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31]">
+                    <label htmlFor="desc">Email:</label>
+                  </div>
+
+                  <input
+                    className="rounded-lg border pl-[122px] p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
+                    placeholder="wagmi@ngmi.eth"
+                    type="text"
+                    value={userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
                     name="desc"
                   />
                 </div>
