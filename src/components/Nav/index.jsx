@@ -17,19 +17,21 @@ function Nav() {
     } else {
       console.log("Not logged in");
     }
+
+    if (isAuthenticated) {
+      let address = user.get("ethAddress");
+      console.log("Here ");
+      buttonText =
+        address.substring(0, 5) +
+        "...." +
+        address.substring(address.length - 5, address.length);
+    } else {
+      buttonText = "Connect Wallet";
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
-  if (isAuthenticated) {
-    let address = user.get("ethAddress");
-    console.log("Here ");
-    buttonText =
-      address.substring(0, 5) +
-      "...." +
-      address.substring(address.length - 5, address.length);
-  } else {
-    buttonText = "Connect Wallet";
-  }
+  
 
   const handleLogout = () => {
     authenticate(false);
@@ -72,7 +74,13 @@ function Nav() {
               className="hover:bg-[#ff320e] transition-all delay-500 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-4"
             >
               {buttonText}
-            </button>
+          </button>
+          {isAuthenticated && (
+            <button
+              onClick={handleLogout}
+              className="ml-2 hover:bg-[#ff320e] transition-all delay-500 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-4"
+            >Logout</button>
+          )}
         </div>
       </div>
     </div>
