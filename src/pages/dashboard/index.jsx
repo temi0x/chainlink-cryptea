@@ -10,24 +10,21 @@ import { RiSettingsLine } from "react-icons/ri";
 import logo1 from "../../assets/img/cryptea.png";
 import logo from "../../assets/img/cryptea1.PNG";
 import "../../assets/styles/dash.css";
-import { Avatar } from "web3uikit";
+import { Avatar } from "@mui/material";
 import DashHome from "./home";
-import { NavLink, useLocation } from "react-router-dom";
-import { useMoralis } from "react-moralis";
+import { NavLink, 
+        useLocation 
+      } from "react-router-dom";
+
 
 const Dash = () => {
-  const { isAuthenticated } = useMoralis();
 
-  if (isAuthenticated) {
-  } else {
-    window.location.href = "/";
-  }
   const { pathname } = useLocation();
 
   const active = "border-l-[3px] border-l-[#F57059] text-[#F57059]";
   return (
     <div className="h-full dash w-full bg-[#F9FAFF] flex">
-      <div className="sidebar min-w-[250px] bg-white border-solid border-r-[1px] border-r-[#E3E3E3] h-full">
+      <div className="sidebar min-w-[250px] bg-white border-solid border-r-[1px] border-r-[#E3E3E3] h-[inherit]">
         <div className="w-full py-[1.6rem] border-solid border-b-[1px] flex justify-center items-center">
           <NavLink to="/" className="flex items-center justify-center">
             <img src={logo} alt="cryptea" width={22} className="mr-[5px]" />{" "}
@@ -120,12 +117,12 @@ const Dash = () => {
               <BiBell size={23} className="cursor-pointer" color="#000" />
             </div>
 
-            <Avatar
-              isRounded
-              text="US"
-              className="cursor-pointer"
-              theme="letters"
-            />
+          <Avatar
+          sx={{ bgcolor: 'red'}}
+          alt="Zarror"
+        >
+          Z
+        </Avatar>
           </div>
         </div>
 

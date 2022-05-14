@@ -1,3 +1,12 @@
-body, #root, .dash{
-    height:100vh;
+body, #root, .dash, html{
+    height:100%;
+    width:100%;
+}
+
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+    color: #F57059 !important;
+}
+
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #F57059 !important;
 }

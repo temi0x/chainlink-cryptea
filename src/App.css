@@ -7,16 +7,16 @@
   pointer-events: none;
 }
 
-body::-webkit-scrollbar {
+body::-webkit-scrollbar,.cusscroller::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-body::-webkit-scrollbar-track {
-  background: #fff;
+body::-webkit-scrollbar-track, .cusscroller::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb, .cusscroller::-webkit-scrollbar-thumb {
   background-color: rgb(219, 219, 219);
   border-radius: 20px;
 }

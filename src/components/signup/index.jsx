@@ -1,6 +1,5 @@
 import info from '../../assets/img/info.svg';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useMoralis } from 'react-moralis';
 
 const SignupForm = () => {
