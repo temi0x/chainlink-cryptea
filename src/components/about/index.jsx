@@ -5,7 +5,6 @@ import circle from "../../assets/img/circle.svg";
 import Supported from "./supported";
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
-import { ConnectButton } from 'web3uikit';
 const About = () => {
   const { authenticate, isAuthenticated, isAuthenticating, user, account } =
     useMoralis();
@@ -50,16 +49,12 @@ const About = () => {
           payments from your fans, without needing to compromise your data
         </span>
 
-        {/* <button
+        <button
           onClick={login}
           className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8"
         >
           Connect Wallet
-        </button> */}
-        
-        <div className="buttonConnect w-fit overflow-hidden rounded-[6rem] mt-2">
-            <ConnectButton signingMessage="Welcome To Cryptea"  type="button" text="Connect Wallet"/>
-            </div>
+        </button>
       </div>
 
       <div className="w-[calc(100% - 6rem)] md:mt-[10pc] md:flex-wrap sm:w-full sm:ml-0 relative justify-around flex items-center 2sm:overflow-hidden mt-[19rem] ml-24">
@@ -117,16 +112,12 @@ const About = () => {
           Secure Donations and payments in one platform.
         </span>
 
-        {/* <button
+        <button
           onClick={login}
           className="text-sm mmd:mt-10 hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-20 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8"
         >
           Connect Wallet
-        </button> */}
-
-        <div className="buttonConnect w-fit rounded-[6rem] mt-20 justify-self-center">
-            <ConnectButton signingMessage="Welcome To Cryptea"  type="button" text="Connect Wallet"/>
-            </div>
+        </button>
 
       </div>
 

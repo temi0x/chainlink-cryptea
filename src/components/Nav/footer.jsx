@@ -4,7 +4,6 @@ import twitt from "../../assets/img/icon2.png";
 // import hmm from "../../assets/img/icon4.png";
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
-import { ConnectButton } from "web3uikit"
 const Footer = () => {
   const date = new Date();
   const { authenticate, isAuthenticated, isAuthenticating, user, account } =
@@ -59,19 +58,14 @@ const Footer = () => {
             Join Us
           </h3>
           <div className="hidden 2sm:flex items-center justify-between w-[200px]">
-            <a className="mr-[5px] block">
-              {/* <button
+            <div className="mr-[5px] block">
+              <button
                 onClick={login}
                 className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8"
               >
                 Connect Wallet
-              </button> */}
-
-              <div className="buttonConnect w-fit">
-            <ConnectButton signingMessage="Welcome To Cryptea"  type="button" text="Connect Wallet"/>
+              </button>              
             </div>
-              
-            </a>
           </div>
           <div>
             <h3 className="font-bold hidden 2sm:block text-[18px] mt-5 mb-2">
@@ -109,16 +103,13 @@ const Footer = () => {
         <div className="w-[220px] 2sm:hidden">
           <h3 className="font-bold text-[18px] mb-2">Join Us</h3>
           <div className="flex items-center justify-between w-[200px]">
-            <a className="mr-[5px]">
-              {/* <button 
+            <div className="mr-[5px]">
+              <button 
               onClick={login} 
               className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
                 Connect Wallet
-              </button> */}
-              <div className="buttonConnect w-fit">
-            <ConnectButton signingMessage="Welcome To Cryptea"  type="button" text="Connect Wallet"/>
+              </button>
             </div>
-            </a>
           </div>
         </div>
       </div>
