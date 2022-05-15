@@ -268,7 +268,7 @@ const DashHome = () => {
             </div>
             <Button
               variant="contained"
-              className="!bg-[#F57059] !2sm:block !hidden mt-4 !py-[8px] absolute !font-medium !capitalize"
+              className="!bg-[#F57059] !hidden !mt-4 2sm:!block !py-[8px] absolute !font-medium !capitalize"
               style={{
                 fontFamily: "inherit",
               }}

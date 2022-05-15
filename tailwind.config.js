@@ -7,11 +7,13 @@ module.exports = {
     screens: {
       '3sm': {'max': '1025px'},
       '2sm': {'max': '975px'},
+      'dsm': { 'max': '900px' },
       'sm' : {'max' : '770px'},
       'ssm' : {'max' : '718px'},
       'md': {'max': '699px'},
       'mmd': { 'max': '659px' },
-      '2md': { 'max': '510px' }
+      '2md': { 'max': '510px' },
+      '3md': {'max' : '403px'}
     },
     extend: {
       backgroundImage : {

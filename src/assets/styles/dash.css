@@ -3,6 +3,10 @@ body, #root, .dash, html{
     width:100%;
 }
 
+body{
+    min-width:350px;
+}
+
 .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
     color: #F57059 !important;
 }

@@ -40,8 +40,8 @@ const Dash = () => {
   return (
     <div className="h-full dash w-full bg-[#F9FAFF] flex">
       <div
-        className={`sidebar transition-all delay-500 ${
-          isOpen ? "min-w-[250px] w-[250px]" : "w-[50px] min-w-[50px]"
+        className={`sidebar transition-all z-[100] delay-500 ${
+          isOpen ? "min-w-[250px] dsm:absolute  w-[250px]" : `w-[50px]  min-w-[50px] ${isOpen3 ? 'dsm:absolute' : 'relative'}`
         } bg-white border-solid border-r-[1px] border-r-[#E3E3E3] h-[inherit]`}
       >
         <div
@@ -183,7 +183,7 @@ const Dash = () => {
         </div>
       </div>
       <div className="body w-full h-full">
-        <div className="flex px-[20px] py-[13px] justify-between items-center border-solid border-b-[1px] bg-white border-b-[#E3E3E3]">
+        <div className="flex px-[20px] py-[13px] justify-between items-center border-solid border-b-[1px] 3md:border-b-transparent bg-white border-b-[#E3E3E3]">
           <div className="">
             <h1 className="font-bold">Welcome Zarror!☕</h1>
             <span>Hope you are healthy and happy today..</span>
