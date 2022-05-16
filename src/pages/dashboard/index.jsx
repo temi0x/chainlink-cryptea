@@ -211,9 +211,9 @@ const Dash = () => {
               <BiBell size={23} className="cursor-pointer" color="#000" />
             </div>
 
-            <Avatar sx={{ bgcolor: "red" }} alt="Zarror">
-              Z
-            </Avatar>
+              <Avatar sx={{ bgcolor: "red" }} alt="Zarror">
+                Z
+              </Avatar>
           </div>
         </div>
 
