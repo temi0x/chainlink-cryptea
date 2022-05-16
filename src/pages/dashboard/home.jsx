@@ -1,17 +1,25 @@
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { FaWallet } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BsBoxArrowInDownLeft, BsArrowRight } from "react-icons/bs";
+import { 
+         MdKeyboardArrowUp,
+         MdKeyboardArrowDown
+      } from 'react-icons/md';
 import {
   TextField,
   Button,
+  AvatarGroup,
+  IconButton,
   Modal,
   Box,
+  Collapse,
   TableContainer,
   TableHead,
   TableRow,
   Table,
+  Avatar,
   TableCell,
   TableBody,
   TablePagination,
@@ -31,10 +39,10 @@ const DashHome = () => {
     received[received.length - 1].amt,
   ];
   const rchange = ((rcurrent - rprevious) / rprevious) * 100;
-
+  const [nft, viewN] = useState(false);
   const columns = [
     { id: "name", label: "Token", minWidth: 170 },
-    { id: "code", label: "Symbol", minWidth: 50 },
+    { id: "code", label: "Symbol", minWidth: 100 },
     {
       id: "price",
       label: "Label Price",
@@ -44,7 +52,7 @@ const DashHome = () => {
     },
     {
       id: "change",
-      label: "24H change",
+      label: "24h change",
       minWidth: 100,
       align: "right",
       format: (value) => value.toLocaleString("en-US"),
@@ -60,46 +68,138 @@ const DashHome = () => {
 
   const rows = [
     {
-      name: "Binance",
-      code: "BNB",
+      name: (
+        <div className="flex items-center">
+          <Avatar
+            alt="BNB"
+            src={require("../../assets/img/bnb.png")}
+            sx={{ width: 24, height: 24, marginRight: "10px" }}
+          />
+          <span>Binance</span>
+        </div>
+      ),
+      code: <span className="text-[#626262]">BNB</span>,
       price: "$1354",
-      change: 263,
+      change: <div className={`flex items-center text-[#53D258]`}> +32% </div>,
       amount: "$220",
     },
     {
-      name: "Bitcoin",
-      code: "BTC",
+      name: (
+        <div className="flex items-center">
+          <Avatar
+            alt="BTC"
+            src={require("../../assets/img/btc.png")}
+            sx={{ width: 24, height: 24, marginRight: "10px" }}
+          />
+          <span>Bitcoin</span>
+        </div>
+      ),
+      code: <span className="text-[#626262]">BTC</span>,
       price: "$140365",
-      change: 9596961,
+      change: <div className={`flex items-center text-[#53D258]`}> +32% </div>,
       amount: "$334",
     },
     {
-      name: "Ethereum",
-      code: "ETH",
+      name: (
+        <div className="flex items-center">
+          <Avatar
+            alt="ETH"
+            src={require("../../assets/img/eth.png")}
+            sx={{ width: 24, height: 24, marginRight: "10px" }}
+          />
+          <span>Ethereum</span>
+        </div>
+      ),
+      code: <span className="text-[#626262]">ETH</span>,
       price: "$3973",
-      change: 301340,
+      change: <div className={`flex items-center text-[#53D258]`}> +32% </div>,
       amount: "$100",
     },
     {
-      name: "Luna",
-      code: "LUNA",
+      name: (
+        <div className="flex items-center">
+          <Avatar
+            alt="LUNA"
+            src={require("../../assets/img/terra.png")}
+            sx={{ width: 24, height: 24, marginRight: "10px" }}
+          />
+          <span>Terra</span>
+        </div>
+      ),
+      code: <span className="text-[#626262]">LUNA</span>,
       price: "$0.001",
-      change: 9833520,
+      change: <div className={`flex items-center text-[#53D258]`}> +32% </div>,
       amount: "$100",
     },
     {
-      name: "Cordano",
-      code: "ADA",
+      name: (
+        <div className="flex items-center">
+          <Avatar
+            alt="Cardano"
+            src={require("../../assets/img/cardano.png")}
+            sx={{ width: 24, height: 24, marginRight: "10px" }}
+          />
+          <span>Cardano</span>
+        </div>
+      ),
+      code: <span className="text-[#626262]">ADA</span>,
       price: "$332",
-      change: 9984670,
+      change: <div className={`flex items-center text-[#53D258]`}> +32% </div>,
       amount: "$100",
     },
     {
-      name: "NFT",
-      code: "",
+      collapse: true, 
+      name: (
+        <div className="flex items-center">
+          <Avatar
+            alt="NFT"
+            src={require("../../assets/img/nft.png")}
+            sx={{ width: 24, height: 24, marginRight: "10px" }}
+          />
+          <span>NFT</span>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => viewN(!nft)}
+          >
+            {nft ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+          </IconButton>
+        </div>
+      ),
+      code: (
+        <div>
+          <AvatarGroup max={3}>
+            <Avatar
+              alt="one"
+              sx={{ width: 30, height: 30 }}
+              src={require("../../assets/img/nft.png")}
+            />
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              alt="two"
+              src={require("../../assets/img/cardano.png")}
+            />
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              alt="three"
+              src={require("../../assets/img/terra.png")}
+            />
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              alt="four"
+              src={require("../../assets/img/bnb.png")}
+            />
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              alt="five"
+              src={require("../../assets/img/eth.png")}
+            />
+          </AvatarGroup>
+        </div>
+      ),
       price: "20 - 10,000",
-      change: 7692024,
-      amount: "$100",
+      change: <div className={`flex items-center text-[#53D258]`}> +3 </div>,
+      amount: 10,
     },
   ];
 
@@ -327,14 +427,16 @@ const DashHome = () => {
             <h2 className="text-[16px] font-bold text-bold">Portfolio</h2>
           </div>
           <TableContainer sx={{ maxHeight: "auto" }}>
-            <Table stickyHeader aria-label="sticky table">
+            <Table stickyHeader style={{
+              borderSpacing: "0px 12px"
+            }} aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  {columns.map((column) => (
+                  {columns.map((column, id) => (
                     <TableCell
-                      key={column.id}
+                      key={column.id+'-'+id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={{ minWidth: column.minWidth}}
                       className="border-b-solid !text-[#A9A9A9]"
                     >
                       {column.label}
@@ -345,24 +447,58 @@ const DashHome = () => {
               <TableBody>
                 {rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
+                  .map((row, id) => {
                     return (
-                      <TableRow role="checkbox" tabIndex={-1} key={row.code}>
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
+                      <Fragment>
+                        <TableRow
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={id}
+                        >
+                          {columns.map((column, idd) => {
+                            const value = row[column.id];
+                            return (
+                              <TableCell
+                                className="!border-[0px] !border-none"
+                                key={column.id + "-" + id}
+                                align={column.align}
+                                style={{
+                                  background: "#f5f5f5",
+                                  position: "relative",
+                                  zIndex: 7 - idd,
+                                  borderRadius:
+                                    idd === 4
+                                      ? "0px 6px 6px 0px"
+                                      : idd
+                                      ? 0
+                                      : "6px 0px 0px 6px",
+                                }}
+                              >
+                                {column.format && typeof value === "number"
+                                  ? column.format(value)
+                                  : value}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
+
+                        {row["collapse"] !== undefined && (
+                          <TableRow>
                             <TableCell
-                              className="!border-[0px] !border-none"
-                              key={column.id}
-                              align={column.align}
+                              style={{ paddingBottom: 0, paddingTop: 0 }}
+                              colSpan={5}
                             >
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
+                              <Collapse in={nft} timeout="auto" unmountOnExit>
+                                <Box sx={{ margin: 1 }}>
+                                  <h2 className="text-[16px] font-bold text-bold">
+                                    NFT List
+                                  </h2>
+                                </Box>
+                              </Collapse>
                             </TableCell>
-                          );
-                        })}
-                      </TableRow>
+                          </TableRow>
+                        )}
+                      </Fragment>
                     );
                   })}
               </TableBody>
