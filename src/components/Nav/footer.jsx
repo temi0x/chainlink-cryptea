@@ -64,7 +64,7 @@ const Footer = () => {
                 className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8"
               >
                 Connect Wallet
-              </button>              
+              </button>
             </div>
           </div>
           <div>
@@ -104,9 +104,10 @@ const Footer = () => {
           <h3 className="font-bold text-[18px] mb-2">Join Us</h3>
           <div className="flex items-center justify-between w-[200px]">
             <div className="mr-[5px]">
-              <button 
-              onClick={login} 
-              className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
+              <button
+                onClick={login}
+                className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8"
+              >
                 Connect Wallet
               </button>
             </div>
@@ -114,7 +115,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="text-center font-semibold py-5">
-        Copyright @ Cryptea {date.getFullYear()}. All Rights Reserved.
+        Copyright &copy; Cryptea {date.getFullYear()}. All Rights Reserved.
       </div>
     </div>
   );
