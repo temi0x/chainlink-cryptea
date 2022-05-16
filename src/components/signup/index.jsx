@@ -1,8 +1,11 @@
-import info from '../../assets/img/info.svg';
-import { useState, useEffect } from 'react';
-import { useMoralis } from 'react-moralis';
+import info from "../../assets/img/info.svg";
+import { useState, useEffect } from "react";
+import { useMoralis } from "react-moralis";
 
 const SignupForm = () => {
+  // Need a usernameAvailable variable check availabilty
+  let usernameAvailable = true;
+
   const {
     authenticate,
     isAuthenticated,
@@ -13,19 +16,19 @@ const SignupForm = () => {
     isWeb3Enabled,
   } = useMoralis();
 
- useEffect(() => {
-   if (isAuthenticated) {
-     console.log("Logged in user:", user.get("ethAddress"));
-   } else {
-     console.log("Not logged in");
-   }
-   // eslint-disable-next-line react-hooks/exhaustive-deps
- }, [isAuthenticated]);
-  
-  let [ userLink, setUserLink ] = useState('');
-  let [userDescription, setUserDescription] = useState('');
-  let [userEmail, setUserEmail] = useState('');
-  let [userInfo, setuserInfo] = useState('');
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("Logged in user:", user.get("ethAddress"));
+    } else {
+      console.log("Not logged in");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
+
+  let [userLink, setUserLink] = useState("");
+  let [userDescription, setUserDescription] = useState("");
+  let [userEmail, setUserEmail] = useState("");
+  let [userInfo, setuserInfo] = useState("");
 
   useEffect(() => {
     setUserLink(userLink);
@@ -34,8 +37,6 @@ const SignupForm = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
-
-
 
   return (
     <form>
@@ -52,11 +53,11 @@ const SignupForm = () => {
               <div name="inputName" className="rounded-md">
                 <div className="flex">
                   <div className="uppercase absolute max-w-[122px] px-3 py-4 font-bold text-sm sm:text-sm sm:leading-5 focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31]">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Username:</label>
                   </div>
 
                   <input
-                    className="rounded-lg border p-3 w-full pl-[122px] focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
+                    className="rounded-lg border p-3 w-full pl-[122px] focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-black-900"
                     placeholder="wagmi.eth"
                     type="text"
                     name="username"
@@ -71,7 +72,7 @@ const SignupForm = () => {
                   </div>
 
                   <input
-                    className="rounded-lg border pl-[122px] p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
+                    className="rounded-lg border pl-[122px] p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-black-900"
                     placeholder="I created Ethereum"
                     type="text"
                     value={userDescription}
@@ -87,7 +88,7 @@ const SignupForm = () => {
                   </div>
 
                   <input
-                    className="rounded-lg border pl-[122px] p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
+                    className="rounded-lg border pl-[122px] p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-black-900"
                     placeholder="wagmi@ngmi.eth"
                     type="text"
                     value={userEmail}
@@ -114,9 +115,9 @@ const SignupForm = () => {
               <label className="font-semibold block mb-2" htmlFor="link">
                 Choose Link Slug
               </label>
-              <div className="flex items-center ssm:flex-wrap">
+              <div className="flex flex-col items-start ssm:flex-wrap">
                 <input
-                  className="rounded-lg border p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900 ssm:mr-0 mr-10"
+                  className="rounded-lg border p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-black-900 ssm:mr-0 mr-10"
                   placeholder="wagmi"
                   type="text"
                   value={userLink}
@@ -124,8 +125,16 @@ const SignupForm = () => {
                   name="link"
                 />
 
-                <span className="font-semibold min-w-[200px]">
-                  Your Username has been taken
+                <span
+                  className={`mt-2 font-md text-sm ${
+                    usernameAvailable === true
+                      ? "text-[#90ee90]"
+                      : "text-[#ee9090]"
+                  } min-w-[200px] ${userLink === "" ? "hidden" : ""}`}
+                >
+                  {usernameAvailable === true
+                    ? "That username is available ✓"
+                    : "That username has been taken ✗"}
                 </span>
               </div>
             </div>
