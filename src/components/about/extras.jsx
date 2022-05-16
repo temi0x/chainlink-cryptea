@@ -1,6 +1,5 @@
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
-import { ConnectButton } from "web3uikit"
 const Extras = () => {
   const { authenticate, isAuthenticated, isAuthenticating, user, account } =
     useMoralis();
@@ -60,15 +59,12 @@ const Extras = () => {
           And receive tips while you sip tea
         </span>
 
-        {/* <button 
+        <button 
          onClick={login}
          className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
           Connect Wallet
-        </button> */}
+        </button>
 
-        <div className="buttonConnect m-auto w-fit">
-            <ConnectButton signingMessage="Welcome To Cryptea"  type="button" text="Connect Wallet"/>
-            </div>
       </div>
     </div>
   );
