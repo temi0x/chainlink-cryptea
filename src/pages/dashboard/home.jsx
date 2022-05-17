@@ -146,61 +146,63 @@ const DashHome = () => {
       price: "$332",
       change: <div className={`flex items-center text-[#53D258]`}> +32% </div>,
       amount: "$100",
-    },
-    {
-      collapse: true, 
-      name: (
-        <div className="flex items-center">
-          <Avatar
-            alt="NFT"
-            src={require("../../assets/img/nft.png")}
-            sx={{ width: 24, height: 24, marginRight: "10px" }}
-          />
-          <span>NFT</span>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => viewN(!nft)}
-          >
-            {nft ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
-          </IconButton>
-        </div>
-      ),
-      code: (
-        <div>
-          <AvatarGroup max={3}>
-            <Avatar
-              alt="one"
-              sx={{ width: 30, height: 30 }}
-              src={require("../../assets/img/nft.png")}
-            />
-            <Avatar
-              sx={{ width: 30, height: 30 }}
-              alt="two"
-              src={require("../../assets/img/cardano.png")}
-            />
-            <Avatar
-              sx={{ width: 30, height: 30 }}
-              alt="three"
-              src={require("../../assets/img/terra.png")}
-            />
-            <Avatar
-              sx={{ width: 30, height: 30 }}
-              alt="four"
-              src={require("../../assets/img/bnb.png")}
-            />
-            <Avatar
-              sx={{ width: 30, height: 30 }}
-              alt="five"
-              src={require("../../assets/img/eth.png")}
-            />
-          </AvatarGroup>
-        </div>
-      ),
-      price: "20 - 10,000",
-      change: <div className={`flex items-center text-[#53D258]`}> +3 </div>,
-      amount: 10,
-    },
+    }, 
+    // ,
+    // {
+    //   collapse: true, 
+    //   name: (
+    //     <div className="flex items-center">
+    //       <Avatar
+    //         alt="NFT"
+    //         src={require("../../assets/img/nft.png")}
+    //         sx={{ width: 24, height: 24, marginRight: "10px" }}
+    //       />
+    //       <span>NFT</span>
+    //       <IconButton
+    //         aria-label="expand row"
+    //         size="small"
+    //         onClick={() => viewN(!nft)}
+    //       >
+    //         {nft ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+    //       </IconButton>
+    //     </div>
+    //   ),
+    //   code: (
+    //     <div>
+    //       <AvatarGroup max={3}>
+    //         <Avatar
+    //           alt="one"
+    //           sx={{ width: 30, height: 30 }}
+    //           src={require("../../assets/img/nft.png")}
+    //         />
+    //         <Avatar
+    //           sx={{ width: 30, height: 30 }}
+    //           alt="two"
+    //           src={require("../../assets/img/cardano.png")}
+    //         />
+    //         <Avatar
+    //           sx={{ width: 30, height: 30 }}
+    //           alt="three"
+    //           src={require("../../assets/img/terra.png")}
+    //         />
+    //         <Avatar
+    //           sx={{ width: 30, height: 30 }}
+    //           alt="four"
+    //           src={require("../../assets/img/bnb.png")}
+    //         />
+    //         <Avatar
+    //           sx={{ width: 30, height: 30 }}
+    //           alt="five"
+    //           src={require("../../assets/img/eth.png")}
+    //         />
+    //       </AvatarGroup>
+    //     </div>
+    //   ),
+    //   price: "20 - 10,000",
+    //   change: <div className={`flex items-center text-[#53D258]`}> +3 </div>,
+    //   amount: 10,
+    // },
+
   ];
 
   const [page, setPage] = useState(0);

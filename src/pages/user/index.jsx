@@ -96,8 +96,8 @@ function UserPage() {
   const [blockchainName, setBlockchainName] = useState([]);
 
   return (
-    <div className="w-100% h-100% bg-white">
-      <div className="mx-[calc(100%/12)] rounded-lg bg-gray-100 my-[calc(100%/12)] h-full flex flex-col">
+    <div className="w-full h-full bg-white">
+      <div className="mx-[calc(100%/12)] rounded-lg bg-gray-100 h-full flex flex-col">
         <div className="img h-20 overflow-hidden rounded-t-lg">
           <img src={img} className="h-auto w-auto " alt="Pay user" />
         </div>

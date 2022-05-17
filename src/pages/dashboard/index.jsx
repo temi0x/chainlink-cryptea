@@ -17,13 +17,15 @@ import { Avatar } from "@mui/material";
 import DashHome from "./home";
 import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { useMoralis } from 'react-moralis';
+
 
 const Dash = () => {
   const { pathname } = useLocation();
-
   const [isOpen, close] = useState(false);
-
   const [isOpen3, close3] = useState(false);
+
+  const { user } = useMoralis();
 
   const toggle = () => {
     close(!isOpen);
@@ -201,7 +203,7 @@ const Dash = () => {
       <div className="body w-full h-full">
         <div className="flex px-[20px] py-[13px] justify-between items-center border-solid border-b-[1px] 3md:border-b-transparent bg-white border-b-[#E3E3E3]">
           <div className="">
-            <h1 className="font-bold">Welcome Zarror!☕</h1>
+            <h1 className="font-bold">Welcome {user.get("username")}!☕</h1>
             <span>Hope you are healthy and happy today..</span>
           </div>
           <div className="flex items-center">
@@ -227,8 +229,8 @@ const Dash = () => {
               <BiBell size={23} className="cursor-pointer" color="#000" />
             </div>
 
-            <Avatar sx={{ bgcolor: "red" }} alt="Zarror">
-              Z
+            <Avatar sx={{ bgcolor: "#F57059" }} alt={user.get("username")}>
+              {(user.get("username").charAt(0)).toUpperCase()}
             </Avatar>
           </div>
         </div>
