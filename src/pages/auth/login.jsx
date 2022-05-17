@@ -1,59 +1,128 @@
+import { useState } from "react";
+import {useMoralis } from "react-moralis";
+import { TextField, Box, LinearProgress, Button, Alert } from "@mui/material";
 import Nav from "../../components/Nav";
 const LoginForm = () => {
+
+  const [ user, setUser] = useState('');
+  const [pass, setPass] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const { isAuthenticated, Moralis, user : usee } = useMoralis();
+
+  const submitForm = async () => {
+    let more = true;
+    [user, pass].forEach((val) => {
+      if (!val.length) {
+        setError("Password or username incorrect");
+        setLoading(false);
+        more = false;
+        return;
+      }
+    });
+
+    if (more) {
+      if (pass.length < 6) {
+        setError("Password or username incorrect");
+        setLoading(false);
+      }
+    }
+
+    if (!error.length) {
+      if (!isAuthenticated) {
+        try{
+         await Moralis.User.logIn(user, pass, {
+           usePost: true,
+         });
+      } catch (err){
+            setError(err.message);
+            setLoading(false);
+      }
+
+      }
+
+      window.location.href = '/dashboard';              
+
+    }
+    window.scrollTo(0, 0);
+    setLoading(true);
+  };
+
+
   return (
-      <div>
+    <div>
       <Nav />
-    <form>
-      <div className="w-full flex justify-center mt-8">
-        <div className="flex flex-col w-[900px] mx-7 items-center justify-center">
-          <div className="flex flex-row border-b border-[#1B1C31] justify-start w-full">
-            <div className="text-[#1B1C31] font-semibold text-xl py-4">
-              Login
-            </div>
-          </div>
-
-          <div className="username w-full">
-            <div className="mt-8">
-              <div name="inputName" className="rounded-md">
-                <div className="flex">
-                  <div className="uppercase absolute max-w-[122px] px-3 py-4 font-bold text-sm sm:text-sm sm:leading-5 focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31]">
-                    <label htmlFor="username">Username</label>
-                  </div>
-
-                  <input
-                    className="rounded-lg border p-3 w-full pl-[122px] focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
-                    placeholder="vitalik.eth"
-                    type="text"
-                    name="username"
-                  />
-                </div>
-              </div>
-
-              <div name="inputDescription" className="rounded-md mt-8">
-                <div className="flex">
-                  <div className="uppercase absolute px-3 py-4 max-w-[122px] font-bold text-sm sm:text-sm sm:leading-5 focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31]">
-                    <label htmlFor="pass">Password</label>
-                  </div>
-
-                  <input
-                    className="rounded-lg border pl-[122px] p-3 w-full focus:outline-none focus:shadow-outline-blue focus:border-[#1B1C31] text-[#1B1C31] placeholder-blue-900"
-                    placeholder="I created Ethereum"
-                    type="password"
-                    name="pass"
-                  />
-                </div>
+      <form
+        action=""
+        method="POST"
+        enctype="multipart/form-data"
+        onSubmit={(c) => {
+          c.preventDefault();
+          submitForm();
+        }}
+      >
+        <div className="w-full flex justify-center mt-8">
+          <div className="flex flex-col w-[900px] mx-7 items-center justify-center">
+            <div className="flex flex-row border-b border-[#1B1C31] justify-start w-full">
+              <div className="text-[#1B1C31] font-semibold text-xl py-4">
+                Login
               </div>
             </div>
-          </div>
-        
-          <div className="flex flex-row justify-center w-full mt-8">
-            <button className="hover:bg-[#ff320e] transition-all delay-500 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-10">
-              Connect Wallet
-            </button>
+            {isLoading && (
+              <Box className="text-[#1B1C31]" sx={{ width: "100%" }}>
+                <LinearProgress color="inherit" />
+              </Box>
+            )}
+
+            {error.length > 0 && <Alert severity="error">{error}</Alert>}
+            <div className="username w-full">
+              <div className="mt-8">
+                <div name="inputName" className="rounded-md">
+                  <div className="flex">
+                    <TextField
+                      label={"Username"}
+                      value={user}
+                      fullWidth
+                      placeholder="wagmi.eth"
+                      name="username"
+                      onChange={(e) => {
+                        setError("");
+                        setUser(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div name="inputDescription" className="rounded-md mt-8">
+                  <div className="flex">
+                    <TextField
+                      label={"Password"}
+                      value={pass}
+                      fullWidth
+                      placeholder="******"
+                      name="password"
+                      onChange={(e) => {
+                        setError("");
+                        setPass(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-row justify-center w-full mt-8">
+              <Button
+                variant="contained"
+                className="!text-sm !rounded-lg !bg-[#1B1C31] !text-white !font-semibold !py-4 !px-10"
+              >
+                {isAuthenticated ? "Save" : "Connect Wallet"}
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
     </div>
   );
 };

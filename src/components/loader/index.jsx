@@ -6,7 +6,7 @@ const Loader = () => {
     <div className="h-screen flex flex-col justify-center items-center w-full">
       <div className="flex items-center justify-center">
         <img src={logo} alt="cryptea" width={35} className="mr-[5px]" />
-        <a className="text-black text-2xl font-bold">CRYPTEA</a>
+        <div className="text-black text-2xl font-bold">CRYPTEA</div>
         {/* <img src={logo1} alt="cryptea" width={100} /> */}
       </div>
       <Box

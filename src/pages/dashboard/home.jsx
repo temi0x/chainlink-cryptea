@@ -493,6 +493,11 @@ const DashHome = () => {
                                   <h2 className="text-[16px] font-bold text-bold">
                                     NFT List
                                   </h2>
+
+                                  <div className="flex">
+
+                                  </div>
+
                                 </Box>
                               </Collapse>
                             </TableCell>
