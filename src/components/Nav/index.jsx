@@ -1,53 +1,51 @@
 import { Link, NavLink } from "react-router-dom";
-import { useEffect, useRef } from 'react';
-import { useMoralis } from 'react-moralis';
-import logo from "../../assets/img/cryptea logo.svg";
+import { useEffect, useRef } from "react";
+import { useMoralis } from "react-moralis";
+import logo from "../../assets/img/cryptea-logo.svg";
 function Nav() {
+  const { isAuthenticated, user, authenticate, logout } = useMoralis();
 
-const { isAuthenticated, user, authenticate, logout } = useMoralis();
+  let buttonText = useRef("Connect Wallet");
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("Logged in user:", user.get("ethAddress"));
+    } else {
+      console.log("Not logged in");
+    }
 
-let buttonText = useRef("Connect Wallet");
-useEffect(() => {
-  if (isAuthenticated) {
-    console.log("Logged in user:", user.get("ethAddress"));
-  } else {
-    console.log("Not logged in");
-  }
+    if (isAuthenticated) {
+      let address = user.get("ethAddress");
 
-  if (isAuthenticated) {
-    let address = user.get("ethAddress");
+      buttonText.current =
+        address.substring(0, 5) +
+        "...." +
+        address.substring(address.length - 5, address.length);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
-    buttonText.current = address.substring(0, 5) +"...." +address.substring(address.length - 5, address.length);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [isAuthenticated]);
-
-const logOut = async (redirect = false) => {
-  if (isAuthenticated) {
-    logout();
-    buttonText.current = 'Connect Wallet';
-  }
-};
- const walletConnect = async () => {
-  if (!isAuthenticated) {
-    await authenticate({ signingMessage: "Welcome to Cryptea" })
-      .then(function (user) {
-        if (!user.get("email").length) {
-          window.location.href = "/signup"; 
-        } else {
-          window.location.href = "/dashboard";
-        }
-      
-      })
-      .catch(function (error) {
-        console.log(error);
-        window.location.href = "/";
-        
-      });
-  }
-  
-};
-
+  const logOut = async (redirect = false) => {
+    if (isAuthenticated) {
+      logout();
+      buttonText.current = "Connect Wallet";
+    }
+  };
+  const walletConnect = async () => {
+    if (!isAuthenticated) {
+      await authenticate({ signingMessage: "Welcome to Cryptea" })
+        .then(function (user) {
+          if (!user.get("email").length) {
+            window.location.href = "/signup";
+          } else {
+            window.location.href = "/dashboard";
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          window.location.href = "/";
+        });
+    }
+  };
 
   return (
     <div className="nav relative ml-[30px] 2sm:ml-1 z-10">

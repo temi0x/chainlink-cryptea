@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import About from "./pages/about";
 import Home from "./pages/Home";
@@ -8,6 +7,7 @@ import Dash from "./pages/dashboard";
 import Loader from "./components/loader";
 import Notfound from "./pages/error/404";
 import LoginForm from "./pages/auth/login";
+import UserPage from "./pages/user";
 import { useMoralis } from "react-moralis";
 const App = () => {
   const { isAuthenticated, isInitializing } = useMoralis();
@@ -24,7 +24,18 @@ const App = () => {
         <Route path="/" element={loading ? <Loader /> : <Home />} />
         <Route path="/about" element={loading ? <Loader /> : <About />} />
         <Route path="/signup" element={loading ? <Loader /> : <Signup />} />
-        <Route path="/login" element={loading ? <Loader /> : isAuthenticated ? (<Navigate to="/dashboard" />) : (<LoginForm />)} />
+        <Route
+          path="/login"
+          element={
+            loading ? (
+              <Loader />
+            ) : isAuthenticated ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <LoginForm />
+            )
+          }
+        />
         <Route
           path="/dashboard"
           element={
@@ -37,6 +48,8 @@ const App = () => {
             )
           }
         />
+        {/* <Route path="/user/:id" element={loading ? <Loader /> : <UserPage />} /> */}
+        <Route path="/user" element={loading ? <Loader /> : <UserPage />} />
         <Route path="*" element={loading ? <Loader /> : <Notfound />} />
       </Routes>
     </BrowserRouter>

@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from "@mui/material";
 import logo1 from "../../assets/img/cryptea.png";
-import logo from "../../assets/img/cryptea logo.svg";
+import logo from "../../assets/img/cryptea-logo.svg";
 const Loader = () => {
   return (
     <div className="h-screen flex flex-col justify-center items-center w-full">

@@ -11,8 +11,7 @@ import {
   IoIosArrowDroprightCircle,
 } from "react-icons/io";
 import { RiSettingsLine } from "react-icons/ri";
-import logo1 from "../../assets/img/cryptea.png";
-import logo from "../../assets/img/cryptea logo.svg";
+import logo from "../../assets/img/cryptea-logo.svg";
 import "../../assets/styles/dash.css";
 import { Avatar } from "@mui/material";
 import DashHome from "./home";
