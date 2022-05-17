@@ -3,10 +3,7 @@ import { useState, Fragment } from "react";
 import { FaWallet } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BsBoxArrowInDownLeft, BsArrowRight } from "react-icons/bs";
-import { 
-         MdKeyboardArrowUp,
-         MdKeyboardArrowDown
-      } from 'react-icons/md';
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import {
   TextField,
   Button,
@@ -24,7 +21,24 @@ import {
   TableBody,
   TablePagination,
 } from "@mui/material";
+import { useMoralis } from "react-moralis";
+import { data } from "autoprefixer";
+
 const DashHome = () => {
+  const { user } = useMoralis();
+  const userAddress = user.get("ethAddress");
+  console.log(userAddress);
+
+async function getAllTokens() {
+  fetch(
+    `https://api.covalenthq.com/v1/137/address/${userAddress}/balances_v2/?quote-currency=USD&format=JSON&nft=false&no-nft-fetch=false&key=ckey_d8fd93851d6a4d57bdcf14a337d`
+  ).then((response) => {
+    console.log(response.json());
+    const { data } = response.json();
+  });
+}
+getAllTokens();
+
   const balance = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
   const received = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
 
@@ -146,10 +160,10 @@ const DashHome = () => {
       price: "$332",
       change: <div className={`flex items-center text-[#53D258]`}> +32% </div>,
       amount: "$100",
-    }, 
+    },
     // ,
     // {
-    //   collapse: true, 
+    //   collapse: true,
     //   name: (
     //     <div className="flex items-center">
     //       <Avatar
@@ -202,7 +216,6 @@ const DashHome = () => {
     //   change: <div className={`flex items-center text-[#53D258]`}> +3 </div>,
     //   amount: 10,
     // },
-
   ];
 
   const [page, setPage] = useState(0);
@@ -223,14 +236,13 @@ const DashHome = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     minWidth: 300,
-    width: '50%',
+    width: "50%",
     maxWidth: 600,
     p: 4,
   };
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
 
   return (
     <div className="dashbody h-[calc(100%-75px)] 2sm:pr-1 flex px-5 pb-5">
@@ -429,16 +441,20 @@ const DashHome = () => {
             <h2 className="text-[16px] font-bold text-bold">Portfolio</h2>
           </div>
           <TableContainer sx={{ maxHeight: "auto" }}>
-            <Table stickyHeader style={{
-              borderSpacing: "0px 12px"
-            }} aria-label="sticky table">
+            <Table
+              stickyHeader
+              style={{
+                borderSpacing: "0px 12px",
+              }}
+              aria-label="sticky table"
+            >
               <TableHead>
                 <TableRow>
                   {columns.map((column, id) => (
                     <TableCell
-                      key={column.id+'-'+id}
+                      key={column.id + "-" + id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth}}
+                      style={{ minWidth: column.minWidth }}
                       className="border-b-solid !text-[#A9A9A9]"
                     >
                       {column.label}
@@ -452,11 +468,7 @@ const DashHome = () => {
                   .map((row, id) => {
                     return (
                       <Fragment>
-                        <TableRow
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={id}
-                        >
+                        <TableRow role="checkbox" tabIndex={-1} key={id}>
                           {columns.map((column, idd) => {
                             const value = row[column.id];
                             return (
@@ -496,10 +508,7 @@ const DashHome = () => {
                                     NFT List
                                   </h2>
 
-                                  <div className="flex">
-
-                                  </div>
-
+                                  <div className="flex"></div>
                                 </Box>
                               </Collapse>
                             </TableCell>
