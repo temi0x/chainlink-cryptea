@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useEffect, useRef } from 'react';
 import { useMoralis } from 'react-moralis';
+import logo from "../../assets/img/cryptea logo.svg";
 function Nav() {
 
 const { isAuthenticated, user, authenticate, logout } = useMoralis();
@@ -51,9 +52,18 @@ const logOut = async (redirect = false) => {
   return (
     <div className="nav relative ml-[30px] 2sm:ml-1 z-10">
       <div className="flex flex-row justify-between items-center px-14 pt-5 2sm:px-7">
-        <Link to="/" className="text-black text-2xl font-bold">
+        <NavLink to="/" className="flex items-center justify-center">
+          <img
+            src={logo}
+            alt="cryptea"
+            width={30}
+            className="mr-[5px] min-w-[30px]"
+          />
+          <span className="text-black text-2xl font-bold">CRYPTEA</span>
+        </NavLink>
+        {/* <Link to="/" className="text-black text-2xl font-bold">
           CRYPTEA
-        </Link>
+        </Link> */}
         <div className="text-black flex flex-row font-medium text-lg">
           <Link to="about" className="text-black pr-4">
             About
