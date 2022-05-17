@@ -58,7 +58,7 @@ const Dash = () => {
                 isOpen ? 30 : 40
               }px] transition-all delay-500`}
             />
-            <a
+            <span
               className={
                 isOpen3
                   ? "text-black text-2xl font-bold"
@@ -66,7 +66,7 @@ const Dash = () => {
               }
             >
               CRYPTEA
-            </a>
+            </span>
             {/* <img
               src={logo1}
               className={isOpen3 ? "" : "transition-all delay-500 hidden"}
@@ -228,9 +228,9 @@ const Dash = () => {
               <BiBell size={23} className="cursor-pointer" color="#000" />
             </div>
 
-              <Avatar sx={{ bgcolor: "red" }} alt="Zarror">
-                Z
-              </Avatar>
+            <Avatar sx={{ bgcolor: "red" }} alt="Zarror">
+              Z
+            </Avatar>
           </div>
         </div>
 
