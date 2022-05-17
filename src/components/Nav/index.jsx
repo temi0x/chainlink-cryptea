@@ -25,10 +25,10 @@ useEffect(() => {
 const logOut = async (redirect = false) => {
   if (isAuthenticated) {
     logout();
+    buttonText.current = 'Connect Wallet';
   }
 };
  const walletConnect = async () => {
-
   if (!isAuthenticated) {
     await authenticate({ signingMessage: "Welcome to Cryptea" })
       .then(function (user) {

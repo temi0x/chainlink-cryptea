@@ -1,6 +1,18 @@
 import { useState } from "react";
 import {useMoralis } from "react-moralis";
-import { TextField, Box, LinearProgress, Button, Alert } from "@mui/material";
+import { MdVisibilityOff, MdVisibility } from "react-icons/md";
+import {
+  TextField,
+  Box,
+  IconButton,  
+  InputLabel,
+  LinearProgress,
+  FormControl,
+  OutlinedInput,
+  Button,
+  InputAdornment,
+  Alert,
+} from "@mui/material";
 import Nav from "../../components/Nav";
 const LoginForm = () => {
 
@@ -9,9 +21,14 @@ const LoginForm = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { isAuthenticated, Moralis, user : usee } = useMoralis();
+  const { isAuthenticated, Moralis } = useMoralis();
+  const [viewPass, setViewPass] = useState(false);
 
   const submitForm = async () => {
+      
+    if (!isAuthenticated) {
+        window.scrollTo(0, 0);
+        setLoading(true);
     let more = true;
     [user, pass].forEach((val) => {
       if (!val.length) {
@@ -38,15 +55,18 @@ const LoginForm = () => {
       } catch (err){
             setError(err.message);
             setLoading(false);
+            return;
       }
 
       }
-
+      
       window.location.href = '/dashboard';              
 
     }
-    window.scrollTo(0, 0);
-    setLoading(true);
+  
+  }else{
+    window.location.href = '/dashboard'; 
+  }
   };
 
 
@@ -64,13 +84,13 @@ const LoginForm = () => {
       >
         <div className="w-full flex justify-center mt-8">
           <div className="flex flex-col w-[900px] mx-7 items-center justify-center">
-            <div className="flex flex-row border-b border-[#1B1C31] justify-start w-full">
-              <div className="text-[#1B1C31] font-semibold text-xl py-4">
+            <div className="flex flex-row border-b border-[#F57059] justify-start w-full">
+              <div className="text-[#F57059] font-semibold text-xl py-4">
                 Login
               </div>
             </div>
             {isLoading && (
-              <Box className="text-[#1B1C31]" sx={{ width: "100%" }}>
+              <Box className="text-[#F57059]" sx={{ width: "100%" }}>
                 <LinearProgress color="inherit" />
               </Box>
             )}
@@ -107,6 +127,43 @@ const LoginForm = () => {
                         setPass(e.target.value);
                       }}
                     />
+                    <FormControl
+                      sx={{
+                        width: "100%",
+                      }}
+                      variant="outlined"
+                    >
+                      <InputLabel htmlFor="password">Password</InputLabel>
+                      <OutlinedInput
+                        id="password"
+                        type={viewPass ? "text" : "password"}
+                        value={pass}
+                        onChange={(e) => {
+                          setPass(e.target.value);
+                          setError("");
+                        }}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setViewPass(!viewPass)}
+                              onMouseDown={(event) => {
+                                event.preventDefault();
+                              }}
+                              edge="end"
+                            >
+                              {viewPass ? (
+                                <MdVisibilityOff />
+                              ) : (
+                                <MdVisibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        label="Password"
+                        placeholder="******"
+                      />
+                    </FormControl>
                   </div>
                 </div>
               </div>
@@ -114,8 +171,9 @@ const LoginForm = () => {
 
             <div className="flex flex-row justify-center w-full mt-8">
               <Button
+                type="submit"
                 variant="contained"
-                className="!text-sm !rounded-lg !bg-[#1B1C31] !text-white !font-semibold !py-4 !px-10"
+                className="!text-sm !rounded-lg !bg-[#F57059] !text-white !font-semibold !py-4 !px-10"
               >
                 {isAuthenticated ? "Save" : "Connect Wallet"}
               </Button>

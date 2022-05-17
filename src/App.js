@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/" element={loading ? <Loader /> : <Home />} />
         <Route path="/about" element={loading ? <Loader /> : <About />} />
         <Route path="/signup" element={loading ? <Loader /> : <Signup />} />
-        <Route path="/login" element={loading ? <Loader /> : <LoginForm />} />
+        <Route path="/login" element={loading ? <Loader /> : isAuthenticated ? (<Navigate to="/dashboard" />) : (<LoginForm />)} />
         <Route
           path="/dashboard"
           element={
