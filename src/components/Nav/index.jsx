@@ -6,6 +6,7 @@ function Nav() {
   const { isAuthenticated, user, authenticate, logout } = useMoralis();
 
   let buttonText = useRef("Connect Wallet");
+
   useEffect(() => {
     if (isAuthenticated) {
       console.log("Logged in user:", user.get("ethAddress"));
@@ -30,19 +31,24 @@ function Nav() {
       buttonText.current = "Connect Wallet";
     }
   };
+ 
   const walletConnect = async () => {
     if (!isAuthenticated) {
       await authenticate({ signingMessage: "Welcome to Cryptea" })
         .then(function (user) {
-          if (!user.get("email").length) {
+
+          if (user.get("email") === undefined) {
             window.location.href = "/signup";
           } else {
+            if (!user.get("email").length) {
+              window.location.href = "/signup";
+            }else{
             window.location.href = "/dashboard";
           }
+        }
         })
         .catch(function (error) {
           console.log(error);
-          window.location.href = "/";
         });
     }
   };
