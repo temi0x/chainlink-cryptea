@@ -32,24 +32,27 @@ const DashHome = () => {
   const [amount, setAmount] = useState(0);
   const [receiver, setReceiver] = useState("");
 
-  useEffect = () => { };
+  // useEffect = () => { };
 
-  const { fetch, error, isFetching } = useWeb3Transfer({
+  const { fetch: fetched, error, isFetching } = useWeb3Transfer({
     type: "native",
     amount: Moralis.Units.ETH(amount),
     receiver: receiver,
   });
 
-  async function getAllTokens() {
+  const [wdata, setWData] = useState({});
+
     fetch(
       `https://api.covalenthq.com/v1/137/address/${userAddress}/balances_v2/?quote-currency=USD&format=JSON&nft=false&no-nft-fetch=false&key=ckey_d8fd93851d6a4d57bdcf14a337d`
-    ).then((response) => {
-      console.log(response.json());
-      const { data } = response.json();
+    )
+    .then((response) => response.json())
+    .then((data) => {
+        setWData(data.data)
     });
-  }
-  
-  getAllTokens();
+
+
+    // console.log(wdata)
+
 
   const balance = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
   const received = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
@@ -299,7 +302,7 @@ const DashHome = () => {
                     fontFamily: "inherit",
                   }}
                   fullWidth
-                  onClick={() => fetch()}
+                  onClick={() => fetched()}
                   disabled={isFetching}
                 >
                   Transfer{" "}
