@@ -7,11 +7,12 @@ function Nav() {
 
   let buttonText = useRef("Connect Wallet");
 
-
   useEffect(() => {
     if (isAuthenticated) {
+      
       console.log("Logged in user:", user.get("ethAddress"));
     } else {
+
       console.log("Not logged in");
     }
 

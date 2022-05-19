@@ -29,16 +29,15 @@ const DashHome = () => {
   const userAddress = user.get("ethAddress");
   console.log(userAddress);
 
-async function getAllTokens() {
+
   fetch(
     `https://api.covalenthq.com/v1/137/address/${userAddress}/balances_v2/?quote-currency=USD&format=JSON&nft=false&no-nft-fetch=false&key=ckey_d8fd93851d6a4d57bdcf14a337d`
   ).then((response) => {
     console.log(response.json());
     const { data } = response.json();
   });
-}
-getAllTokens();
 
+    
   const balance = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
   const received = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
 
