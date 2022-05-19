@@ -283,7 +283,7 @@ const DashHome = () => {
                   value={amount}
                   onChange={(e) => {
                     const val = e.target.value;
-                    setAmount(val)
+                    setAmount(val.replace(/[^\d.]/g, ""));
                   }}
                   className="amount"
                   id="Amount"
