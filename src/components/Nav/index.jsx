@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useMoralis } from "react-moralis";
 import logo from "../../assets/img/cryptea-logo.svg";
@@ -6,6 +6,7 @@ function Nav() {
   const { isAuthenticated, user, authenticate, logout } = useMoralis();
 
   let buttonText = useRef("Connect Wallet");
+
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -69,10 +70,12 @@ function Nav() {
           CRYPTEA
         </Link> */}
         <div className="text-black flex flex-row font-medium text-lg">
-          <Link to="about" className="text-black pr-4">
+          <div onClick={() => {
+            document.querySelector('#about').scrollIntoView();
+          }} className="text-black pr-4">
             About
-          </Link>
-          <div className="text-black pl-4">Blog</div>
+          </div>
+          <NavLink to='/blog' className="text-black pl-4">Blog</NavLink>
         </div>
         <div className="right mmd:hidden">
           <button

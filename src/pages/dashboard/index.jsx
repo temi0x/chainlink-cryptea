@@ -15,7 +15,7 @@ import logo from "../../assets/img/cryptea-logo.svg";
 import "../../assets/styles/dash.css";
 import { Avatar } from "@mui/material";
 import DashHome from "./home";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useMoralis } from 'react-moralis';
 
@@ -25,7 +25,7 @@ const Dash = () => {
   const [isOpen, close] = useState(false);
   const [isOpen3, close3] = useState(false);
 
-  const { user } = useMoralis();
+  const { user, isAuthenticated, logout } = useMoralis();
 
   const toggle = () => {
     close(!isOpen);
@@ -35,13 +35,15 @@ const Dash = () => {
     }, 900);
   };
 
+  
+
   const active = "border-l-[3px] border-l-[#F57059] text-[#F57059]";
   return (
     <div className="h-full dash w-full bg-[#F9FAFF] flex">
       <div
         className={`sidebar transition-all z-[100] delay-500 ${
           isOpen
-            ? "min-w-[250px] dsm:absolute  w-[250px]"
+            ? "min-w-[250px] dsm:absolute w-[250px]"
             : `w-[75px]  min-w-[75px] ${isOpen3 ? "dsm:absolute" : "relative"}`
         } bg-white border-solid border-r-[1px] border-r-[#E3E3E3] h-[inherit]`}
       >
@@ -128,7 +130,7 @@ const Dash = () => {
           </div>
 
           <div
-            className={`rounded-[4px] overflow-hidden flex-nowrap  my-1 ${
+            className={`rounded-[4px] overflow-hidden flex-nowrap my-1 ${
               pathname.indexOf("") !== -1 ? active : ""
             } border-solid hover:border-l-[3px] border-l-transparent text-[#A9A9A9] hover:border-l-[#F57059] hover:text-[#F57059] hover:bg-[#F5F8FE] py-[9px]`}
           >
@@ -185,9 +187,14 @@ const Dash = () => {
           </div>
 
           <div className="rounded-[4px] overflow-hidden flex-nowrap my-1 border-solid hover:border-l-[3px] hover:border-l-[#F57059] border-l-transparent text-[#A9A9A9] hover:text-[#F57059] hover:bg-[#F5F8FE] py-[9px]">
-            <NavLink
-              to="dashboard/logout"
+            <div
               className="text-inherit flex items-center text-[14px]"
+              onClick={async () => {
+                  if (isAuthenticated) {
+                      logout()
+                  }
+                  <Navigate to="/" />     
+              }}
             >
               <BiLogOut
                 size={isOpen3 ? 16.5 : 21}
@@ -196,7 +203,7 @@ const Dash = () => {
                 } mx-[22.5px]`}
               />{" "}
               {isOpen3 ? "Log Out" : ""}
-            </NavLink>
+            </div>
           </div>
         </div>
       </div>
