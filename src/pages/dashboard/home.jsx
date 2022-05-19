@@ -25,16 +25,18 @@ import { useMoralis, useWeb3Transfer } from "react-moralis";
 import { data } from "autoprefixer";
 
 const DashHome = () => {
-  const { user, Moralis } = useMoralis();
+  const { user, Moralis, isWeb3Enabled, enableWeb3 } = useMoralis();
   const userAddress = user.get("ethAddress");
   console.log(userAddress);
 
   const [amount, setAmount] = useState(0);
   const [receiver, setReceiver] = useState("");
 
-  // useEffect = () => { };
+  if (!isWeb3Enabled) {
+    enableWeb3();
+  }
 
-  const { fetch: fetched, error, isFetching } = useWeb3Transfer({
+  const { fetch:fetched, error, isFetching } = useWeb3Transfer({
     type: "native",
     amount: Moralis.Units.ETH(amount),
     receiver: receiver,
@@ -279,7 +281,10 @@ const DashHome = () => {
                   fullWidth
                   type={`number`}
                   value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setAmount(val)
+                  }}
                   className="amount"
                   id="Amount"
                 />
@@ -289,7 +294,7 @@ const DashHome = () => {
                   label={"Account/Address"}
                   fullWidth
                   value={receiver}
-                  onchange={(e) => setReceiver(e.target.value)}
+                  onChange={(e) => setReceiver(e.target.value)}
                   className="account"
                   id="account"
                 />
@@ -561,6 +566,8 @@ const DashHome = () => {
           </h2>
           <div className="py-2">
             <TextField
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
               label={"Amount"}
               fullWidth
               className="amount"
@@ -572,11 +579,14 @@ const DashHome = () => {
               label={"Account/Address"}
               fullWidth
               className="account"
+              value={receiver}
+              onChange={(e) => setReceiver(e.target.value)}
               id="account"
             />
           </div>
           <div className="py-2 flex justify-center">
             <Button
+              onClick={(e) => fetched()}
               variant="contained"
               className="!bg-[#F57059] !py-[13px] !font-medium !capitalize"
               style={{
