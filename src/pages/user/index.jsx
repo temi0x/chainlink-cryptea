@@ -16,6 +16,8 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
+import { useMoralis } from "react-moralis";
+
 import img from "../../assets/img/art.png";
 
 import { useState } from "react";
@@ -76,6 +78,11 @@ function getStyles(name, blockchainName, theme) {
 }
 
 function UserPage() {
+  const { user, authenticate, logout } = useMoralis();
+  const userAddress = user.get("ethAddress");
+  const userDescription = user.get("description");
+  const userName = user.get("username");
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -104,11 +111,10 @@ function UserPage() {
         <div className="flex flex-row">
           <div className=" w-3/5 px-8">
             <div className="title text-2xl font-semibold mt-8">
-              Send some Tea money to {}
+              Send some Tea money to {userName}
             </div>
             <div className="text-xl font-medium mt-5">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. At
-              repudiandae et necessitatibus?
+              {userDescription}
             </div>
           </div>
           <div className="w-2/5 px-6 my-8 justify-items-center">
