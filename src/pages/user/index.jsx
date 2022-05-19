@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import { useParams } from 'react-router-dom'
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
@@ -8,7 +9,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
+import Loader from "../../components/loader";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -16,11 +17,11 @@ import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-import { useMoralis } from "react-moralis";
+import { useMoralis, useMoralisQuery } from "react-moralis";
 
 import img from "../../assets/img/art.png";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -78,11 +79,34 @@ function getStyles(name, blockchainName, theme) {
 }
 
 function UserPage() {
-  const { user, authenticate, logout } = useMoralis();
-  const userAddress = user.get("ethAddress");
-  const userDescription = user.get("description");
-  const userName = user.get("username");
 
+  const {user, Moralis } = useMoralis();
+
+  const { username } = useParams();
+
+  const { fetch } = useMoralisQuery(
+    "_User",
+    (query) => query.equalTo("username", username),
+    [],
+    { autoFetch: false }
+  );
+  
+  const [userD, setUserD] = useState({})
+  const [ isLoading, setIsLoading] = useState(true)
+  useEffect(() => {
+    fetch().then((er) => {
+      setUserD(er[0]);
+      setIsLoading(false);
+    });
+    
+  }, []);
+
+let userDescription;
+
+  if (!isLoading) {
+
+   userDescription = userD.attributes.description;
+  }
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -103,7 +127,10 @@ function UserPage() {
   const [blockchainName, setBlockchainName] = useState([]);
 
   return (
-    <div className="w-full h-full bg-white">
+    <div>
+    {isLoading ? (
+        <Loader />
+   ) : (<div className="w-full h-full bg-white">
       <div className="mx-[calc(100%/12)] rounded-lg bg-gray-100 h-full flex flex-col">
         <div className="img h-20 overflow-hidden rounded-t-lg">
           <img src={img} className="h-auto w-auto " alt="Pay user" />
@@ -111,7 +138,7 @@ function UserPage() {
         <div className="flex flex-row">
           <div className=" w-3/5 px-8">
             <div className="title text-2xl font-semibold mt-8">
-              Send some Tea money to {userName}
+              Send some Tea money to {username}
             </div>
             <div className="text-xl font-medium mt-5">
               {userDescription}
@@ -231,6 +258,7 @@ function UserPage() {
           </div>
         </div>
       </div>
+    </div>)}
     </div>
   );
 }

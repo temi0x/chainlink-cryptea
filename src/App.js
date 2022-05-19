@@ -8,6 +8,7 @@ import DashSettings from "./pages/dashboard/settings";
 import Loader from "./components/loader";
 import Notfound from "./pages/error/404";
 import LoginForm from "./pages/auth/login";
+import Test from "./pages/test";
 import UserPage from "./pages/user";
 import { useMoralis } from "react-moralis";
 const App = () => {
@@ -51,7 +52,9 @@ const App = () => {
         />
         <Route path="/dashboard/settings" element={loading ? <Loader /> : <DashSettings />} />
         {/* <Route path="/user/:id" element={loading ? <Loader /> : <UserPage />} /> */}
-        <Route path="/user" element={loading ? <Loader /> : <UserPage />} />
+        <Route path="/user/:username" element={<UserPage />} />
+        <Route path="/test" element={loading ? <Loader /> : <Test />} />
+
         <Route path="*" element={loading ? <Loader /> : <Notfound />} />
       </Routes>
     </BrowserRouter>
