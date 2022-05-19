@@ -1,5 +1,5 @@
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
-import { useState, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { FaWallet } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BsBoxArrowInDownLeft, BsArrowRight } from "react-icons/bs";
@@ -21,23 +21,34 @@ import {
   TableBody,
   TablePagination,
 } from "@mui/material";
-import { useMoralis } from "react-moralis";
+import { useMoralis, useWeb3Transfer } from "react-moralis";
 import { data } from "autoprefixer";
 
 const DashHome = () => {
-  const { user } = useMoralis();
+  const { user, Moralis } = useMoralis();
   const userAddress = user.get("ethAddress");
   console.log(userAddress);
 
-async function getAllTokens() {
-  fetch(
-    `https://api.covalenthq.com/v1/137/address/${userAddress}/balances_v2/?quote-currency=USD&format=JSON&nft=false&no-nft-fetch=false&key=ckey_d8fd93851d6a4d57bdcf14a337d`
-  ).then((response) => {
-    console.log(response.json());
-    const { data } = response.json();
+  const [amount, setAmount] = useState(0);
+  const [receiver, setReceiver] = useState("");
+
+  useEffect = () => { };
+
+  const { fetch, error, isFetching } = useWeb3Transfer({
+    type: "native",
+    amount: Moralis.Units.ETH(amount),
+    receiver: receiver,
   });
-}
-getAllTokens();
+
+  async function getAllTokens() {
+    fetch(
+      `https://api.covalenthq.com/v1/137/address/${userAddress}/balances_v2/?quote-currency=USD&format=JSON&nft=false&no-nft-fetch=false&key=ckey_d8fd93851d6a4d57bdcf14a337d`
+    ).then((response) => {
+      console.log(response.json());
+      const { data } = response.json();
+    });
+  }
+  getAllTokens();
 
   const balance = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
   const received = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
@@ -262,6 +273,9 @@ getAllTokens();
                 <TextField
                   label={"Amount"}
                   fullWidth
+                  type={`number`}
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
                   className="amount"
                   id="Amount"
                 />
@@ -270,6 +284,8 @@ getAllTokens();
                 <TextField
                   label={"Account/Address"}
                   fullWidth
+                  value={receiver}
+                  onchange={(e) => setReceiver(e.target.value)}
                   className="account"
                   id="account"
                 />
@@ -282,6 +298,8 @@ getAllTokens();
                     fontFamily: "inherit",
                   }}
                   fullWidth
+                  onClick={() => fetch()}
+                  disabled={isFetching}
                 >
                   Transfer{" "}
                   <BsArrowRight className="ml-3 font-medium" size={18} />
