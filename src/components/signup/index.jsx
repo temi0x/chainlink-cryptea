@@ -43,7 +43,7 @@ const SignupForm = () => {
   const submitForm = async () => {
         window.scrollTo(0, 0);
         setLoading(true);
-      let more = true;
+        let more = true;
       [userDescription, userEmail, userInfo, pass, repass].forEach((val) => {
         if (!val.length) {
           setError('Data Incomplete, Please required fields should be field');
@@ -68,9 +68,12 @@ const SignupForm = () => {
   if (!isAuthenticated) {
     await authenticate({ signingMessage: "Welcome to Cryptea" })
       .then(function (user) {
-          if(user.get('email').length){
-              window.location.href = '/dashboard';
+        if (user.get("email") !== undefined) {
+          if (user.get("email").length) {
+            window.location.href = "/dashboard";
           }
+        }
+
       })
       .catch(function (error) {
         setError(error);
@@ -80,7 +83,7 @@ const SignupForm = () => {
       });  
     }
 
-        if(!user.get('email').length){
+        if(user.get('email') === undefined){
           
           user.set("username", userInfo);
           user.set("desc", userDescription);
