@@ -27,7 +27,7 @@ import { data } from "autoprefixer";
 const DashHome = () => {
   const { user, Moralis, isWeb3Enabled, enableWeb3 } = useMoralis();
   const userAddress = user.get("ethAddress");
-  console.log(userAddress);
+  // console.log(userAddress);
 
   const [amount, setAmount] = useState(0);
   const [receiver, setReceiver] = useState("");
