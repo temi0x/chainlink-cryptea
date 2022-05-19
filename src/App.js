@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import About from "./pages/about";
+import Blog from "./pages/blog";
 import Home from "./pages/Home";
 import { useEffect, useState } from "react";
 import Signup from "./pages/auth/signup";
@@ -22,7 +22,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={loading ? <Loader /> : <Home />} />
-        <Route path="/about" element={loading ? <Loader /> : <About />} />
+        <Route path="/blog" element={loading ? <Loader /> : <Blog />} />
         <Route path="/signup" element={loading ? <Loader /> : <Signup />} />
         <Route
           path="/login"
