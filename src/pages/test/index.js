@@ -1,24 +1,30 @@
-import { useMoralis } from "react-moralis";
+import React from "react";
+import { useMoralis,useWeb3Transfer } from "react-moralis";
 
-export default function Test() {
-  const { authenticate, isAuthenticated, user, logout } = useMoralis();
 
-  if (!isAuthenticated) {
-    return (
-      <div>
-        <h1>Wallet Connect Authentication</h1>
+const Test =  () => {
+  const { Moralis, isWeb3Enabled, enableWeb3 } = useMoralis();
 
-        <button onClick={() => authenticate({ provider: "walletconnect" })}>
-          Authenticate
-        </button>
-      </div>
-    );
+  if(!isWeb3Enabled){
+    enableWeb3()
   }
 
+  const { fetch, error, isFetching } = useWeb3Transfer({
+    type: "native",
+    amount: Moralis.Units.ETH(0.5),
+    receiver: "0xe99356bde974bbe08721d77712168fa070aa8da4",
+  });
+
+  console.log(isFetching, error)
   return (
+    // Use your custom error component to show errors
     <div>
-      <h1>Welcome {user.get("address")}</h1>
-      <button onClick={() => logout()}>Authenticate</button>{" "}
+      {error && <div error={error} ></div>}
+      <button onClick={() => fetch()} disabled={isFetching}>
+        Transfer
+      </button>
     </div>
   );
-}
+};
+
+export default Test;
