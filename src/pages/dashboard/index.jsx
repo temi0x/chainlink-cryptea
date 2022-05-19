@@ -15,10 +15,10 @@ import logo from "../../assets/img/cryptea-logo.svg";
 import "../../assets/styles/dash.css";
 import { Avatar } from "@mui/material";
 import DashHome from "./home";
+import DashSettings from "./settings";
 import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { useMoralis } from 'react-moralis';
-
+import { useMoralis } from "react-moralis";
 
 const Dash = () => {
   const { pathname } = useLocation();
@@ -37,7 +37,7 @@ const Dash = () => {
 
   const active = "border-l-[3px] border-l-[#F57059] text-[#F57059]";
   return (
-    <div className="h-full dash w-full bg-[#F9FAFF] flex">
+    <div className="h-full  dash w-full bg-[#F9FAFF] flex">
       <div
         className={`sidebar transition-all z-[100] delay-500 ${
           isOpen
@@ -230,12 +230,13 @@ const Dash = () => {
             </div>
 
             <Avatar sx={{ bgcolor: "#F57059" }} alt={user.get("username")}>
-              {(user.get("username").charAt(0)).toUpperCase()}
+              {user.get("username").charAt(0).toUpperCase()}
             </Avatar>
           </div>
         </div>
 
-        <DashHome />
+        <DashSettings />
+        {/* <DashHome /> */}
       </div>
     </div>
   );
