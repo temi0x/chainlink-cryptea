@@ -11,15 +11,15 @@ import {
   IoIosArrowDroprightCircle,
 } from "react-icons/io";
 import { RiSettingsLine } from "react-icons/ri";
-import logo from "../../assets/img/cryptea-logo.svg";
-import "../../assets/styles/dash.css";
+import logo from "../../../assets/img/cryptea-logo.svg";
+import "../../../assets/styles/dash.css";
 import { Avatar } from "@mui/material";
-import DashHome from "./home";
+import Settings from "./settings";
 import { NavLink, useLocation, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useMoralis } from "react-moralis";
 
-const Dash = () => {
+const DashSettings = () => {
   const { pathname } = useLocation();
   const [isOpen, close] = useState(false);
   const [isOpen3, close3] = useState(false);
@@ -36,7 +36,7 @@ const Dash = () => {
 
   const active = "border-l-[3px] border-l-[#F57059] text-[#F57059]";
   return (
-    <div className="h-full  dash w-full bg-[#F9FAFF] flex">
+    <div className="h-full dash w-full bg-[#F9FAFF] flex">
       <div
         className={`sidebar transition-all z-[100] delay-500 ${
           isOpen
@@ -165,9 +165,9 @@ const Dash = () => {
           </div>
 
           <div
-            className={`rounded-[4px] overflow-hidden flex-nowrap my-1 border-solid hover:border-l-[3px] hover:border-l-[#F57059] hover:text-[#F57059] border-l-transparent text-[#A9A9A9] hover:bg-[#F5F8FE] py-[9px] ${
-              pathname.indexOf("") !== -1 ? active : ""
-            }`}
+            className={`rounded-[4px] overflow-hidden flex-nowrap transition-all delay-500 hover:border-l-[#F57059] hover:text-[#F57059] hover:bg-[#F5F8FE] border-solid ${
+              pathname === "/dashboard/settings" ? active : ""
+            } transition-all delay-500 bg-[#F5F8FE] py-[9px]`}
           >
             <NavLink
               to="/dashboard/settings"
@@ -239,10 +239,11 @@ const Dash = () => {
           </div>
         </div>
 
-        <DashHome />
+        <Settings />
+        {/* <DashHome /> */}
       </div>
     </div>
   );
 };
 
-export default Dash;
+export default DashSettings;

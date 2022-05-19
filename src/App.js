@@ -4,10 +4,12 @@ import Home from "./pages/Home";
 import { useEffect, useState } from "react";
 import Signup from "./pages/auth/signup";
 import Dash from "./pages/dashboard";
+import DashSettings from "./pages/dashboard/settings";
 import Loader from "./components/loader";
 import Notfound from "./pages/error/404";
 import LoginForm from "./pages/auth/login";
 import UserPage from "./pages/user";
+// import Tester from "./pages/test/test";
 import { useMoralis } from "react-moralis";
 const App = () => {
   const { isAuthenticated, isInitializing } = useMoralis();
@@ -48,7 +50,9 @@ const App = () => {
             )
           }
         />
+        <Route path="/dashboard/settings" element={loading ? <Loader /> : <DashSettings />} />
         {/* <Route path="/user/:id" element={loading ? <Loader /> : <UserPage />} /> */}
+        {/* <Route path="/test" element={loading ? <Loader /> : <Tester />} /> */}
         <Route path="/user" element={loading ? <Loader /> : <UserPage />} />
         <Route path="*" element={loading ? <Loader /> : <Notfound />} />
       </Routes>

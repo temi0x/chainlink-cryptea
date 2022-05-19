@@ -1,4 +1,4 @@
-import "../../assets/styles/auth.css";
+import "../../../assets/styles/auth.css";
 import { useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import { MdVisibilityOff, MdVisibility, MdInfo } from "react-icons/md";
@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { AiOutlineNotification } from "react-icons/ai";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import "../../assets/styles/dash.css";
+import "../../../assets/styles/dash.css";
 import { NavLink, useLocation } from "react-router-dom";
 
 const DashSettings = () => {
