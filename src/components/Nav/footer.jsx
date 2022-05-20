@@ -4,16 +4,16 @@ import twitt from "../../assets/img/icon2.png";
 // import hmm from "../../assets/img/icon4.png";
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 const Footer = () => {
   const date = new Date();
   const { authenticate, isAuthenticated, isAuthenticating, user, account } =
     useMoralis();
 
-
   useEffect(() => {
     if (isAuthenticated) {
       console.log("Logged in user:", user.get("ethAddress"));
-      console.log(user)
+      console.log(user);
     } else {
       console.log("Not logged in");
     }
@@ -24,17 +24,17 @@ const Footer = () => {
     if (!isAuthenticated) {
       await authenticate({ signingMessage: "Welcome to Cryptea" })
         .then(function (user) {
-          window.location.href = "/signup";
+          window.location.href = "/#/signup";
           console.log("logged in user:", user);
 
           console.log(user.get("ethAddress"));
         })
         .catch(function (error) {
           console.log(error);
-          window.location.href = "/";
+          Navigate("/");
         });
     } else {
-      window.location.href = "/signup";
+      window.location.href = "/#/signup";
     }
   };
 

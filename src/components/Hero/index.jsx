@@ -3,6 +3,7 @@ import check from "../../assets/img/tick.svg";
 import "../../App.css";
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 const Hero = () => {
   const { authenticate, isAuthenticated, isAuthenticating, user, account } =
@@ -21,16 +22,16 @@ const Hero = () => {
     if (!isAuthenticated) {
       await authenticate({ signingMessage: "Welcome to Cryptea" })
         .then(function (user) {
-          window.location.href = "/signup";
+          window.location.href = "/#/signup";
           console.log("logged in user:", user);
           console.log(user.get("ethAddress"));
         })
         .catch(function (error) {
           console.log(error);
-          window.location.href = "/";
+          Navigate("/");
         });
     } else {
-      window.location.href = "/signup";
+      window.location.href = "/#/signup";
     }
   };
 
@@ -68,11 +69,12 @@ const Hero = () => {
               your decentralized wallet.
             </div>
             <div className="flex justify-center">
-              <button 
-             onClick={login}
-             className="text-sm rounded-lg bg-[#1B1C31] mt-6 mx-auto justify-self-center place-self-center object-center text-white font-semibold py-4 px-8">
-              Connect Wallet
-            </button>
+              <button
+                onClick={login}
+                className="text-sm rounded-lg bg-[#1B1C31] mt-6 mx-auto justify-self-center place-self-center object-center text-white font-semibold py-4 px-8"
+              >
+                Connect Wallet
+              </button>
             </div>
             <div className="flex sm:justify-center mt-16">
               <img src={check} className="mr-1" alt="yes" />
