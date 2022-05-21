@@ -86,7 +86,6 @@ function getStyles(name, blockchainName, theme) {
 
 function UserPage() {
   const { username } = useParams();
-  const { description } = useParams();
 
    const [alignment, setAlignment] = useState();
 
@@ -97,10 +96,6 @@ function UserPage() {
   const { fetch } = useMoralisQuery(
     "link",
     (query) => query.equalTo("link", username),
-    [],
-    { autoFetch: false },
-    "Description",
-    (query) => query.equalTo("description", description),
     [],
     { autoFetch: false }
   );
@@ -129,11 +124,10 @@ function UserPage() {
          }
        );
       }else{
-           window.location.href = '/404';
+           window.location.href = '/#/404';
       }
     });
   }, []);
-
 
   const { username: usern, description, email, img } = userD;
   const [value, setValue] = useState(0);

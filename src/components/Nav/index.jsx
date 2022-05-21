@@ -32,6 +32,7 @@ function Nav() {
     }
   };
 
+  
   const walletConnect = async () => {
     if (!isAuthenticated) {
       await authenticate({ signingMessage: "Welcome to Cryptea" })

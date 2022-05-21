@@ -52,7 +52,7 @@ const App = () => {
             ) : isAuthenticated ? (
               <Dash />
             ) : (
-              <Navigate to="/" />
+              <Navigate to="/login" />
             )
           }
         />

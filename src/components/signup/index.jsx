@@ -90,7 +90,7 @@ const SignupForm = () => {
 
         const Links = Moralis.Object.extend("link");
         const link = new Links();
-        link.set("link", userLink.length ? userLink : userInfo);
+        link.set("link", (userLink.length ? userLink : userInfo).toLowerCase());
         link.set("amount", "variable");
         link.set("user", user);
 
@@ -120,7 +120,7 @@ const SignupForm = () => {
       }}
       method="POST"
       action="#"
-      entype="multipart/form-data"
+      encType="multipart/form-data"
     >
       <div className="w-full flex justify-center mt-8">
         <div className="flex flex-col w-[900px] mx-7 items-center justify-center">

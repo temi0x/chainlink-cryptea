@@ -73,7 +73,7 @@ const LoginForm = () => {
       <form
         action=""
         method="POST"
-        enctype="multipart/form-data"
+        encType="multipart/form-data"
         onSubmit={(c) => {
           c.preventDefault();
           submitForm();
@@ -113,17 +113,7 @@ const LoginForm = () => {
 
                 <div name="inputDescription" className="rounded-md mt-8">
                   <div className="flex">
-                    <TextField
-                      label={"Password"}
-                      value={pass}
-                      fullWidth
-                      placeholder="******"
-                      name="password"
-                      onChange={(e) => {
-                        setError("");
-                        setPass(e.target.value);
-                      }}
-                    />
+                    
                     <FormControl
                       sx={{
                         width: "100%",
