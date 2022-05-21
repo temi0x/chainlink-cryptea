@@ -18,6 +18,8 @@ import DashHome from "./home";
 import { NavLink, useLocation, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useMoralis } from "react-moralis";
+import Popover from "@mui/material/Popover";
+import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 
 const Dash = () => {
   const { pathname } = useLocation();
@@ -230,7 +232,32 @@ const Dash = () => {
             </form> */}
 
             <div className="h-full w-[20px] mx-2">
-              <BiBell size={23} className="cursor-pointer" color="#000" />
+              <PopupState variant="popover" popupId="demo-popup-popover">
+                {(popupState) => (
+                  <div>
+                    <BiBell
+                      size={23}
+                      {...bindTrigger(popupState)}
+                      className="cursor-pointer"
+                      color="#000"
+                    />
+
+                    <Popover
+                      {...bindPopover(popupState)}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                      }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "center",
+                      }}
+                    >
+                      <div>Popover content</div>
+                    </Popover>
+                  </div>
+                )}
+              </PopupState>
             </div>
 
             <Avatar sx={{ bgcolor: "#F57059" }} alt={user.get("username")}>
