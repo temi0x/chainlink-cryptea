@@ -1,6 +1,6 @@
-import '../../assets/styles/auth.css';
-import { useState, useEffect } from 'react';
-import { useMoralis } from 'react-moralis';
+import "../../assets/styles/auth.css";
+import { useState, useEffect } from "react";
+import { useMoralis } from "react-moralis";
 import { MdVisibilityOff, MdVisibility, MdInfo } from "react-icons/md";
 import {
   Button,
@@ -13,108 +13,104 @@ import {
   TextField,
   LinearProgress,
   Box,
-  Alert
+  Alert,
 } from "@mui/material";
+import { Navigate } from "react-router-dom";
 
 const SignupForm = () => {
   const { isAuthenticated, user, authenticate, Moralis } = useMoralis();
 
- useEffect(() => {
-   if (isAuthenticated) {
-     console.log("Logged in user:", user.get("ethAddress"));
-   } else {
-     console.log("Not logged in");
-   }
-   // eslint-disable-next-line react-hooks/exhaustive-deps
- }, [isAuthenticated]);
-  
-  const [userLink, setUserLink ] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userInfo, setuserInfo] = useState('');
-  const [pass, setPass] = useState('');
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("Logged in user:", user.get("ethAddress"));
+    } else {
+      console.log("Not logged in");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
+
+  const [userLink, setUserLink] = useState("");
+  const [userDescription, setUserDescription] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userInfo, setuserInfo] = useState("");
+  const [pass, setPass] = useState("");
   const [repass, setRepass] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const [viewpass, setViewpass] = useState(false);
   const [viewRepass, setViewRepass] = useState(false);
-  
+
   const submitForm = async () => {
-        window.scrollTo(0, 0);
-        setLoading(true);
-        let more = true;
-      [userDescription, userEmail, userInfo, pass, repass].forEach((val) => {
-        if (!val.length) {
-          setError('Data Incomplete, Please required fields should be field');
-          setLoading(false);
-          more = false;
-          return;
-        }
-      })
-
-      if(more){
-          if (pass.length < 6) {
-            setError("Minimum of 6 characters required for password");
-            setLoading(false);
-          }else if(pass !== repass){
-            setError("Please Reenter the correct password");
-            setLoading(false);
-          }    
-      }
-
-      if (!error.length) {
-
-  if (!isAuthenticated) {
-    await authenticate({ signingMessage: "Welcome to Cryptea" })
-      .then(function (user) {
-        if (user.get("email") !== undefined) {
-          if (user.get("email").length) {
-            window.location.href = "/dashboard";
-          }
-        }
-
-      })
-      .catch(function (error) {
-        setError(error);
-        console.log(error);
+    window.scrollTo(0, 0);
+    setLoading(true);
+    let more = true;
+    [userDescription, userEmail, userInfo, pass, repass].forEach((val) => {
+      if (!val.length) {
+        setError("Data Incomplete, Please required fields should be field");
         setLoading(false);
+        more = false;
         return;
-      });  
+      }
+    });
+
+    if (more) {
+      if (pass.length < 6) {
+        setError("Minimum of 6 characters required for password");
+        setLoading(false);
+      } else if (pass !== repass) {
+        setError("Please Reenter the correct password");
+        setLoading(false);
+      }
     }
 
-        if(user.get('email') === undefined){
-          
-          user.set("username", userInfo);
-          user.set("desc", userDescription);
-          user.setPassword(pass);
-          user.set("email", userEmail);
-
-          const Links = Moralis.Object.extend("link");
-          const link = new Links();
-          link.set("link", userLink.length ? userLink : userInfo);
-          link.set("amount", "variable");
-          link.set("user", user);
-
-          try {
-            await user.save();
-            await link.save();
-          } catch (err) {
-            console.log(err)
-            setError(err.message);
+    if (!error.length) {
+      if (!isAuthenticated) {
+        await authenticate({ signingMessage: "Welcome to Cryptea" })
+          .then(function (user) {
+            if (user.get("email") !== undefined) {
+              if (user.get("email").length) {
+                window.location.href = "/#/dashboard";
+              }
+            }
+          })
+          .catch(function (error) {
+            setError(error);
+            console.log(error);
             setLoading(false);
             return;
-          }
-          
-           window.location.href = '/dashboard';
-
-        }else{
-            setError('Logout of your current wallet to sign up');
-            setLoading(false);
-        }
+          });
       }
-      
-  }
+
+      if (user.get("email") === undefined) {
+        user.set("username", userInfo);
+        user.set("desc", userDescription);
+        user.setPassword(pass);
+        user.set("email", userEmail);
+
+        const Links = Moralis.Object.extend("link");
+        const link = new Links();
+        link.set("link", userLink.length ? userLink : userInfo);
+        link.set("amount", "variable");
+        link.set("user", user);
+
+        try {
+          await user.save();
+          await link.save();
+        } catch (err) {
+          console.log(err);
+          setError(err.message);
+          setLoading(false);
+          return;
+        }
+
+        window.location.href = "/#/dashboard";
+      } else {
+        setError("Logout of your current wallet to sign up");
+        setLoading(false);
+      }
+    }
+  };
 
   return (
     <form

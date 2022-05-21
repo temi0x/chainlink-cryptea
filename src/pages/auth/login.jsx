@@ -58,11 +58,11 @@ const LoginForm = () => {
             return;
       }
 
-      }      
-      window.location.href = '/dashboard';              
+      }   
+      window.location.href="/#/dashboard";
     }
   }else{
-    window.location.href = '/dashboard'; 
+    window.location.href = "/#/dashboard"; 
   }
   };
 

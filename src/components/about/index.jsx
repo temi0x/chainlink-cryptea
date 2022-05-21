@@ -5,6 +5,7 @@ import circle from "../../assets/img/circle.svg";
 import Supported from "./supported";
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 const About = () => {
   const { authenticate, isAuthenticated, isAuthenticating, user, account } =
     useMoralis();
@@ -22,16 +23,16 @@ const About = () => {
     if (!isAuthenticated) {
       await authenticate({ signingMessage: "Welcome to Cryptea" })
         .then(function (user) {
-          window.location.href = "/signup";
+          window.location.href = "/#/signup";
           console.log("logged in user:", user);
           console.log(user.get("ethAddress"));
         })
         .catch(function (error) {
           console.log(error);
-          window.location.href = "/";
+          Navigate("/");
         });
     } else {
-      window.location.href = "/signup";
+      window.location.href = "/#/signup";
     }
   };
 
@@ -118,7 +119,6 @@ const About = () => {
         >
           Connect Wallet
         </button>
-
       </div>
 
       <Supported />

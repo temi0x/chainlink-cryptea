@@ -9,10 +9,8 @@ function Nav() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      
       console.log("Logged in user:", user.get("ethAddress"));
     } else {
-
       console.log("Not logged in");
     }
 
@@ -33,21 +31,20 @@ function Nav() {
       buttonText.current = "Connect Wallet";
     }
   };
- 
+
   const walletConnect = async () => {
     if (!isAuthenticated) {
       await authenticate({ signingMessage: "Welcome to Cryptea" })
         .then(function (user) {
-
           if (user.get("email") === undefined) {
-            window.location.href = "/signup";
+            window.location.href = "/#/signup";
           } else {
             if (!user.get("email").length) {
-              window.location.href = "/signup";
-            }else{
-            window.location.href = "/dashboard";
+              window.location.href = "/#/signup";
+            } else {
+              window.location.href = "/#/dashboard";
+            }
           }
-        }
         })
         .catch(function (error) {
           console.log(error);
@@ -71,12 +68,17 @@ function Nav() {
           CRYPTEA
         </Link> */}
         <div className="text-black flex flex-row font-medium text-lg">
-          <div onClick={() => {
-            document.querySelector('#about').scrollIntoView();
-          }} className="text-black pr-4">
+          <div
+            onClick={() => {
+              document.querySelector("#about").scrollIntoView();
+            }}
+            className="text-black pr-4"
+          >
             About
           </div>
-          <NavLink to='/blog' className="text-black pl-4">Blog</NavLink>
+          <NavLink to="/blog" className="text-black pl-4">
+            Blog
+          </NavLink>
         </div>
         <div className="right mmd:hidden">
           <button

@@ -18,7 +18,7 @@ import {
 import { AiOutlineNotification } from "react-icons/ai";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import "../../../assets/styles/dash.css";
-import { NavLink, useLocation } from "react-router-dom";
+import { Navigate, NavLink, useLocation } from "react-router-dom";
 
 const DashSettings = () => {
   const { isAuthenticated, user, authenticate, Moralis } = useMoralis();
@@ -74,7 +74,7 @@ const DashSettings = () => {
         await authenticate({ signingMessage: "Welcome to Cryptea" })
           .then(function (user) {
             if (user.get("email").length) {
-              window.location.href = "/dashboard";
+              window.location.href = "/#/dashboard";
             }
           })
           .catch(function (error) {
@@ -107,7 +107,7 @@ const DashSettings = () => {
           return;
         }
 
-        window.location.href = "/dashboard";
+        window.location.href = "/#/dashboard";
       } else {
         setError("Logout of your current wallet to sign up");
         setLoading(false);

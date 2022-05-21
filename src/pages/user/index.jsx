@@ -86,6 +86,7 @@ function getStyles(name, blockchainName, theme) {
 
 function UserPage() {
   const { username } = useParams();
+  const { description } = useParams();
 
    const [alignment, setAlignment] = useState();
 
@@ -96,6 +97,10 @@ function UserPage() {
   const { fetch } = useMoralisQuery(
     "link",
     (query) => query.equalTo("link", username),
+    [],
+    { autoFetch: false },
+    "Description",
+    (query) => query.equalTo("description", description),
     [],
     { autoFetch: false }
   );

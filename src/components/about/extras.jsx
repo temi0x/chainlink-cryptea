@@ -1,5 +1,6 @@
 import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 const Extras = () => {
   const { authenticate, isAuthenticated, isAuthenticating, user, account } =
     useMoralis();
@@ -17,18 +18,18 @@ const Extras = () => {
     if (!isAuthenticated) {
       await authenticate({ signingMessage: "Welcome to Cryptea" })
         .then(function (user) {
-          window.location.href = "/signup";
+          window.location.href = "/#/signup";
           console.log("logged in user:", user);
           console.log(user.get("ethAddress"));
         })
         .catch(function (error) {
           console.log(error);
-          window.location.href = "/";
+          Navigate("/");
         });
     } else {
-      window.location.href = "/signup";
+      window.location.href = "/#/signup";
     }
-  }
+  };
 
   return (
     <div className="mt-40 mb-10 h-[660px] mmd:h-fit w-full bg-cover bg-no-repeat flex justify-center items-center relative">
@@ -59,12 +60,12 @@ const Extras = () => {
           And receive tips while you sip tea
         </span>
 
-        <button 
-         onClick={login}
-         className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8">
+        <button
+          onClick={login}
+          className="text-sm hover:bg-[#ff320e] transition-all delay-500 rounded-[6rem] bg-[#F57059] mt-2 mx-auto justify-self-center place-self-center object-center text-white font-normal py-[14px] px-8"
+        >
           Connect Wallet
         </button>
-
       </div>
     </div>
   );
