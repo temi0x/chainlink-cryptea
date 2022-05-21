@@ -21,7 +21,7 @@ const LoginForm = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { isAuthenticated, Moralis } = useMoralis();
+  const { isAuthenticated,isAuthenticating, Moralis } = useMoralis();
   const [viewPass, setViewPass] = useState(false);
 
   const submitForm = async () => {
@@ -49,17 +49,27 @@ const LoginForm = () => {
     if (!error.length) {
       if (!isAuthenticated) {
         try{
-         await Moralis.User.logIn(user, pass, {
+       
+        Moralis.User.logIn(user, pass, {
            usePost: true,
+         }).then(req => {
+            window.location.reload()
+            
+         }).catch(err => {
+            setError(err.message);
+            setLoading(false);
+            return;
          });
+
       } catch (err){
             setError(err.message);
             setLoading(false);
             return;
       }
 
-      }   
+      }else{   
       window.location.href="/#/dashboard";
+      }
     }
   }else{
     window.location.href = "/#/dashboard"; 
