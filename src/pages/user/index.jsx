@@ -1,25 +1,28 @@
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import { useParams } from 'react-router-dom'
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { useParams } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Loader from "../../components/loader";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import '../../assets/styles/auth.css'
+import empty from '../../assets/img/coming-soon.svg';
+import {
+  OutlinedInput,
+  Box,
+  MenuItem,
+  Avatar,
+  Tabs,
+  Tab,
+  ToggleButton,
+  Typography,
+  FormControl,
+  Select,
+  ToggleButtonGroup,
+  TextField,
+  Button,
+} from "@mui/material";
 
 import { useMoralis, useMoralisQuery } from "react-moralis";
 
-import img from "../../assets/img/art.png";
+
+import Loader from "../../components/loader";
 
 import { useState, useEffect } from "react";
 
@@ -78,35 +81,56 @@ function getStyles(name, blockchainName, theme) {
   };
 }
 
+
+
+
 function UserPage() {
-
-  const {user, Moralis } = useMoralis();
-
   const { username } = useParams();
 
+   const [alignment, setAlignment] = useState();
+
+   const changeAlignMent = (event, newAlignment) => {
+     setAlignment(newAlignment);
+   };
+
   const { fetch } = useMoralisQuery(
-    "_User",
-    (query) => query.equalTo("username", username),
+    "link",
+    (query) => query.equalTo("link", username),
     [],
     { autoFetch: false }
   );
-  
-  const [userD, setUserD] = useState({})
-  const [ isLoading, setIsLoading] = useState(true)
+
+  const { Moralis } = useMoralis();
+
+  const [userD, setUserD] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     fetch().then((er) => {
-      setUserD(er[0]);
-      setIsLoading(false);
+
+      if(er.length){
+
+       Moralis.Cloud.run("getUser", { obj: er[0].get("user").id }).then(
+         (ex) => {
+
+            setUserD({
+              description: ex[0].get("desc"),
+              username: ex[0].get("username"),
+              email: ex[0].get("email"),
+              img: ex[0].get("img") === undefined ? "" : ex[0].get("img")
+            });          
+
+           setIsLoading(false);
+         }
+       );
+      }else{
+           window.location.href = '/404';
+      }
     });
-    
   }, []);
 
-let userDescription;
 
-  if (!isLoading) {
-
-   userDescription = userD.attributes.description;
-  }
+  const { username: usern, description, email, img } = userD;
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -128,137 +152,209 @@ let userDescription;
 
   return (
     <div>
-    {isLoading ? (
+      {isLoading ? (
         <Loader />
-   ) : (<div className="w-full h-full bg-white">
-      <div className="mx-[calc(100%/12)] rounded-lg bg-gray-100 h-full flex flex-col">
-        <div className="img h-20 overflow-hidden rounded-t-lg">
-          <img src={img} className="h-auto w-auto " alt="Pay user" />
-        </div>
-        <div className="flex flex-row">
-          <div className=" w-3/5 px-8">
-            <div className="title text-2xl font-semibold mt-8">
-              Send some Tea money to {username}
-            </div>
-            <div className="text-xl font-medium mt-5">
-              {userDescription}
+      ) : (
+        <div className="w-full h-full bg-white">
+          <div className="img relative h-[150px] bg-[#dfcdb3]">
+            <div
+              className="bg-repeat h-[135px] bg-[#FFEBCD] bg-pattern"
+              style={{
+                backgroundSize: 90,
+                backgroundBlendMode: "multiply",
+              }}
+            ></div>
+            <div className="absolute border-solid border-[4px] p-1 border-[#f57059] rounded-[50%] left-0 right-0 m-auto bottom-[-29px] w-fit">
+              {!img.length ? (
+                <Avatar
+                  sx={{
+                    bgcolor: "#F57059",
+                    width: 140,
+                    height: 140,
+                  }}
+                  className="!font-bold !text-[35px]"
+                  alt={usern}
+                >
+                  {usern.charAt(0).toUpperCase()}
+                </Avatar>
+              ) : (
+                <Avatar
+                  src={img}
+                  sx={{ width: 140, height: 140 }}
+                  alt={usern}
+                ></Avatar>
+              )}
             </div>
           </div>
-          <div className="w-2/5 px-6 my-8 justify-items-center">
-            <div className="border rounded-lg border-[#F57059] bg-white shadow-sm shadow-[#F57059]">
-              <div className="border-b pl-4 pt-4 text-lg font-semibold">
-                Pay Now
+          <div className="flex flex-row usm:flex-col">
+            <div className="w-3/5 usm:mb-4 usm:w-full px-8">
+              <div className="title text-2xl font-semibold mt-8">
+                Send some tea money to {usern}
               </div>
-              <div className="form pt-4">
-                <Box sx={{ width: "100%" }}>
-                  <Box
-                    sx={{
-                      borderBottom: 1,
-                      borderColor: "divider",
-                    }}
-                  >
-                    <Tabs
-                      value={value}
-                      onChange={handleChange}
-                      fullWidth
-                      aria-label="basic tabs example"
+              <div className="text-xl font-medium mt-5">{description}</div>
+            </div>
+            <div className="w-2/5 2usm:w-full usm:w-[85%] usm:m-auto min-w-[340px] px-6 my-8 justify-items-center">
+              <div className="rounded-lg bg-white shadow-lg shadow-[#cccccc]">
+                <div className="border-b py-[14px] px-[17px] text-lg font-semibold">
+                  Send Payment
+                </div>
+                <div className="form pt-4">
+                  <Box sx={{ width: "100%" }}>
+                    <Box
+                      sx={{
+                        borderBottom: 1,
+                        borderColor: "divider",
+                      }}
                     >
-                      <Tab label="One Time" {...a11yProps(0)} />
-                      <Tab label="Monthly" {...a11yProps(1)} />
-                      <Tab label="Annually" {...a11yProps(2)} />
-                    </Tabs>
-                  </Box>
-                  <TabPanel value={value} index={0}>
-                    <FormControl>
-                      <Select
-                        displayEmpty
+                      <Tabs
+                        value={value}
+                        onChange={handleChange}
                         fullWidth
-                        value={blockchainName}
-                        onChange={handleSelectChange}
-                        input={<OutlinedInput />}
-                        renderValue={(selected) => {
-                          if (selected.length === 0) {
-                            return <em>Select Blockchain</em>;
-                          }
-
-                          return selected.join(", ");
-                        }}
-                        MenuProps={MenuProps}
-                        inputProps={{ "aria-label": "Without label" }}
+                        aria-label="payment tabs"
                       >
-                        <MenuItem disabled value="">
-                          <em>Select Blockchain</em>
-                        </MenuItem>
-                        {names.map((name) => (
-                          <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, blockchainName, theme)}
-                          >
-                            {name}
+                        <Tab
+                          className="!font-bold !rounded-[4px] !capitalize"
+                          label="Onetime😇"
+                          {...a11yProps(0)}
+                        />
+                        <Tab
+                          className="!font-bold !rounded-[4px] !capitalize"
+                          label="Monthly😍"
+                          {...a11yProps(1)}
+                        />
+                        <Tab
+                          className="!font-bold !rounded-[4px] !capitalize"
+                          label="Annually🙏"
+                          {...a11yProps(2)}
+                        />
+                      </Tabs>
+                    </Box>
+                    <TabPanel value={value} index={0}>
+                      <FormControl fullWidth>
+                        <Select
+                          displayEmpty
+                          value={blockchainName}
+                          onChange={handleSelectChange}
+                          input={<OutlinedInput />}
+                          renderValue={(selected) => {
+                            if (selected.length === 0) {
+                              return <span>Select Blockchain</span>;
+                            }
+
+                            return selected.join(", ");
+                          }}
+                          MenuProps={MenuProps}
+                          inputProps={{ "aria-label": "Without label" }}
+                        >
+                          <MenuItem disabled value="">
+                            Select Blockchain
                           </MenuItem>
-                        ))}
-                      </Select>
+                          {names.map((name) => (
+                            <MenuItem
+                              key={name}
+                              value={name}
+                              style={getStyles(name, blockchainName, theme)}
+                            >
+                              {name}
+                            </MenuItem>
+                          ))}
+                        </Select>
 
-                      <FormLabel
-                        sx={{ mt: 3 }}
-                        id="demo-row-radio-buttons-group-label"
+                        <div className="py-3 font-bold">Amount</div>
+
+                        <ToggleButtonGroup
+                          value={alignment}
+                          exclusive
+                          className="w-full justify-between"
+                          onChange={changeAlignMent}
+                        >
+                          <ToggleButton value="0.1">0.1</ToggleButton>
+                          <ToggleButton value="1">1</ToggleButton>
+                          <ToggleButton value="10">10</ToggleButton>
+                          <ToggleButton value="50">50</ToggleButton>
+                          <ToggleButton value="100">100</ToggleButton>
+                        </ToggleButtonGroup>
+
+                        <div className="py-3 font-bold">
+                          Or input Amount manually
+                        </div>
+                        <TextField
+                          fullWidth
+                          id="outlined-basic"
+                          label="Input Price"
+                          variant="outlined"
+                        />
+                        <Button
+                          variant="contained"
+                          className="!bg-[#F57059] !mt-4 !py-[13px] !font-medium !capitalize"
+                          style={{
+                            fontFamily: "inherit",
+                          }}
+                          fullWidth
+                        >
+                          Send
+                        </Button>
+                      </FormControl>
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                      <div
+                        className="empty"
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          height: "fit-content",
+                          justifyContent: "center",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
                       >
-                        Amount
-                      </FormLabel>
-                      <RadioGroup
-                        fullWidth
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
+                        <img
+                          src={empty}
+                          className="mb-3"
+                          style={{
+                            width: "300px",
+                          }}
+                          alt="Would Be Released soon"
+                        />
+
+                        <h2 className="mt-2 font-bold">
+                          This Feature would be released soon
+                        </h2>
+                      </div>
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                      <div
+                        className="empty"
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          height: "fit-content",
+                          justifyContent: "center",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
                       >
-                        <FormControlLabel
-                          value="0.1"
-                          control={<Radio />}
-                          label="0.1"
+                        <img
+                          src={empty}
+                          className="mb-3"
+                          style={{
+                            width: "300px",
+                          }}
+                          alt="Would Be Released soon"
                         />
-                        <FormControlLabel
-                          value="1"
-                          control={<Radio />}
-                          label="1"
-                        />
-                        <FormControlLabel
-                          value="10"
-                          control={<Radio />}
-                          label="10"
-                        />
-                        <FormControlLabel
-                          value="100"
-                          control={<Radio />}
-                          label="100"
-                        />
-                      </RadioGroup>
-                      <div className="py-3">Or input Price manually</div>
-                      <TextField
-                        fullWidth
-                        id="outlined-basic"
-                        label="Input Price"
-                        variant="outlined"
-                        // value={price}
-                      />
-                      <Button variant="contained" fullWidth sx={{ mt: 3 }}>
-                        Pay
-                      </Button>
-                    </FormControl>
-                  </TabPanel>
-                  <TabPanel value={value} index={1}>
-                    Item Two
-                  </TabPanel>
-                  <TabPanel value={value} index={2}>
-                    Item Three
-                  </TabPanel>
-                </Box>{" "}
+
+                        <h2 className="mt-2 font-bold">
+                          This Feature would be released soon
+                        </h2>
+                      </div>
+                    </TabPanel>
+                  </Box>{" "}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>)}
+      )}
     </div>
   );
 }
