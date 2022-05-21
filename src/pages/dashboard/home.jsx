@@ -53,7 +53,7 @@ const DashHome = () => {
     });
 
 
-    // console.log(wdata)
+     console.log(wdata)
 
 
   const balance = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
@@ -494,8 +494,8 @@ const DashHome = () => {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, id) => {
                     return (
-                      <Fragment>
-                        <TableRow role="checkbox" tabIndex={-1} key={id}>
+                      <Fragment key={id}>
+                        <TableRow role="checkbox" tabIndex={-1}>
                           {columns.map((column, idd) => {
                             const value = row[column.id];
                             return (

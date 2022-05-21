@@ -1,11 +1,11 @@
 import "../../../assets/styles/auth.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useMoralis } from "react-moralis";
-import { MdVisibilityOff, MdVisibility, MdInfo } from "react-icons/md";
+import { MdVisibilityOff, MdVisibility } from "react-icons/md";
 import {
   Button,
-  Link,
   OutlinedInput,
+  Avatar,
   FormControl,
   IconButton,
   InputAdornment,
@@ -15,22 +15,12 @@ import {
   Box,
   Alert,
 } from "@mui/material";
-import { AiOutlineNotification } from "react-icons/ai";
-import { BsFillPersonLinesFill } from "react-icons/bs";
-import "../../../assets/styles/dash.css";
-import { Navigate, NavLink, useLocation } from "react-router-dom";
+
+
 
 const DashSettings = () => {
-  const { isAuthenticated, user, authenticate, Moralis } = useMoralis();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      console.log("Logged in user:", user.get("ethAddress"));
-    } else {
-      console.log("Not logged in");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  const { isAuthenticated, Moralis, authenticate, user } = useMoralis();
 
   const [userLink, setUserLink] = useState("");
   const [userDescription, setUserDescription] = useState("");
@@ -101,7 +91,6 @@ const DashSettings = () => {
           await user.save();
           await link.save();
         } catch (err) {
-          console.log(err);
           setError(err.message);
           setLoading(false);
           return;
@@ -115,48 +104,10 @@ const DashSettings = () => {
     }
   };
 
-  const { pathname } = useLocation();
 
-  const active = "border-l-[3px] border-l-[#F57059] text-[#F57059]";
   return (
     <div className="flex">
-      <div
-        className={`flex bg-[#FFFFFF] border-r-[#E3E3E3] border-r-[1px] transition-all delay-500 flex-col py-1 px-3`}
-      >
-        <div
-          className={`rounded-[4px] overflow-hidden flex-nowrap my-1 ${
-            pathname.indexOf("") !== -1 ? active : ""
-          } border-solid hover:border-l-[3px] border-l-transparent text-[#A9A9A9] hover:border-l-[#F57059] hover:text-[#F57059] hover:bg-[#F5F8FE] py-[9px]`}
-        >
-          <NavLink
-            to="/dashboard"
-            className="text-inherit flex items-center text-[14px] mr-5"
-          >
-            <BsFillPersonLinesFill
-              size={16.5}
-              className={`text-inherit transition-all min-w-[20px] mx-[15px]`}
-            />
-            Account
-          </NavLink>
-        </div>
-
-        <div
-          className={`rounded-[4px] overflow-hidden flex-nowrap my-1 border-solid hover:border-l-[3px] hover:border-l-[#F57059] hover:text-[#F57059] border-l-transparent text-[#A9A9A9] hover:bg-[#F5F8FE] py-[9px] ${
-            pathname.indexOf("") !== -1 ? active : ""
-          }`}
-        >
-          <NavLink
-            to="/dashboard"
-            className="text-inherit flex items-center text-[14px] mr-5"
-          >
-            <AiOutlineNotification
-              size={16.5}
-              className={`text-inherit transition-all min-w-[20px] mx-[15px]`}
-            />
-            Notifications
-          </NavLink>
-        </div>
-      </div>
+    
       <div className="p-5">
         <form
           onSubmit={(e) => {

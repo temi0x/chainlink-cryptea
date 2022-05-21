@@ -15,15 +15,17 @@ import logo from "../../assets/img/cryptea-logo.svg";
 import "../../assets/styles/dash.css";
 import { Avatar } from "@mui/material";
 import DashHome from "./home";
-import { NavLink, useLocation, Navigate } from "react-router-dom";
+import DashLinks from "./links";
+import DashPages from './pages';
+import DashSettings from './settings';
+import { NavLink, Navigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useMoralis } from "react-moralis";
 
 const Dash = () => {
-  const { pathname } = useLocation();
   const [isOpen, close] = useState(false);
   const [isOpen3, close3] = useState(false);
-
+  const { page } = useParams();
   const { user, isAuthenticated, logout } = useMoralis();
 
   const toggle = () => {
@@ -108,7 +110,7 @@ const Dash = () => {
           <div className={`pb-3 mb-1 border-b-[#E3E3E3] border-b-[1px]`}>
             <div
               className={`rounded-[4px] overflow-hidden flex-nowrap transition-all delay-500 hover:border-l-[#F57059] hover:text-[#F57059] hover:bg-[#F5F8FE] border-solid ${
-                pathname === "/dashboard" ? active : ""
+                page === "home" || page === "" ? active : ""
               } transition-all delay-500 bg-[#F5F8FE] py-[9px]`}
             >
               <NavLink
@@ -128,11 +130,14 @@ const Dash = () => {
 
           <div
             className={`rounded-[4px] overflow-hidden flex-nowrap my-1 ${
-              pathname.indexOf("") !== -1 ? active : ""
+              (page === "userpages" || page === "pages" || page === "page") !==
+              -1
+                ? active
+                : ""
             } border-solid hover:border-l-[3px] border-l-transparent text-[#A9A9A9] hover:border-l-[#F57059] hover:text-[#F57059] hover:bg-[#F5F8FE] py-[9px]`}
           >
             <NavLink
-              to="/dashboard"
+              to="/dashboard/pages"
               className="text-inherit flex items-center text-[14px]"
             >
               <BiPaperPlane
@@ -147,11 +152,11 @@ const Dash = () => {
 
           <div
             className={`rounded-[4px] overflow-hidden flex-nowrap my-1 border-solid hover:border-l-[3px] hover:border-l-[#F57059] border-l-transparent text-[#A9A9A9] hover:text-[#F57059] hover:bg-[#F5F8FE] py-[9px] ${
-              pathname.indexOf("") !== -1 ? active : ""
+              (page === "links" || page === "link") !== -1 ? active : ""
             }`}
           >
             <NavLink
-              to="/dashboard"
+              to="/dashboard/links"
               className="text-inherit flex items-center text-[14px]"
             >
               <BiCreditCard
@@ -166,7 +171,7 @@ const Dash = () => {
 
           <div
             className={`rounded-[4px] overflow-hidden flex-nowrap my-1 border-solid hover:border-l-[3px] hover:border-l-[#F57059] hover:text-[#F57059] border-l-transparent text-[#A9A9A9] hover:bg-[#F5F8FE] py-[9px] ${
-              pathname.indexOf("") !== -1 ? active : ""
+              (page === "settings" || page === "setting") !== -1 ? active : ""
             }`}
           >
             <NavLink
@@ -239,7 +244,15 @@ const Dash = () => {
           </div>
         </div>
 
-        <DashHome />
+        {(page === "settings" || page === "setting") && <DashSettings />}
+
+        {(page === "home" || page === "") && <DashHome />}
+
+        {(page === "links" || page === "link") && <DashLinks />}
+
+        {(page === "userpages" || page === "pages" || page === "page") && (
+          <DashPages />
+        )}
       </div>
     </div>
   );

@@ -45,7 +45,7 @@ const App = () => {
         />
         <Route
           exact
-          path="/dashboard"
+          path="/dashboard/:page"
           element={
             loading ? (
               <Loader />
