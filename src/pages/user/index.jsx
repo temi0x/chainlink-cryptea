@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import '../../assets/styles/auth.css'
-import empty from '../../assets/img/coming-soon.svg';
+import "../../assets/styles/auth.css";
+import empty from "../../assets/img/coming-soon.svg";
 import {
   OutlinedInput,
   Box,
@@ -19,8 +19,7 @@ import {
   Button,
 } from "@mui/material";
 
-import { useMoralis, useMoralisQuery } from "react-moralis";
-
+import { useMoralis, useMoralisQuery, useWeb3Transfer } from "react-moralis";
 
 import Loader from "../../components/loader";
 
@@ -81,17 +80,14 @@ function getStyles(name, blockchainName, theme) {
   };
 }
 
-
-
-
 function UserPage() {
   const { username } = useParams();
 
-   const [alignment, setAlignment] = useState();
+  const [alignment, setAlignment] = useState();
 
-   const changeAlignMent = (event, newAlignment) => {
-     setAlignment(newAlignment);
-   };
+  const changeAlignMent = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
 
   const { fetch } = useMoralisQuery(
     "link",
@@ -100,37 +96,50 @@ function UserPage() {
     { autoFetch: false }
   );
 
-  const { Moralis } = useMoralis();
+  const { Moralis, isWeb3Enabled, enableWeb3 } = useMoralis();
 
   const [userD, setUserD] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch().then((er) => {
-
-      if(er.length){
-
-       Moralis.Cloud.run("getUser", { obj: er[0].get("user").id }).then(
-         (ex) => {
-
+      if (er.length) {
+        Moralis.Cloud.run("getUser", { obj: er[0].get("user").id }).then(
+          (ex) => {
             setUserD({
               description: ex[0].get("desc"),
               username: ex[0].get("username"),
               email: ex[0].get("email"),
-              img: ex[0].get("img") === undefined ? "" : ex[0].get("img")
-            });          
+              ethAddress: ex[0].get("ethAddress"),
+              img: ex[0].get("img") === undefined ? "" : ex[0].get("img"),
+            });
 
-           setIsLoading(false);
-         }
-       );
-      }else{
-           window.location.href = '/#/404';
+            setIsLoading(false);
+          }
+        );
+      } else {
+        window.location.href = "/#/404";
       }
     });
   }, []);
 
-  const { username: usern, description, email, img } = userD;
+  const { username: usern, description, email, img, ethAddress } = userD;
   const [value, setValue] = useState(0);
+  const [amount, setAmount] = useState(0);
+
+  if (!isWeb3Enabled) {
+    enableWeb3();
+  }
+
+  const {
+    fetch: fetched,
+    error,
+    isFetching,
+  } = useWeb3Transfer({
+    type: "native",
+    amount: Moralis.Units.ETH(amount),
+    receiver: ethAddress,
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -233,6 +242,7 @@ function UserPage() {
                     <TabPanel value={value} index={0}>
                       <FormControl fullWidth>
                         <Select
+                          disabled
                           displayEmpty
                           value={blockchainName}
                           onChange={handleSelectChange}
@@ -247,9 +257,7 @@ function UserPage() {
                           MenuProps={MenuProps}
                           inputProps={{ "aria-label": "Without label" }}
                         >
-                          <MenuItem disabled value="">
-                            Select Blockchain
-                          </MenuItem>
+                          <MenuItem value="">Select Blockchain</MenuItem>
                           {names.map((name) => (
                             <MenuItem
                               key={name}
@@ -264,10 +272,10 @@ function UserPage() {
                         <div className="py-3 font-bold">Amount</div>
 
                         <ToggleButtonGroup
-                          value={alignment}
+                          value={amount}
                           exclusive
                           className="w-full justify-between"
-                          onChange={changeAlignMent}
+                          onChange={setAmount}
                         >
                           <ToggleButton value="0.1">0.1</ToggleButton>
                           <ToggleButton value="1">1</ToggleButton>
@@ -284,6 +292,11 @@ function UserPage() {
                           id="outlined-basic"
                           label="Input Price"
                           variant="outlined"
+                          value={amount}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAmount(val.replace(/[^\d.]/g, ""));
+                          }}
                         />
                         <Button
                           variant="contained"
@@ -291,6 +304,8 @@ function UserPage() {
                           style={{
                             fontFamily: "inherit",
                           }}
+                          onClick={() => fetched()}
+                          disabled={isFetching}
                           fullWidth
                         >
                           Send
