@@ -25,22 +25,25 @@ import { useMoralis, useWeb3Transfer } from "react-moralis";
 import { data } from "autoprefixer";
 
 const DashHome = () => {
-  const { user, Moralis, isWeb3Enabled, enableWeb3 } = useMoralis();
+  const { user, Moralis,web3, isWeb3Enabled, enableWeb3, chainId } = useMoralis();
   const userAddress = user.get("ethAddress");
   // console.log(userAddress);
 
   const [amount, setAmount] = useState(0);
   const [receiver, setReceiver] = useState("");
 
-  if (!isWeb3Enabled) {
+  useEffect(() => {
+      if (!isWeb3Enabled) {
     enableWeb3();
-  }
+      }
+  }, [])
 
   const { fetch:fetched, error, isFetching } = useWeb3Transfer({
     type: "native",
-    amount: Moralis.Units.ETH(amount),
+    amount: Moralis.Units.ETH(parseFloat(amount)),
     receiver: receiver,
   });
+
 
   const [wdata, setWData] = useState({});
 
@@ -52,6 +55,7 @@ const DashHome = () => {
         setWData(data.data)
     });
 
+    // console.log(web3.currentProvider.chainId);
 
      console.log(wdata)
 

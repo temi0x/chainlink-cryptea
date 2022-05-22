@@ -16,7 +16,7 @@ import {
   Select,
   ToggleButtonGroup,
   TextField,
-  Button,
+  Button
 } from "@mui/material";
 
 import { useMoralis, useMoralisQuery, useWeb3Transfer } from "react-moralis";
@@ -137,7 +137,7 @@ function UserPage() {
     isFetching,
   } = useWeb3Transfer({
     type: "native",
-    amount: Moralis.Units.ETH(amount),
+    amount: Moralis.Units.ETH(parseFloat(amount)),
     receiver: ethAddress,
   });
 
@@ -275,7 +275,10 @@ function UserPage() {
                           value={amount}
                           exclusive
                           className="w-full justify-between"
-                          onChange={setAmount}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAmount(val.replace(/[^\d.]/g, ""));
+                          }}
                         >
                           <ToggleButton value="0.1">0.1</ToggleButton>
                           <ToggleButton value="1">1</ToggleButton>
