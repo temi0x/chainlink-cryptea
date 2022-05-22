@@ -24,16 +24,24 @@ The sections include:
 
 - Product Pages
 - User Pages
+- Dark Mode
+- Custom colors for users
+- Themes
+- User Page custom design
 
 ### Features
 
 - Product Pages
 - Creating multiple services/products
+- Multiple product links
 - Adding private resources
-- General user pages to show all listed services
-- Monthly payments
-- Annual payments
+- General user pages to show all listed services and projects
+- Enable comments on user pages (restricted to supporter)
+- Enable comments while tipping
+- Analytics for product pages
+- Recurring payments (monthly, annually, or even custom timelines)
 - Quick transfer to ENS domains
+- User Page Custom designs
 
 ### Integrations
 
