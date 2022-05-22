@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import { useEffect, useState } from "react";
 import Signup from "./pages/auth/signup";
 import Dash from "./pages/dashboard";
-import DashSettings from "./pages/dashboard/settings";
 import Loader from "./components/loader";
 import Notfound from "./pages/error/404";
 import LoginForm from "./pages/auth/login";
@@ -45,7 +44,7 @@ const App = () => {
         />
         <Route
           exact
-          path="/dashboard/:page"
+          path="/dashboard"
           element={
             loading ? (
               <Loader />
@@ -58,10 +57,18 @@ const App = () => {
         />
         <Route
           exact
-          path="/dashboard/settings"
-          element={loading ? <Loader /> : <DashSettings />}
+          path="/dashboard/:page"
+          element={
+            loading ? (
+              <Loader />
+            ) : isAuthenticated ? (
+              <Dash />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
-        {/* <Route path="/user/:id" element={loading ? <Loader /> : <UserPage />} /> */}
+        
         <Route path="/user/:username" element={<UserPage />} />
         <Route path="/test" element={loading ? <Loader /> : <Test />} />
 

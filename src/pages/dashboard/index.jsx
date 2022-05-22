@@ -28,6 +28,8 @@ const Dash = () => {
   const { page } = useParams();
   const { user, isAuthenticated, logout } = useMoralis();
 
+ 
+
   const toggle = () => {
     close(!isOpen);
 
@@ -35,6 +37,17 @@ const Dash = () => {
       close3(!isOpen3);
     }, 900);
   };
+
+  console.log([
+          "settings",
+          "setting",
+          "home",
+          "links",
+          "link",
+          "userpages",
+          "pages",
+          "page",
+        ].includes(page), 'peo')
 
   const active = "border-l-[3px] border-l-[#F57059] text-[#F57059]";
   return (
@@ -109,8 +122,8 @@ const Dash = () => {
         >
           <div className={`pb-3 mb-1 border-b-[#E3E3E3] border-b-[1px]`}>
             <div
-              className={`rounded-[4px] overflow-hidden flex-nowrap transition-all delay-500 hover:border-l-[#F57059] hover:text-[#F57059] hover:bg-[#F5F8FE] border-solid ${
-                page === "home" || page === "" ? active : ""
+              className={`rounded-[4px] overflow-hidden flex-nowrap transition-all delay-500 hover:border-l-[#f89e8e] hover:text-[#F57059] hover:bg-[#F5F8FE] border-solid ${
+                page === "home" || page === undefined ? active : ""
               } transition-all delay-500 bg-[#F5F8FE] py-[9px]`}
             >
               <NavLink
@@ -246,16 +259,30 @@ const Dash = () => {
 
         {(page === "settings" || page === "setting") && <DashSettings />}
 
-        {(page === "home" || page === "") && <DashHome />}
+        {(page === "home" || page === undefined) && <DashHome />}
 
         {(page === "links" || page === "link") && <DashLinks />}
 
         {(page === "userpages" || page === "pages" || page === "page") && (
           <DashPages />
         )}
+
+        {
+       page !== undefined && (![
+          "settings",
+          "setting",
+          "home",
+          "links",
+          "link",
+          "userpages",
+          "pages",
+          "page",
+        ].includes(page) && <Navigate to='/404' />)
+      }
       </div>
     </div>
   );
+
 };
 
 export default Dash;

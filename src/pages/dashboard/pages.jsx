@@ -17,13 +17,12 @@ const DashPages = () => {
             src={empty}
             className="mb-3"
             style={{
-              minWidth: 300,
-              width: "80%"
+              width: 300
             }}
             alt="Would Be Released soon"
           />
 
-          <h2 className="mt-2 font-bold">
+          <h2 className="mt-2 text-[22px] font-bold">
             This Feature would be released soon, we are working on it
           </h2>
         </div>
