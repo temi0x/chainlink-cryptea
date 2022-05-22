@@ -18,7 +18,7 @@ import {
 import { Navigate } from "react-router-dom";
 
 const SignupForm = () => {
-  const { isAuthenticated, user, authenticate, Moralis } = useMoralis();
+  const { isAuthenticated, user, authenticate, Moralis, isWeb3Enabled, enableWeb3, chainId, isWeb3EnableLoading } = useMoralis();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -28,6 +28,16 @@ const SignupForm = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
+
+
+  useEffect(() => {
+      if (!isWeb3Enabled) {
+        enableWeb3();
+      }
+  }, []);
+
+
+  console.log(chainId)  
 
   const [userLink, setUserLink] = useState("");
   const [userDescription, setUserDescription] = useState("");

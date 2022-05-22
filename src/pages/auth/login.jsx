@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {useMoralis } from "react-moralis";
 import { MdVisibilityOff, MdVisibility } from "react-icons/md";
 import {
@@ -21,8 +21,24 @@ const LoginForm = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { isAuthenticated,isAuthenticating, Moralis } = useMoralis();
+  const {
+    isAuthenticated,
+    isAuthenticating,
+    Moralis,
+    isWeb3Enabled,
+    enableWeb3,
+    chainId,
+    isWeb3EnableLoading,
+  } = useMoralis();
   const [viewPass, setViewPass] = useState(false);
+
+  useEffect(() => {
+    if (!isWeb3Enabled) {
+      enableWeb3();
+    }
+  }, []);
+
+  console.log(chainId)
 
   const submitForm = async () => {
       

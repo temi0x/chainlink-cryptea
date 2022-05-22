@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useMoralis } from "react-moralis";
 import logo from "../../assets/img/cryptea-logo.svg";
 function Nav() {
-  const { isAuthenticated, user, authenticate, logout } = useMoralis();
+  const { isAuthenticated, user, authenticate, logout, chainId, isWeb3EnableLoading, isWeb3Enabled, enableWeb3 } = useMoralis();
 
   let buttonText = useRef("Connect Wallet");
 
@@ -24,6 +24,8 @@ function Nav() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
+
+  
 
   const logOut = async (redirect = false) => {
     if (isAuthenticated) {

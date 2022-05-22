@@ -127,9 +127,11 @@ function UserPage() {
   const [value, setValue] = useState(0);
   const [amount, setAmount] = useState(0);
 
-  if (!isWeb3Enabled) {
-    enableWeb3();
-  }
+  useEffect(() => {
+    if (!isWeb3Enabled) {
+      enableWeb3();
+    }
+  }, [])
 
   const {
     fetch: fetched,
