@@ -55,12 +55,12 @@ The sections include:
 
 In your terminal, navigate to the folder where you'd like to store the project, and r:
 
-`git clone https://github.com/TelloHQ/tello.v1`
+`git clone https://github.com/Temiloluwa-ade/chainlink-cryptea`
 
 ### Install dependencies
 
 Navigate to the project directory:
-`cd tello.v1`
+`cd chainlink-cryptea`
 Run the install command:
 `npm install`
 
