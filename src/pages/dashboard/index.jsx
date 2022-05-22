@@ -13,7 +13,7 @@ import {
 import { RiSettingsLine } from "react-icons/ri";
 import logo from "../../assets/img/cryptea-logo.svg";
 import "../../assets/styles/dash.css";
-import { Avatar } from "@mui/material";
+import { Avatar, Popover  } from "@mui/material";
 import DashHome from "./home";
 import DashLinks from "./links";
 import DashPages from './pages';
@@ -21,8 +21,7 @@ import DashSettings from './settings';
 import { NavLink, Navigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useMoralis } from "react-moralis";
-import Popover from "@mui/material/Popover";
-import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
+
 
 const Dash = () => {
   const [isOpen, close] = useState(false);
@@ -40,16 +39,20 @@ const Dash = () => {
     }, 900);
   };
 
-  console.log([
-          "settings",
-          "setting",
-          "home",
-          "links",
-          "link",
-          "userpages",
-          "pages",
-          "page",
-        ].includes(page), 'peo')
+
+      const [anchorEl, setAnchorEl] = useState(null);
+
+      const handleNotes = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+
+      const notesClose = () => {
+        setAnchorEl(null);
+      };
+
+      const nopen = Boolean(anchorEl);
+      const id = nopen ? "Your Notifications" : undefined;
+
 
   const active = "border-l-[3px] border-l-[#F57059] text-[#F57059]";
   return (
@@ -250,32 +253,27 @@ const Dash = () => {
             </form> */}
 
             <div className="h-full w-[20px] mx-2">
-              <PopupState variant="popover" popupId="demo-popup-popover">
-                {(popupState) => (
-                  <div>
-                    <BiBell
-                      size={23}
-                      {...bindTrigger(popupState)}
-                      className="cursor-pointer"
-                      color="#000"
-                    />
-
-                    <Popover
-                      {...bindPopover(popupState)}
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "center",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "center",
-                      }}
-                    >
-                      <div>Popover content</div>
-                    </Popover>
-                  </div>
-                )}
-              </PopupState>
+              <BiBell
+                size={23}
+                aria-describedby={id}
+                onClick={handleNotes}
+                className="cursor-pointer"
+                color="#000"
+              />
+              <Popover
+                id={id}
+                
+                open={nopen}
+                anchorEl={anchorEl}
+                onClose={notesClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+              >
+               Continue Your Plan Here
+             
+              </Popover>
             </div>
 
             <Avatar sx={{ bgcolor: "#F57059" }} alt={user.get("username")}>
@@ -294,18 +292,17 @@ const Dash = () => {
           <DashPages />
         )}
 
-        {
-       page !== undefined && (![
-          "settings",
-          "setting",
-          "home",
-          "links",
-          "link",
-          "userpages",
-          "pages",
-          "page",
-        ].includes(page) && <Navigate to='/404' />)
-      }
+        {page !== undefined &&
+          ![
+            "settings",
+            "setting",
+            "home",
+            "links",
+            "link",
+            "userpages",
+            "pages",
+            "page",
+          ].includes(page) && <Navigate to="/404" />}
       </div>
     </div>
   );
