@@ -190,7 +190,9 @@ function UserPage() {
               <div className="title text-2xl font-semibold mt-8">
                 Send some tea money to {usern}
               </div>
-              <div className="text-xl font-medium mt-5">{description}</div>
+              <div className="text-[18px] font-medium mt-5 text-[#838383]">
+                {description}
+              </div>
             </div>
             <div className="w-2/5 2usm:w-full usm:w-[85%] usm:m-auto min-w-[340px] px-6 my-8 justify-items-center">
               <div className="rounded-lg bg-white shadow-lg shadow-[#cccccc]">
