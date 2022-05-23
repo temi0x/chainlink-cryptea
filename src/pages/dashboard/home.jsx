@@ -2,6 +2,7 @@ import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
 import { useState, useEffect, Fragment } from "react";
 import { FaWallet } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import Loader from "../../components/loader";
 import { BsBoxArrowInDownLeft, BsArrowRight } from "react-icons/bs";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import {
@@ -25,56 +26,177 @@ import { useMoralis, useWeb3Transfer } from "react-moralis";
 import { data } from "autoprefixer";
 
 const DashHome = () => {
-  const { user, Moralis,web3, isWeb3Enabled, enableWeb3, chainId } = useMoralis();
+  const {
+    user,
+    Moralis,
+    isWeb3Enabled,
+    enableWeb3,
+    chainId
+  } = useMoralis();
   const userAddress = user.get("ethAddress");
   // console.log(userAddress);
 
+  const BigNum = (n = 0, p) => {
+  
+  const nn = String(n).split('.');
+
+     if (Boolean(nn[1])) {
+      if(nn[1].length >= p) { 
+          return n.toFixed(p)
+      }else{
+          return n.toFixed(nn[1].length)
+      }
+    }else{
+        return n;
+    }
+}
+
   const [amount, setAmount] = useState(0);
   const [receiver, setReceiver] = useState("");
-
+  const [loading1, setLoading1] = useState(true);
+  const [loading2, setLoading2] = useState(true);
+  const [wdata, setWData] = useState({});
+  const [rows, setrows] = useState({});
+  const [nft, viewN] = useState(false);
   useEffect(() => {
+    console.log(isWeb3Enabled);
       if (!isWeb3Enabled) {
-    enableWeb3();
-      }
-  }, [])
+         enableWeb3();
+         setLoading1(false)
+      }else{
+        setLoading1(false)
+      
+
+    fetch(
+      `https://api.covalenthq.com/v1/${Number(chainId)}/address/${userAddress}/balances_v2/?quote-currency=USD&format=JSON&nft=true&no-nft-fetch=false&key=ckey_d8fd93851d6a4d57bdcf14a337d`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setWData(data.data);
+        setLoading2(false);
+
+        const { items } = data.data;
+
+        setrows(
+          items.map(
+            ({
+              balance,
+              contract_name,
+              contract_decimals,
+              contract_ticker_symbol,
+              quote,
+              quote_24h,
+              logo_url,
+            }) => {
+              return {
+                name: (
+                  <div className="flex items-center">
+                    <Avatar
+                      alt={contract_ticker_symbol}
+                      src={logo_url}
+                      sx={{ width: 24, height: 24, marginRight: "10px" }}
+                    />
+                    <span>{contract_name}</span>
+                  </div>
+                ),
+                code: (
+                  <span className="text-[#626262]">
+                    {contract_ticker_symbol}
+                  </span>
+                ),
+                price: `$${quote}`,
+                change: (
+                  <div
+                    style={{
+                      color:
+                        ((quote - quote_24h) / quote_24h) * 100 > 0
+                          ? "#53D258"
+                          : "#f83333",
+                    }}
+                    className={`flex items-center justify-end`}
+                  >
+                    {quote_24h !== null
+                      ? (((quote - quote_24h) / quote_24h) * 100 > 0
+                          ? "+"
+                          : "") +
+                        BigNum(((quote - quote_24h) / quote_24h) * 100, 2) +
+                        "%"
+                      : "0%"}
+                  </div>
+                ),
+                amount:
+                  "$" +
+                  BigNum(
+                    (Boolean(balance) ? balance / 10 ** contract_decimals : 0) *
+                      quote,
+                    5
+                  ),
+              };
+            }
+          )
+        );
+
+      })
+    }
+  }, [chainId, isWeb3Enabled, wdata, loading2])
 
   const { fetch:fetched, error, isFetching } = useWeb3Transfer({
     type: "native",
     amount: Moralis.Units.ETH(parseFloat(amount)),
-    receiver: receiver,
+    receiver: receiver
   });
 
+    
+ 
+  const balances = () => {
+    if (!loading2) {
+      let bs = user.get("balances");
+      const { items } = wdata;
+      let bss = 0;
 
-  const [wdata, setWData] = useState({});
+      items.forEach(({ quote, balance, contract_decimals }) => {
+        bss += parseFloat(BigNum((balance / 10 ** contract_decimals) * quote, 5));
+      });
+      if (!Boolean(bs)) {
+        const json = [];
+        json.push({ amt: 0 }, { amt: bss });
 
-    fetch(
-      `https://api.covalenthq.com/v1/137/address/${userAddress}/balances_v2/?quote-currency=USD&format=JSON&nft=false&no-nft-fetch=false&key=ckey_d8fd93851d6a4d57bdcf14a337d`
-    )
-    .then((response) => response.json())
-    .then((data) => {
-        setWData(data.data)
-    });
+        user.set("balances", JSON.stringify(json));
+        user.save();
 
-    // console.log(web3.currentProvider.chainId);
+        return json;
+      } else {
+        bs = JSON.parse(bs);
+        
+        if (bs[bs.length - 1].amt !== bss) {
+          bs.push({ amt: bss });
+          user.set("balances", JSON.stringify(bs));
+          user.save();
+        }
 
-     console.log(wdata)
+        return bs;
+      }
+    }
+}
 
-
-  const balance = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
+  const balance = balances();
   const received = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
 
-  const [previous, current] = [
+
+  const [previous, current] = loading2 ? [] : [
     balance[balance.length - 2].amt,
     balance[balance.length - 1].amt,
   ];
-  const change = ((current - previous) / previous) * 100;
-
+  
+  const change = loading2 ? 0 : ((current - previous) / previous) * 100;
+  console.log(current, previous, balance);
+  
   const [rprevious, rcurrent] = [
     received[received.length - 2].amt,
     received[received.length - 1].amt,
   ];
   const rchange = ((rcurrent - rprevious) / rprevious) * 100;
-  const [nft, viewN] = useState(false);
+
   const columns = [
     { id: "name", label: "Token", minWidth: 170 },
     { id: "code", label: "Symbol", minWidth: 100 },
@@ -101,7 +223,7 @@ const DashHome = () => {
     },
   ];
 
-  const rows = [
+  const rowss = [
     {
       name: (
         <div className="flex items-center">
@@ -267,7 +389,9 @@ const DashHome = () => {
 
   return (
     <div className="dashbody h-[calc(100%-75px)] 2sm:pr-1 flex px-5 pb-5">
-      <div>
+      {(loading1 || loading2) && <Loader />}
+
+      {(!loading1 && !loading2) && (<Fragment><div>
         <Modal
           open={open}
           onClose={handleClose}
@@ -602,7 +726,7 @@ const DashHome = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </div></Fragment>)}
     </div>
   );
 };
