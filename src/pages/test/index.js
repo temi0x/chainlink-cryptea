@@ -11,7 +11,7 @@ const Test =  () => {
   const [result, setResult] = useState(null);
 
   function makeStorageClient() {
-    return new Web3Storage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFEN2I5MDFBODNFZjFBNkQzM2I4NjRBNTEzNjcwNjYzNTFiOEY1RGYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTMzNTgzOTEzNDQsIm5hbWUiOiJjcnlwdG9fY2xvdWQifQ.0KydZhZjWnYjPyTk-ZUxIZuvAZPzaXMhlzeGNRdaP-Q' })
+   
   }
 
 

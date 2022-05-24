@@ -379,7 +379,7 @@ const DashSettings = () => {
           }}
         >
           {Boolean(isLoading["progress"][0]) && (
-            <Box className="text-[#F57059]" sx={{ width: "100%" }}>
+            <Box className="text-[#F57059] mb-1" sx={{ width: "100%" }}>
               <LinearProgress
                 variant="buffer"
                 value={isLoading["progress"][0]}
