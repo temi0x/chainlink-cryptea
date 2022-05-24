@@ -2,7 +2,6 @@ import {useState} from "react";
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Web3Storage } from 'web3.storage'
-import { base64StringToBlob } from 'blob-util';
 
 const Test =  () => {
  
@@ -16,6 +15,10 @@ const Test =  () => {
   }
 
 
+  const [ iprogress, setiProgress ] = useState(0)
+
+
+
 
   const ee = (event) => {
 
@@ -24,8 +27,8 @@ const Test =  () => {
     
   }
 
-  const beginUpload = async (files, totalSize) => {
-
+  const beginUpload = async (files) => {
+    const { size: totalSize } = files[0];
     const onRootCidReady = cid => {
       console.log('uploading files with cid:', cid)
     }
@@ -34,7 +37,9 @@ const Test =  () => {
 
     const onStoredChunk = size => {
       uploaded += size
-      const pct = totalSize / uploaded
+      
+      const pct = (totalSize / uploaded) * 100
+
       console.log(`Uploading... ${pct.toFixed(2)}% complete`)
     }
 
@@ -64,16 +69,16 @@ const Test =  () => {
         crop.width,
         crop.height
       );
-      const { type, size } = iimg;
+      const { type } = iimg;
         const ext = type.split('/')
-      const base64Image = canvas.toDataURL(type, 1);
 
-      const blo = base64StringToBlob(base64Image, type)
-
-      const files = [new File(blo, `testimg.${ext[1]}`)];
-
-      beginUpload(files, size);
+      canvas.toBlob((blob) => {
+        const files = [new File([blob], `testimg.${ext[1]}`)];
+        beginUpload(files);
+      },type, 1);
    
+     
+
     } catch (e) {
       console.log(e);
     }

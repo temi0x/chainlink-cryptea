@@ -5,6 +5,7 @@ import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { IoMdClose } from 'react-icons/io';
 import { useMoralis } from "react-moralis";
+import { Web3Storage } from "web3.storage";
 import { MdVisibilityOff, MdVisibility } from "react-icons/md";
 import {
   Button,
@@ -26,8 +27,8 @@ import {
 const DashSettings = () => {
 
 
-  const { isAuthenticated, Moralis, authenticate, user } = useMoralis();
-
+  const { Moralis, user } = useMoralis();
+  const [dp, setDp] = useState(user.get('img')); 
   const [userLink, setUserLink] = useState("");
   const [userDescription, setUserDescription] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -36,7 +37,7 @@ const DashSettings = () => {
   const [pass, setPass] = useState("");
   const [repass, setRepass] = useState("");
   const [isLoading, setLoading] = useState({
-    account: false, security: false, link: false
+    account: false, security: false, link: false, progress: [0, 0]
   });
   const [crop, setCrop] = useState();
   const [simg, setsImg] = useState(null);
@@ -45,7 +46,7 @@ const DashSettings = () => {
 
   const [openM, setOpenM] = useState(false);
 
-  const handleOpenM = () => setOpenM(true);
+  const handleOpenM = () => setOpenM(false);
   const handleCloseM = () => setOpenM(false);
 
   const [error, setError] = useState({
@@ -85,6 +86,7 @@ const DashSettings = () => {
           return true;
         }
   }
+
 
   const submitAccount = async () => {
       document.querySelector('#account_sett').scrollIntoView();
@@ -155,8 +157,50 @@ const DashSettings = () => {
 
      setsImg(URL.createObjectURL(fil));
      setIiimg(fil);
-     
+    
+     handleOpenM()
+
    };
+
+   const makeStorageClient = async () => {
+      return new Web3Storage({
+        token: await Moralis.Cloud.run("getWeb3StorageKey"),
+      });
+    }
+
+     const beginUpload = async (files) => {
+       const { size: totalSize, type } = files[0];
+        const ext = type.split('/');
+       const onRootCidReady = (cid) => {
+
+          handleCloseM();
+         setError({ account: "", ...error });
+         setSuccess({ account: "Image Uploaded Successfully, might take a while to fully reflect", ...success });         
+          const img = `${cid}.ipfs.dweb.link/${user.get("username")}.${ext[1]}`;         
+        setDp(img);
+         user.set("img", img);
+
+         user.save()
+
+       };
+
+       let uploaded = 0;
+
+       const onStoredChunk = (size) => {
+         uploaded += size;
+
+         const pct = (totalSize / uploaded) * 100;
+
+         console.log(`Uploading... ${pct.toFixed(2)}% complete`);
+
+         setLoading({progress: [pct, uploaded], ...isLoading})
+
+       };
+
+       const client = makeStorageClient();
+
+       return client.put(files, { onRootCidReady, onStoredChunk });
+     }; 
 
 
      const cropImg = () => {
@@ -180,9 +224,18 @@ const DashSettings = () => {
            crop.height
          );
          const { type } = iimg;
+         const ext = type.split("/");
 
-         const base64Image = canvas.toDataURL(type, 1);
-         setResult(base64Image);
+         canvas.toBlob(
+           (blob) => {
+             const files = [new File([blob], `${user.get('username')}.${ext[1]}`)];
+             beginUpload(files);
+           },
+           type,
+           1
+         );
+   
+
        } catch (e) {
          setError({ account: e.message, ...error });
        }
@@ -317,19 +370,30 @@ const DashSettings = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             minWidth: 340,
+            maxHeight: "100vh",
+            border: "none",
             width: "80%",
+            backgroundColor: "#fff",
             maxWidth: 800,
-            p: 4,
+            p: 2,
           }}
         >
-          {isLoading["account"] && (
+          {Boolean(isLoading["progress"][0]) && (
             <Box className="text-[#F57059]" sx={{ width: "100%" }}>
-              <LinearProgress color="inherit" />
+              <LinearProgress
+                variant="buffer"
+                value={isLoading["progress"][0]}
+                valueBuffer={isLoading['progress'][1]}
+              />
             </Box>
           )}
 
           {error["account"].length > 0 && (
             <Alert severity="error">{error["account"]}</Alert>
+          )}
+
+          {success["account"].length > 0 && (
+            <Alert severity="success">{success["account"]}</Alert>
           )}
 
           <ReactCrop
@@ -349,9 +413,7 @@ const DashSettings = () => {
             />
           </ReactCrop>
 
-          <button onClick={cropImg}>Crop Image</button>
-
-          <div className="py-2 flex justify-center">
+          <div className="py-2 mt-4 flex justify-center">
             <Button
               variant="contained"
               className="!bg-[#F57059] !mr-2 !py-[13px] !font-medium !capitalize"
@@ -484,7 +546,7 @@ const DashSettings = () => {
                       <div className="font-semibold mt-5 mb-4 text-[#777]">
                         Profile Picture
                       </div>
-                      {user.get("img") === undefined ? (
+                      {Boolean(dp) ? (
                         <Avatar
                           sx={{
                             bgcolor: "#F57059",
@@ -498,7 +560,7 @@ const DashSettings = () => {
                         </Avatar>
                       ) : (
                         <Avatar
-                          src={user.get("img")}
+                          src={dp}
                           sx={{ width: 190, height: 190 }}
                           alt={user.get("username")}
                         ></Avatar>
@@ -507,7 +569,7 @@ const DashSettings = () => {
                         <input
                           type="file"
                           accept="image/*"
-                          className="!hidden"
+                          className="!hidden dpp"
                           style={{
                             display: "none !important",
                             visibility: "hidden !important",
@@ -517,7 +579,7 @@ const DashSettings = () => {
 
                         <Button
                           onClick={() => {
-                            console.log("hmm...");
+                            document.querySelector(".dpp").click();
                           }}
                           variant="contained"
                           className="!text-sm !rounded-lg !capitalize !bg-[#F57059] !text-white !font-semibold p-[10px]"

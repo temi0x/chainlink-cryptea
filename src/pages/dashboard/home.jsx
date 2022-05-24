@@ -42,7 +42,7 @@ const DashHome = () => {
 
      if (Boolean(nn[1])) {
       if(nn[1].length >= p) { 
-          return n.toFixed(p)
+         return Number(n.toFixed(p));
       }else{
           return n.toFixed(nn[1].length)
       }
@@ -104,7 +104,7 @@ const DashHome = () => {
                     {contract_ticker_symbol}
                   </span>
                 ),
-                price: `$${quote}`,
+                price: `$${BigNum(quote, 4)}`,
                 change: (
                   <div
                     style={{
@@ -155,8 +155,9 @@ const DashHome = () => {
       let bss = 0;
 
       items.forEach(({ quote, balance, contract_decimals }) => {
-        bss += parseFloat(BigNum((balance / 10 ** contract_decimals) * quote, 5));
+        bss += (balance / 10 ** contract_decimals) * quote;
       });
+
       if (!Boolean(bs)) {
         const json = [];
         json.push({ amt: 0 }, { amt: bss });
@@ -167,7 +168,7 @@ const DashHome = () => {
         return json;
       } else {
         bs = JSON.parse(bs);
-        
+
         if (bs[bs.length - 1].amt !== bss) {
           bs.push({ amt: bss });
           user.set("balances", JSON.stringify(bs));
@@ -189,7 +190,7 @@ const DashHome = () => {
   ];
   
   const change = loading2 ? 0 : ((current - previous) / previous) * 100;
-  console.log(current, previous, balance);
+  console.log(balance);
   
   const [rprevious, rcurrent] = [
     received[received.length - 2].amt,
@@ -523,7 +524,7 @@ const DashHome = () => {
 
               <div className="w-full">
                 <span className="block text-white font-bold text-[15px]">
-                  ${balance.pop().amt}
+                  ${BigNum(balance.pop().amt, 5)}
                 </span>
                 <span
                   style={{
