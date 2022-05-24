@@ -1,6 +1,8 @@
 import {useState} from "react";
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import { Web3Storage } from 'web3.storage'
+import { base64StringToBlob } from 'blob-util';
 
 const Test =  () => {
  
@@ -9,14 +11,40 @@ const Test =  () => {
   const [iimg, setIiimg] = useState({});
   const [result, setResult] = useState(null);
 
+  function makeStorageClient() {
+    return new Web3Storage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFEN2I5MDFBODNFZjFBNkQzM2I4NjRBNTEzNjcwNjYzNTFiOEY1RGYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTMzNTgzOTEzNDQsIm5hbWUiOiJjcnlwdG9fY2xvdWQifQ.0KydZhZjWnYjPyTk-ZUxIZuvAZPzaXMhlzeGNRdaP-Q' })
+  }
+
+
+
   const ee = (event) => {
 
     setsImg(URL.createObjectURL(event.target.files[0]));
     setIiimg(event.target.files[0]);
-
+    
   }
 
-  const copImg = () => {
+  const beginUpload = async (files, totalSize) => {
+
+    const onRootCidReady = cid => {
+      console.log('uploading files with cid:', cid)
+    }
+
+    let uploaded = 0
+
+    const onStoredChunk = size => {
+      uploaded += size
+      const pct = totalSize / uploaded
+      console.log(`Uploading... ${pct.toFixed(2)}% complete`)
+    }
+
+    const client = makeStorageClient()
+
+    return client.put(files, { onRootCidReady, onStoredChunk })
+
+  } 
+
+  const copImg = async () => {
     const img = document.querySelector('.img');
     try {
       const canvas = document.createElement("canvas");
@@ -36,11 +64,15 @@ const Test =  () => {
         crop.width,
         crop.height
       );
-        const { type } = iimg;
-
+      const { type, size } = iimg;
+        const ext = type.split('/')
       const base64Image = canvas.toDataURL(type, 1);
-      setResult(base64Image);
-      
+
+      const blo = base64StringToBlob(base64Image, type)
+
+      const files = [new File(blo, `testimg.${ext[1]}`)];
+
+      beginUpload(files, size);
    
     } catch (e) {
       console.log(e);

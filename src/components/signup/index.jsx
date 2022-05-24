@@ -303,7 +303,8 @@ const SignupForm = () => {
                   placeholder="wagmi"
                   value={userLink}
                   onChange={(e) => {
-                    setUserLink(e.target.value);
+                    const lk = e.target.value;
+                    setUserLink(lk.replace(/[/\\.@#&?;:"'~,*^%|]/g, ""));
                     setError("");
                   }}
                   name="link"
