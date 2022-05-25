@@ -221,7 +221,7 @@ function UserPage() {
                       <Tabs
                         value={value}
                         onChange={handleChange}
-                        fullWidth
+                        fullWidth={true}
                         aria-label="payment tabs"
                       >
                         <Tab

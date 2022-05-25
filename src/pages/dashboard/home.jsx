@@ -185,8 +185,10 @@ const DashHome = () => {
     }
 }
 
+
+
   const balance = balances();
-  const received = [{ amt: 2400 }, { amt: 500 }, { amt: 1400 }, { amt: 3000 }];
+  const received = Boolean(user.get('received')) ? JSON.parse(user.get('received')) : [{amt: 0}];
 
 
   const [previous, current] = loading2 ? [] : [
@@ -197,14 +199,15 @@ const DashHome = () => {
   const change = loading2 ? 0 : ((current - previous) / previous) * 100;
 
 
+  const [rprevious, rcurrent] = Boolean(user.get('received')) ? [
+    received[received.length - 2].amt,
+    received[received.length - 1].amt,
+  ] : [0, 0];
+  const rchange = Boolean(user.get('received')) ? ((rcurrent - rprevious) / rprevious) * 100 : 0;
   
   
 
-  const [rprevious, rcurrent] = [
-    received[received.length - 2].amt,
-    received[received.length - 1].amt,
-  ];
-  const rchange = ((rcurrent - rprevious) / rprevious) * 100;
+
 
   const columns = [
     { id: "name", label: "Token", minWidth: 170 },
