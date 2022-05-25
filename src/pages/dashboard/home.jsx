@@ -3,6 +3,7 @@ import { useState, useEffect, Fragment } from "react";
 import { FaWallet } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import Loader from "../../components/loader";
+
 import { BsBoxArrowInDownLeft, BsArrowRight } from "react-icons/bs";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import {
@@ -33,8 +34,8 @@ const DashHome = () => {
     enableWeb3,
     chainId
   } = useMoralis();
+
   const userAddress = user.get("ethAddress");
-  // console.log(userAddress);
 
   const BigNum = (n = 0, p) => {
   
@@ -51,6 +52,7 @@ const DashHome = () => {
     }
 }
 
+
   const [amount, setAmount] = useState(0);
   const [receiver, setReceiver] = useState("");
   const [loading1, setLoading1] = useState(true);
@@ -58,8 +60,9 @@ const DashHome = () => {
   const [wdata, setWData] = useState({});
   const [rows, setrows] = useState({});
   const [nft, viewN] = useState(false);
+  const [nfts, setNfts] = useState('auto')
   useEffect(() => {
-    console.log(isWeb3Enabled);
+
       if (!isWeb3Enabled) {
          enableWeb3();
          setLoading1(false)
@@ -135,18 +138,18 @@ const DashHome = () => {
             }
           )
         );
-
-      })
+      });
     }
-  }, [chainId, isWeb3Enabled, wdata, loading2])
+  }, [chainId, isWeb3Enabled, loading2, userAddress, enableWeb3])
+
 
   const { fetch:fetched, error, isFetching } = useWeb3Transfer({
     type: "native",
     amount: Moralis.Units.ETH(parseFloat(amount)),
     receiver: receiver
   });
-
-    
+ 
+  console.log(wdata)
  
   const balances = () => {
     if (!loading2) {
@@ -158,6 +161,7 @@ const DashHome = () => {
         bss += (balance / 10 ** contract_decimals) * quote;
       });
 
+
       if (!Boolean(bs)) {
         const json = [];
         json.push({ amt: 0 }, { amt: bss });
@@ -166,10 +170,11 @@ const DashHome = () => {
         user.save();
 
         return json;
+
       } else {
         bs = JSON.parse(bs);
 
-        if (bs[bs.length - 1].amt !== bss) {
+        if (BigNum(bs[bs.length - 1].amt, 5) !== BigNum(bss, 5)) {
           bs.push({ amt: bss });
           user.set("balances", JSON.stringify(bs));
           user.save();
@@ -190,8 +195,11 @@ const DashHome = () => {
   ];
   
   const change = loading2 ? 0 : ((current - previous) / previous) * 100;
-  console.log(balance);
+
+
   
+  
+
   const [rprevious, rcurrent] = [
     received[received.length - 2].amt,
     received[received.length - 1].amt,
@@ -305,61 +313,66 @@ const DashHome = () => {
       change: <div className={`flex items-center text-[#53D258]`}> +32% </div>,
       amount: "$100",
     },
-    // ,
-    // {
-    //   collapse: true,
-    //   name: (
-    //     <div className="flex items-center">
-    //       <Avatar
-    //         alt="NFT"
-    //         src={require("../../assets/img/nft.png")}
-    //         sx={{ width: 24, height: 24, marginRight: "10px" }}
-    //       />
-    //       <span>NFT</span>
-    //       <IconButton
-    //         aria-label="expand row"
-    //         size="small"
-    //         onClick={() => viewN(!nft)}
-    //       >
-    //         {nft ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
-    //       </IconButton>
-    //     </div>
-    //   ),
-    //   code: (
-    //     <div>
-    //       <AvatarGroup max={3}>
-    //         <Avatar
-    //           alt="one"
-    //           sx={{ width: 30, height: 30 }}
-    //           src={require("../../assets/img/nft.png")}
-    //         />
-    //         <Avatar
-    //           sx={{ width: 30, height: 30 }}
-    //           alt="two"
-    //           src={require("../../assets/img/cardano.png")}
-    //         />
-    //         <Avatar
-    //           sx={{ width: 30, height: 30 }}
-    //           alt="three"
-    //           src={require("../../assets/img/terra.png")}
-    //         />
-    //         <Avatar
-    //           sx={{ width: 30, height: 30 }}
-    //           alt="four"
-    //           src={require("../../assets/img/bnb.png")}
-    //         />
-    //         <Avatar
-    //           sx={{ width: 30, height: 30 }}
-    //           alt="five"
-    //           src={require("../../assets/img/eth.png")}
-    //         />
-    //       </AvatarGroup>
-    //     </div>
-    //   ),
-    //   price: "20 - 10,000",
-    //   change: <div className={`flex items-center text-[#53D258]`}> +3 </div>,
-    //   amount: 10,
-    // },
+    
+    {
+      collapse: true,
+      name: (
+        <div className="flex items-center">
+          <Avatar
+            alt="NFT"
+            src={require("../../assets/img/nft.png")}
+            sx={{ width: 24, height: 24, marginRight: "10px" }}
+          />
+          <span>NFT</span>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => {
+              viewN(!nft);
+              const { clientWidth } = document.querySelector('.mainTable')
+
+              setNfts(clientWidth);
+            }}
+          >
+            {nft ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+          </IconButton>
+        </div>
+      ),
+      code: (
+        <div>
+          <AvatarGroup max={3}>
+            <Avatar
+              alt="one"
+              sx={{ width: 30, height: 30 }}
+              src={require("../../assets/img/nft.png")}
+            />
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              alt="two"
+              src={require("../../assets/img/cardano.png")}
+            />
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              alt="three"
+              src={require("../../assets/img/terra.png")}
+            />
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              alt="four"
+              src={require("../../assets/img/bnb.png")}
+            />
+            <Avatar
+              sx={{ width: 30, height: 30 }}
+              alt="five"
+              src={require("../../assets/img/eth.png")}
+            />
+          </AvatarGroup>
+        </div>
+      ),
+      price: "20 - 10,000",
+      change: <div className={`flex items-center text-[#53D258]`}> +3 </div>,
+      amount: 10,
+    }
   ];
 
   const [page, setPage] = useState(0);
@@ -532,7 +545,7 @@ const DashHome = () => {
                   }}
                   className={`block text-[13px]`}
                 >
-                  {change > 0 ? "+" + change.toFixed(2) : change.toFixed(2)}
+                  {change > 0 ? "+" + change.toFixed(2) : change.toFixed(2)}%
                 </span>
               </div>
             </div>
@@ -568,7 +581,7 @@ const DashHome = () => {
                       fill={`url(#${
                         rchange > 0 ? "green" : "red"
                       }) transparent`}
-                      stroke={change > 0 ? "#53D258" : "#7c2424"}
+                      stroke={rchange > 0 ? "#53D258" : "#7c2424"}
                     />
                     <Tooltip />
                   </AreaChart>
@@ -586,7 +599,7 @@ const DashHome = () => {
                 }}
                 className={`block text-[13px]`}
               >
-                {rchange > 0 ? "+" + rchange.toFixed(2) : rchange.toFixed(2)}
+                {rchange > 0 ? "+" + rchange.toFixed(2) : rchange.toFixed(2)}%
               </span>
             </div>
           </div>
@@ -596,7 +609,7 @@ const DashHome = () => {
           <div className="py-[10px]">
             <h2 className="text-[16px] font-bold text-bold">Portfolio</h2>
           </div>
-          <TableContainer sx={{ maxHeight: "auto" }}>
+          <TableContainer className="mainTable" sx={{ maxHeight: "auto" }}>
             <Table
               stickyHeader
               style={{
@@ -659,12 +672,163 @@ const DashHome = () => {
                               colSpan={5}
                             >
                               <Collapse in={nft} timeout="auto" unmountOnExit>
-                                <Box sx={{ margin: 1 }}>
+                                <Box
+                                  sx={{ margin: 1 }}
+                                >
                                   <h2 className="text-[16px] font-bold text-bold">
-                                    NFT List
+                                    NFTs
                                   </h2>
 
-                                  <div className="flex"></div>
+                                  <div
+                                    className="flex nfts cusscroller pb-[10px] w-full overflow-y-hidden overflow-x-scroll flex-nowrap mt-5"
+                                    style={{
+                                      maxWidth: nfts - 50
+                                    }}
+                                  >
+                                    <div className="grid item-center min-w-[256px] w-[256px] rounded-[16px] mr-3 overflow-hidden">
+                                      <img
+                                        alt="something"
+                                        src={require("../../assets/img/art.png")}
+                                        className="w-[256px] h-[210px] object-cover"
+                                      />
+                                      <div className="flex flex-col justify-between flex-start py-3 px-2 bg-[#f1f1f1a9]">
+                                        <div className="flex justify-between">
+                                          <span className="text-[#a1a1a1] text-[12px]">
+                                            0xf0...0f20
+                                          </span>
+                                          <span className="text-[#a1a1a1] text-[12px]">
+                                            MATIC
+                                          </span>
+                                        </div>
+
+                                        <div className="flex items-center justify-between">
+                                          <span className="block mb-1 font-semibold">
+                                            Name Of Something
+                                          </span>
+                                          <div className="flex items-center">
+                                            <Avatar
+                                              alt="name of something"
+                                              src={require("../../assets/img/cardano.png")}
+                                              sx={{
+                                                width: 15,
+                                                height: 15,
+                                                marginRight: "3px",
+                                              }}
+                                            />{" "}
+                                            0.011
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="grid item-center min-w-[256px] w-[256px] rounded-[16px] mr-3 overflow-hidden">
+                                      <img
+                                        alt="something"
+                                        src={require("../../assets/img/art.png")}
+                                        className="w-[256px] h-[210px] object-cover"
+                                      />
+                                      <div className="flex flex-col justify-between flex-start py-3 px-2 bg-[#f1f1f1a9]">
+                                        <div className="flex justify-between">
+                                          <span className="text-[#a1a1a1] text-[12px]">
+                                            0xf0...0f20
+                                          </span>
+                                          <span className="text-[#a1a1a1] text-[12px]">
+                                            MATIC
+                                          </span>
+                                        </div>
+
+                                        <div className="flex items-center justify-between">
+                                          <span className="block mb-1 font-semibold">
+                                            Name Of Something
+                                          </span>
+                                          <div className="flex items-center">
+                                            <Avatar
+                                              alt="name of something"
+                                              src={require("../../assets/img/cardano.png")}
+                                              sx={{
+                                                width: 15,
+                                                height: 15,
+                                                marginRight: "3px",
+                                              }}
+                                            />{" "}
+                                            0.011
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="grid item-center min-w-[256px] w-[256px] rounded-[16px] mr-3 overflow-hidden">
+                                      <img
+                                        alt="something"
+                                        src={require("../../assets/img/art.png")}
+                                        className="w-[256px] h-[210px] object-cover"
+                                      />
+                                      <div className="flex flex-col justify-between flex-start py-3 px-2 bg-[#f1f1f1a9]">
+                                        <div className="flex justify-between">
+                                          <span className="text-[#a1a1a1] text-[12px]">
+                                            0xf0...0f20
+                                          </span>
+                                          <span className="text-[#a1a1a1] text-[12px]">
+                                            MATIC
+                                          </span>
+                                        </div>
+
+                                        <div className="flex items-center justify-between">
+                                          <span className="block mb-1 font-semibold">
+                                            Name Of Something
+                                          </span>
+                                          <div className="flex items-center">
+                                            <Avatar
+                                              alt="name of something"
+                                              src={require("../../assets/img/cardano.png")}
+                                              sx={{
+                                                width: 15,
+                                                height: 15,
+                                                marginRight: "3px",
+                                              }}
+                                            />{" "}
+                                            0.011
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="grid item-center min-w-[256px] w-[256px] rounded-[16px] mr-3 overflow-hidden">
+                                      <img
+                                        alt="something"
+                                        src={require("../../assets/img/art.png")}
+                                        className="w-[256px] h-[210px] object-cover"
+                                      />
+                                      <div className="flex flex-col justify-between flex-start py-3 px-2 bg-[#f1f1f1a9]">
+                                        <div className="flex justify-between">
+                                          <span className="text-[#a1a1a1] text-[12px]">
+                                            0xf0...0f20
+                                          </span>
+                                          <span className="text-[#a1a1a1] text-[12px]">
+                                            MATIC
+                                          </span>
+                                        </div>
+
+                                        <div className="flex items-center justify-between">
+                                          <span className="block mb-1 font-semibold">
+                                            Name Of Something
+                                          </span>
+                                          <div className="flex items-center">
+                                            <Avatar
+                                              alt="name of something"
+                                              src={require("../../assets/img/cardano.png")}
+                                              sx={{
+                                                width: 15,
+                                                height: 15,
+                                                marginRight: "3px",
+                                              }}
+                                            />{" "}
+                                            0.011
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </Box>
                               </Collapse>
                             </TableCell>

@@ -546,7 +546,7 @@ const DashSettings = () => {
                       <div className="font-semibold mt-5 mb-4 text-[#777]">
                         Profile Picture
                       </div>
-                      {Boolean(dp) ? (
+                      {!Boolean(dp) ? (
                         <Avatar
                           sx={{
                             bgcolor: "#F57059",

@@ -29,6 +29,7 @@ const Dash = () => {
   const { page } = useParams();
   const { user, isAuthenticated, logout } = useMoralis();
 
+  const [dp, setDp] = useState(user.get('img'))
  
 
   const toggle = () => {
@@ -262,7 +263,6 @@ const Dash = () => {
               />
               <Popover
                 id={id}
-                
                 open={nopen}
                 anchorEl={anchorEl}
                 onClose={notesClose}
@@ -271,14 +271,20 @@ const Dash = () => {
                   horizontal: "left",
                 }}
               >
-               Continue Your Plan Here
-             
+                Continue Your Plan Here
               </Popover>
             </div>
-
-            <Avatar sx={{ bgcolor: "#F57059" }} alt={user.get("username")}>
-              {user.get("username").charAt(0).toUpperCase()}
-            </Avatar>
+            {Boolean(dp) ? (
+              <Avatar
+                src={dp}
+                sx={{ width: 190, height: 190 }}
+                alt={user.get("username")}
+              ></Avatar>
+            ) : (
+              <Avatar sx={{ bgcolor: "#F57059" }} alt={user.get("username")}>
+                {user.get("username").charAt(0).toUpperCase()}
+              </Avatar>
+            )}
           </div>
         </div>
 

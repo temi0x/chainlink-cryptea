@@ -303,13 +303,18 @@ function UserPage() {
                             setAmount(val.replace(/[^\d.]/g, ""));
                           }}
                         />
+                        
                         <Button
                           variant="contained"
                           className="!bg-[#F57059] !mt-4 !py-[13px] !font-medium !capitalize"
                           style={{
                             fontFamily: "inherit",
                           }}
-                          onClick={() => fetched()}
+                          onClick={() => {
+                            fetched().then(f => {
+                              console.log(f)
+                            })
+                          }}
                           disabled={isFetching}
                           fullWidth
                         >
