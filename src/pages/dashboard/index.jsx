@@ -13,23 +13,20 @@ import {
 import { RiSettingsLine } from "react-icons/ri";
 import logo from "../../assets/img/cryptea-logo.svg";
 import "../../assets/styles/dash.css";
-import { Avatar, Popover  } from "@mui/material";
+import { Avatar, Popover } from "@mui/material";
 import DashHome from "./home";
 import DashLinks from "./links";
-import DashPages from './pages';
-import DashSettings from './settings';
+import DashPages from "./pages";
+import DashSettings from "./settings";
 import { NavLink, Navigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useMoralis } from "react-moralis";
-
 
 const Dash = () => {
   const [isOpen, close] = useState(false);
   const [isOpen3, close3] = useState(false);
   const { page } = useParams();
   const { user, isAuthenticated, logout } = useMoralis();
-
- 
 
   const toggle = () => {
     close(!isOpen);
@@ -39,20 +36,18 @@ const Dash = () => {
     }, 900);
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
 
-      const [anchorEl, setAnchorEl] = useState(null);
+  const handleNotes = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-      const handleNotes = (event) => {
-        setAnchorEl(event.currentTarget);
-      };
+  const notesClose = () => {
+    setAnchorEl(null);
+  };
 
-      const notesClose = () => {
-        setAnchorEl(null);
-      };
-
-      const nopen = Boolean(anchorEl);
-      const id = nopen ? "Your Notifications" : undefined;
-
+  const nopen = Boolean(anchorEl);
+  const id = nopen ? "Your Notifications" : undefined;
 
   const active = "border-l-[3px] border-l-[#F57059] text-[#F57059]";
   return (
@@ -262,7 +257,6 @@ const Dash = () => {
               />
               <Popover
                 id={id}
-                
                 open={nopen}
                 anchorEl={anchorEl}
                 onClose={notesClose}
@@ -271,8 +265,36 @@ const Dash = () => {
                   horizontal: "left",
                 }}
               >
-               Continue Your Plan Here
-             
+                <div className="py-3 px-2 bg-pattern">
+                  <div className="flex flex-col">
+                    <div className="not my-2 py-2 px-3 border border-gray-600 rounded-lg bg-[#FFF7EA] flex flex-row justify-between align-middle">
+                      <div className="img">
+                        <Avatar>U</Avatar>
+                      </div>
+                      <div className="font-medium text-base">
+                        You received 0.1ETH from 0xabc
+                      </div>
+                    </div>
+
+                    <div className="not my-2 py-2 px-3 border border-gray-600 rounded-lg bg-[#FFF7EA] flex flex-row justify-between align-middle">
+                      <div className="img">
+                        <Avatar>J</Avatar>
+                      </div>
+                      <div className="font-medium text-base">
+                        You received 0.1ETH from joel.eth
+                      </div>
+                    </div>
+
+                    <div className="not my-2 py-2 px-3 border border-gray-600 rounded-lg bg-[#FFF7EA] flex flex-row justify-between align-middle">
+                      <div className="img">
+                        <Avatar>L</Avatar>
+                      </div>
+                      <div className="font-medium text-base">
+                        You received 0.1ETH from lucid.eth
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </Popover>
             </div>
 
@@ -306,7 +328,6 @@ const Dash = () => {
       </div>
     </div>
   );
-
 };
 
 export default Dash;
