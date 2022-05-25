@@ -28,12 +28,8 @@ const Dash = () => {
   const { page } = useParams();
   const { user, isAuthenticated, logout } = useMoralis();
 
-<<<<<<< HEAD
-  const [dp, setDp] = useState(user.get('img'))
- 
+  const dp = user.get('img');
 
-=======
->>>>>>> 2386c3684d9180b8175cd54efd8df1870f8889c6
   const toggle = () => {
     close(!isOpen);
 
