@@ -38,6 +38,7 @@ const Dash = () => {
     }, 900);
   };
 
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleNotes = (event) => {
@@ -302,7 +303,7 @@ const Dash = () => {
             {Boolean(dp) ? (
               <Avatar
                 src={dp}
-                sx={{ width: 190, height: 190 }}
+                sx={{ width: 40, height: 40 }}
                 alt={user.get("username")}
               ></Avatar>
             ) : (

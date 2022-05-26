@@ -46,7 +46,7 @@ const DashSettings = () => {
 
   const [openM, setOpenM] = useState(false);
 
-  const handleOpenM = () => setOpenM(false);
+  const handleOpenM = () => setOpenM(true);
   const handleCloseM = () => setOpenM(false);
 
   const [error, setError] = useState({
@@ -56,7 +56,6 @@ const DashSettings = () => {
   const [success, setSuccess] = useState({
     account: "", security: "", link: ""
   });
-
 
   const [currentViewpass, setCurrentViewpass] = useState(false);
   const [viewpass, setViewpass] = useState(false);
@@ -138,6 +137,7 @@ const DashSettings = () => {
   }
 
    const imgCrop = (event) => {
+      handleOpenM();
      const fil = event.target.files[0];
      const {type, size} = fil;
      const ee = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -157,8 +157,6 @@ const DashSettings = () => {
 
      setsImg(URL.createObjectURL(fil));
      setIiimg(fil);
-    
-     handleOpenM()
 
    };
 
@@ -168,20 +166,21 @@ const DashSettings = () => {
       });
     }
 
-     const beginUpload = async (files) => {
-       const { size: totalSize, type } = files[0];
-        const ext = type.split('/');
-       const onRootCidReady = (cid) => {
+     const beginUpload = async (files, type) => {
+       const { size: totalSize } = files[0];
+  
 
-          handleCloseM();
+       const onRootCidReady = (cid) => {
          setError({ account: "", ...error });
          setSuccess({ account: "Image Uploaded Successfully, might take a while to fully reflect", ...success });         
-          const img = `${cid}.ipfs.dweb.link/${user.get("username")}.${ext[1]}`;         
+          const img = `https://${cid}.ipfs.dweb.link/${user.get("username")}.${type}`;
+          console.log(img)       
         setDp(img);
          user.set("img", img);
 
          user.save()
-
+         
+        handleCloseM();
        };
 
        let uploaded = 0;
@@ -197,7 +196,7 @@ const DashSettings = () => {
 
        };
 
-       const client = makeStorageClient();
+       const client = await makeStorageClient();
 
        return client.put(files, { onRootCidReady, onStoredChunk });
      }; 
@@ -225,11 +224,10 @@ const DashSettings = () => {
          );
          const { type } = iimg;
          const ext = type.split("/");
-
          canvas.toBlob(
            (blob) => {
              const files = [new File([blob], `${user.get('username')}.${ext[1]}`)];
-             beginUpload(files);
+             beginUpload(files, ext[1]);
            },
            type,
            1
@@ -377,13 +375,14 @@ const DashSettings = () => {
             maxWidth: 800,
             p: 2,
           }}
+          className="text-center"
         >
           {Boolean(isLoading["progress"][0]) && (
             <Box className="text-[#F57059] mb-1" sx={{ width: "100%" }}>
               <LinearProgress
                 variant="buffer"
                 value={isLoading["progress"][0]}
-                valueBuffer={isLoading['progress'][1]}
+                valueBuffer={isLoading["progress"][1]}
               />
             </Box>
           )}
@@ -407,7 +406,7 @@ const DashSettings = () => {
             }}
           >
             <img
-              className="img w-full min-w-[340px]"
+              className="img w-full m-auto min-w-[340px]"
               alt="crop me"
               src={simg}
             />
