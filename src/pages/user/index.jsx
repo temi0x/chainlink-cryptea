@@ -133,15 +133,21 @@ function UserPage() {
     }
   }, [])
 
-  const {
-    fetch: fetched,
-    error,
-    isFetching,
-  } = useWeb3Transfer({
-    type: "native",
-    amount: Moralis.Units.ETH(parseFloat(amount)),
-    receiver: ethAddress,
-  });
+
+  const fetched = async () => {
+
+   const trans = await Moralis.transfer({
+      type: "native",
+      amount: Moralis.Units.ETH(parseFloat(amount)),
+      receiver: ethAddress,
+    });
+
+
+  const result = await trans.wait();
+
+  console.log(trans, result);
+
+}
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -311,11 +317,9 @@ function UserPage() {
                             fontFamily: "inherit",
                           }}
                           onClick={() => {
-                            fetched().then(f => {
-                              console.log(f)
-                            })
+                            fetched()
                           }}
-                          disabled={isFetching}
+                          // disabled={isFetching}
                           fullWidth
                         >
                           Send
