@@ -38,8 +38,6 @@ const LoginForm = () => {
     }
   }, []);
 
-  console.log(chainId)
-
   const submitForm = async () => {
       
     if (!isAuthenticated) {
@@ -70,11 +68,10 @@ const LoginForm = () => {
            usePost: true,
          }).then(req => {
             window.location.reload()
-            
          }).catch(err => {
             setError(err.message);
             setLoading(false);
-            return;
+            
          });
 
       } catch (err){

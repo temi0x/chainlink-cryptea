@@ -49,6 +49,7 @@ const DashSettings = () => {
   const handleOpenM = () => setOpenM(true);
   const handleCloseM = () => setOpenM(false);
 
+
   const [error, setError] = useState({
     account: "", security: "", link: ""
   });
@@ -60,6 +61,8 @@ const DashSettings = () => {
   const [currentViewpass, setCurrentViewpass] = useState(false);
   const [viewpass, setViewpass] = useState(false);
   const [viewRepass, setViewRepass] = useState(false);
+
+
 
   const passvalid = () => {
       	let noNum = false;
@@ -91,21 +94,22 @@ const DashSettings = () => {
       document.querySelector('#account_sett').scrollIntoView();
       window.scrollTo(0, 0);
       setError({
-        account: "",
         ...error,
+        account: ""
       });
       setSuccess({
-        account: "",
-        ...success,
+       ...success, account: ""
       });
       let more = true;
-      setLoading({ account: true, ...isLoading });
+      setLoading({...isLoading, account: true});
+
       [userInfo, userEmail].forEach(d => {
-          if(!d.length) {
+          if(!d.length) {  
               setError(
-                  {account: "Data Incomplete, Please required fields should be field", ...error}
+                  {...error, account: "Data Incomplete, Please required fields should be field" }
                 );
-                setLoading({ account: false, ...isLoading });
+                
+                setLoading({...isLoading, account: false });
                 more = false;
           }
       });
@@ -113,23 +117,24 @@ const DashSettings = () => {
       if (more) {
           if (userEmail.match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) === null) {
               setError(
-                {account: "Email Address Is Incorrect", ...error}
+                {...error, account: "Email Address Is Incorrect"}
               );
-              setLoading({ account: false, ...isLoading });
+              setLoading({ ...isLoading, account: false });
               
           }
 
         if(!error['account'].length){
-            user.setUsername(userLink);
-            user.setEmail(userEmail);
+            
         try{
-            await user.save();
-            setSuccess({account: "Account Details Saved Successfully", ...success})
+          user.set("username", userInfo);
+          user.set("email", userEmail);
+          await user.save();
+        
+            setSuccess({...success, account: "Account Details Saved Successfully"})
+            setLoading({ ...isLoading, account: false });
         } catch(err){
-            setError(
-                {account: err.message, ...error}
-              );
-              setLoading({ account: false, ...isLoading });
+            setError({ ...error, account: err.message });
+              setLoading({...isLoading, account: false });
         }
 
       }
@@ -144,14 +149,14 @@ const DashSettings = () => {
 
      if(!ee.includes(type)){
           setError({
-            account: "Only JPEG, jpg, and png image types are accepted",
             ...error,
+            account: "Only JPEG, jpg, and png image types are accepted"
           });
           return;  
      }
 
      if (size > 5243880) {
-      setError({ account: "Image Size Exceeds The Limit Of 5mb", ...error });
+      setError({ ...error, account: "Image Size Exceeds The Limit Of 5mb" });
        return;
      }
 
@@ -171,8 +176,8 @@ const DashSettings = () => {
   
 
        const onRootCidReady = (cid) => {
-         setError({ account: "", ...error });
-         setSuccess({ account: "Image Uploaded Successfully, might take a while to fully reflect", ...success });         
+         setError({ ...error, account: "" });
+         setSuccess({ ...success, account: "Image Uploaded Successfully, might take a while to fully reflect"});         
           const img = `https://${cid}.ipfs.dweb.link/${user.get("username")}.${type}`;
           console.log(img)       
         setDp(img);
@@ -192,7 +197,7 @@ const DashSettings = () => {
 
          console.log(`Uploading... ${pct.toFixed(2)}% complete`);
 
-         setLoading({progress: [pct, uploaded], ...isLoading})
+         setLoading({...isLoading, progress: [pct, uploaded]})
 
        };
 
@@ -235,7 +240,7 @@ const DashSettings = () => {
    
 
        } catch (e) {
-         setError({ account: e.message, ...error });
+         setError({ ...error, account: e.message });
        }
      };
 
@@ -244,22 +249,22 @@ const DashSettings = () => {
     document.querySelector("#link_sett").scrollIntoView();
     window.scrollTo(0, 0);
     setError({
-      link: "",
       ...error,
+      link: ""
     });
     setSuccess({
-      link: "",
       ...success,
+      link: ""
     });
     let more = true;
-    setLoading({ link: true, ...isLoading });
+    setLoading({ ...isLoading, link: true });
     [userDescription, userLink].forEach((d) => {
       if (!d.length) {
         setError({
-          link: "Data Incomplete, Please required fields should be field",
           ...error,
+          link: "Data Incomplete, Please required fields should be field"
         });
-        setLoading({ link: false, ...isLoading });
+        setLoading({ ...isLoading, link: false });
         more = false;
       }
     });
@@ -268,8 +273,8 @@ const DashSettings = () => {
       if (
         userDescription.length < 50
       ) {
-        setError({ link: "Atleast 50 characters are required in your description", ...error });
-        setLoading({ link: false, ...isLoading });
+        setError({ ...error, link: "Atleast 50 characters are required in your description" });
+        setLoading({  ...isLoading, link: false });
       }
 
       if (!error["link"].length) {
@@ -282,12 +287,13 @@ const DashSettings = () => {
           await link.save();
           await user.save();
           setSuccess({
-            link: "Link Details Saved Successfully",
             ...success,
+            link: "Link Details Saved Successfully"
           });
+          setLoading({ ...isLoading, link: false });
         } catch (err) {
-          setError({ link: err.message, ...error });
-          setLoading({ link: false, ...isLoading });
+          setError({ ...error, link: err.message });
+          setLoading({ ...isLoading, link: false });
         }
       }
     }
@@ -298,22 +304,22 @@ const DashSettings = () => {
     document.querySelector("#security_sett").scrollIntoView();
     window.scrollTo(0, 0);
     setError({
-      security: "",
       ...error,
+      security: "",
     });
     setSuccess({
-      security: "",
       ...success,
+      security: "",
     });
     let more = true;
-    setLoading({ security: true, ...isLoading });
+    setLoading({ ...isLoading, security: true });
     [currentPass, pass, repass].forEach((d) => {
       if (!d.length) {
         setError({
-          security: "Data Incomplete, Please required fields should be field",
           ...error,
+          security: "Data Incomplete, Please required fields should be field",
         });
-        setLoading({ security: false, ...isLoading });
+        setLoading({ ...isLoading, security: false });
         more = false;
       }
     });
@@ -321,17 +327,17 @@ const DashSettings = () => {
     if (more) {
       if (passvalid(pass)) {
         setError({
+          ...error,
           security:
             "Password with minimum of 8 characters including either a number or special characters",
-          ...error,
         });
-        setLoading({ security: false, ...isLoading });
+        setLoading({ ...isLoading, security: false });
       }else if (repass !== pass){
           setError({
-          security: "Repeat password should be equal to new password",
-          ...error,
-        });
-        setLoading({ security: false, ...isLoading });
+            ...error,
+            security: "Repeat password should be equal to new password",
+          });
+        setLoading({ ...isLoading, security: false });
       }
 
       if (!error["security"].length) {
@@ -341,12 +347,13 @@ const DashSettings = () => {
         try {
           await user.save();
           setSuccess({
-            security: "Security Details Saved Successfully",
             ...success,
+            security: "Security Details Saved Successfully",
           });
+          setLoading({ ...isLoading, security: false });
         } catch (err) {
-          setError({ security: err.message, ...error });
-          setLoading({ security: false, ...isLoading });
+          setError({ ...error, security: err.message });
+          setLoading({ ...isLoading, security: false });
         }
       }
     }
@@ -388,11 +395,15 @@ const DashSettings = () => {
           )}
 
           {error["account"].length > 0 && (
-            <Alert severity="error">{error["account"]}</Alert>
+            <Alert className="w-full" severity="error">
+              {error["account"]}
+            </Alert>
           )}
 
           {success["account"].length > 0 && (
-            <Alert severity="success">{success["account"]}</Alert>
+            <Alert className="w-full" severity="success">
+              {success["account"]}
+            </Alert>
           )}
 
           <ReactCrop
@@ -459,18 +470,22 @@ const DashSettings = () => {
                     <span className="text-[25px] font-[800] mb-2">Account</span>
                   </div>
                 </div>
-                {isLoading["account"] && (
+                {isLoading["account"] === true && (
                   <Box className="text-[#F57059]" sx={{ width: "100%" }}>
                     <LinearProgress color="inherit" />
                   </Box>
                 )}
 
                 {error["account"].length > 0 && (
-                  <Alert severity="error">{error["account"]}</Alert>
+                  <Alert className="w-full" severity="error">
+                    {error["account"]}
+                  </Alert>
                 )}
 
                 {success["account"].length > 0 && (
-                  <Alert severity="success">{success["account"]}</Alert>
+                  <Alert className="w-full" severity="success">
+                    {success["account"]}
+                  </Alert>
                 )}
                 <div className="username w-full">
                   <div className="flex mmd:flex-col-reverse mmd:items-center justify-between items-start">
@@ -490,12 +505,12 @@ const DashSettings = () => {
                               name="username"
                               onChange={(e) => {
                                 setError({
-                                  account: "",
                                   ...error,
+                                  account: "",
                                 });
                                 setSuccess({
-                                  account: "",
                                   ...success,
+                                  account: "",
                                 });
                                 setuserInfo(e.target.value);
                               }}
@@ -516,12 +531,12 @@ const DashSettings = () => {
                               onChange={(e) => {
                                 setUserEmail(e.target.value);
                                 setError({
-                                  account: "",
                                   ...error,
+                                  account: "",
                                 });
                                 setSuccess({
-                                  account: "",
                                   ...success,
+                                  account: "",
                                 });
                               }}
                               name="email"
@@ -621,11 +636,15 @@ const DashSettings = () => {
                 )}
 
                 {error["link"].length > 0 && (
-                  <Alert severity="error">{error["link"]}</Alert>
+                  <Alert className="w-full" severity="error">
+                    {error["link"]}
+                  </Alert>
                 )}
 
                 {success["link"].length > 0 && (
-                  <Alert severity="success">{success["link"]}</Alert>
+                  <Alert className="w-full" severity="success">
+                    {success["link"]}
+                  </Alert>
                 )}
 
                 <div className="username w-full">
@@ -653,12 +672,12 @@ const DashSettings = () => {
                             );
 
                             setError({
-                              link: "",
                               ...error,
+                              link: "",
                             });
                             setSuccess({
-                              link: "",
                               ...success,
+                              link: "",
                             });
                           }}
                           startAdornment={
@@ -687,12 +706,12 @@ const DashSettings = () => {
                             setUserDescription(e.target.value);
 
                             setError({
-                              link: "",
                               ...error,
+                              link: "",
                             });
                             setSuccess({
-                              link: "",
                               ...success,
+                              link: "",
                             });
                           }}
                           name="desc"
@@ -746,11 +765,15 @@ const DashSettings = () => {
                 )}
 
                 {error["security"].length > 0 && (
-                  <Alert severity="error">{error["security"]}</Alert>
+                  <Alert className="w-full" severity="error">
+                    {error["security"]}
+                  </Alert>
                 )}
 
                 {success["security"].length > 0 && (
-                  <Alert severity="success">{success["security"]}</Alert>
+                  <Alert className="w-full" severity="success">
+                    {success["security"]}
+                  </Alert>
                 )}
 
                 <div className="font-semibold mt-5 mb-4 text-[#777]">
@@ -775,12 +798,12 @@ const DashSettings = () => {
                         onChange={(e) => {
                           setCurrentPass(e.target.value);
                           setError({
-                            security: "",
                             ...error,
+                            security: "",
                           });
                           setSuccess({
-                            security: "",
                             ...success,
+                            security: "",
                           });
                         }}
                         endAdornment={
@@ -829,12 +852,12 @@ const DashSettings = () => {
                         onChange={(e) => {
                           setPass(e.target.value);
                           setError({
-                            security: "",
                             ...error,
+                            security: "",
                           });
                           setSuccess({
-                            security: "",
                             ...success,
+                            security: "",
                           });
                         }}
                         endAdornment={
@@ -881,12 +904,12 @@ const DashSettings = () => {
                         onChange={(e) => {
                           setRepass(e.target.value);
                           setError({
-                            security: "",
                             ...error,
+                            security: "",
                           });
                           setSuccess({
-                            security: "",
                             ...success,
+                            security: "",
                           });
                         }}
                         endAdornment={
