@@ -299,6 +299,8 @@ const DashSettings = () => {
     }
   };
 
+  const {username, email, desc } = user.attributes; 
+
 
   const submitSecure = async () => {
     document.querySelector("#security_sett").scrollIntoView();
@@ -501,7 +503,7 @@ const DashSettings = () => {
                               label={"Username"}
                               value={userInfo}
                               fullWidth
-                              placeholder="wagmi.eth"
+                              placeholder={username}
                               name="username"
                               onChange={(e) => {
                                 setError({
@@ -526,7 +528,7 @@ const DashSettings = () => {
                             <TextField
                               className="bg-[white]"
                               label={"Email"}
-                              placeholder="wagmi@ngmi.eth"
+                              placeholder={email}
                               value={userEmail}
                               onChange={(e) => {
                                 setUserEmail(e.target.value);
@@ -662,7 +664,7 @@ const DashSettings = () => {
                         <InputLabel htmlFor="current-password">Link</InputLabel>
                         <OutlinedInput
                           className="bg-[white] !p-0"
-                          placeholder="wagmi"
+                          placeholder={desc}
                           name="Link"
                           label="Link"
                           onChange={(e) => {
