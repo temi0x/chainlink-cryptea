@@ -38,7 +38,7 @@ function Nav() {
   const walletConnect = async () => {
     if (!isAuthenticated) {
       await authenticate({ signingMessage: "Welcome to Cryptea" })
-        .then(function (user) {
+        .then(function (user) { 
           if (user.get("email") === undefined) {
             window.location.href = "/#/signup";
           } else {

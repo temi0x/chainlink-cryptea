@@ -419,7 +419,7 @@ const DashSettings = () => {
             }}
           >
             <img
-              className="img w-full m-auto min-w-[340px]"
+              className="img w-full m-auto !max-h-[calc(100vh-128px)] min-w-[340px]"
               alt="crop me"
               src={simg}
             />
