@@ -1,9 +1,5 @@
-
 module.exports = {
   reactScriptsVersion: "react-scripts",
-  eslint: {
-    enable: false
-  },
   webpack: {
     configure: {
       resolve: {
@@ -11,10 +7,14 @@ module.exports = {
           zlib: require.resolve("browserify-zlib"),
           stream: require.resolve("stream-browserify"),
           https: require.resolve("https-browserify"),
-          http: require.resolve("stream-http")
+          http: require.resolve("stream-http"),
+          crypto: require.resolve("crypto-browserify")
         },
       },
     },
   },
-  
+  eslint: {
+    enable: false
+  },
+  ignoreWarnings: [/Failed to parse source map/]
 };

@@ -120,7 +120,7 @@ function Nav() {
             type="button"
             onClick={() => setShowModal(true)}
           >
-            {buttonText}
+            {buttonText.current}
           </button>
 
           {showModal ? (
