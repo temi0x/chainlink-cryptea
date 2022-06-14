@@ -66,7 +66,7 @@ function Nav() {
     if (!isAuthenticated) {
       await authenticate({
         signingMessage: "Welcome to Cryptea",
-        provider: 'walletConnect',
+        provider: 'walletconnect',
       })
         .then(function (user) {
           if (user.get("email") === undefined) {
