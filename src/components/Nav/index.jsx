@@ -2,12 +2,14 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useMoralis } from "react-moralis";
 import logo from "../../assets/img/cryptea-logo.svg";
+
 function Nav() {
   const {
     isAuthenticated,
     user,
     authenticate,
     logout,
+    Moralis,
     chainId,
     isWeb3EnableLoading,
     isWeb3Enabled,
@@ -62,27 +64,51 @@ function Nav() {
     }
   };
 
-  const wclogin = async () => {
-    if (!isAuthenticated) {
-      await authenticate({
-        signingMessage: "Welcome to Cryptea",
-        provider: 'walletconnect',
-      }).then(function (user) {
-          if (user.get("email") === undefined) {
-            window.location.href = "/#/signup";
-          } else {
-            if (!user.get("email").length) {
-              window.location.href = "/#/signup";
-            } else {
-              window.location.href = "/#/dashboard";
-            }
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  };
+  // const wclogin = async () => {
+  //   if (!isAuthenticated) {
+  //     await authenticate({
+  //       signingMessage: "Welcome to Cryptea",
+  //       provider: "walletconnect",
+  //       mobileLinks: [
+  //         "rainbow",
+  //         "metamask",
+  //         "argent",
+  //         "trust",
+  //         "imtoken",
+  //         "pillar",
+  //       ],
+  //     })
+  //       .then(function (user) {
+  //         if (user.get("email") === undefined) {
+  //           window.location.href = "/#/signup";
+  //         } else {
+  //           if (!user.get("email").length) {
+  //             window.location.href = "/#/signup";
+  //           } else {
+  //             window.location.href = "/#/dashboard";
+  //           }
+  //         }
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
+
+  function wclogin() {
+    Moralis.authenticate({
+      signingMessage: "Welcome to Cryptea",
+      provider: "walletconnect",
+      mobileLinks: [
+        "rainbow",
+        "metamask",
+        "argent",
+        "trust",
+        "imtoken",
+        "pillar",
+      ]
+    })
+  }
 
   return (
     <div className="nav relative ml-[30px] 2sm:ml-1 z-10">
