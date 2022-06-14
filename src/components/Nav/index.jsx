@@ -119,7 +119,7 @@ function Nav() {
               onClick={logOut}
               className="hover:bg-[#ff320e] transition-all delay-200 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-4"
             >
-              {buttonText}
+              Log Out
             </button>
           ) : (
             <div>
@@ -127,7 +127,7 @@ function Nav() {
                 className="hover:bg-[#ff320e] transition-all delay-200 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-4 mx-2"
                 onClick={() => setShowModal(true)}
               >
-                {buttonText}
+                {buttonText.current}
               </button>
               {showModal ? (
                 <>
