@@ -95,8 +95,8 @@ function Nav() {
   //   }
   // };
 
-  function wclogin() {
-    Moralis.authenticate({
+  async function wclogin() {
+    const e = await Moralis.authenticate({
       signingMessage: "Welcome to Cryptea",
       provider: "walletconnect",
       mobileLinks: [
@@ -108,6 +108,8 @@ function Nav() {
         "pillar",
       ]
     })
+
+    console.log(e);
   }
 
   return (
