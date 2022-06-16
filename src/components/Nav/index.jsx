@@ -16,7 +16,6 @@ function Nav() {
     isWeb3Enabled,
     enableWeb3,
   } = useMoralis();
-  const [showModal, setShowModal] = useState(false);
 
   let buttonText = useRef("Connect Wallet");
 
@@ -150,7 +149,9 @@ function Nav() {
               Log Out
             </button>
           ) : (
-            <ConnectButton signingMessage="Welcome to Cryptea" />
+            <div className="buttonConnect">
+              <ConnectButton signingMessage="Welcome to Cryptea" />
+            </div>
           )}
         </div>
       </div>

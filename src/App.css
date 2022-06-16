@@ -29,6 +29,18 @@ body::-webkit-scrollbar-thumb, .cusscroller::-webkit-scrollbar-thumb {
   }
 }
 
+body .walletconnect-modal__base{
+  max-width:380px;
+}
+
+.walletconnect-qrcode__text{
+  font-size:16px !important;
+}
+
+.walletconnect-qrcode-modal{
+  min-width:350px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

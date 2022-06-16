@@ -41,6 +41,33 @@ code {
   line-height: 1.25rem;
   font-family:'Manrope', sans-serif;
 }
+
+.buttonConnect .sc-cOFTSb, .buttonConnect .dGxxRz, .buttonConnect .dGxxRz svg{
+    fill:rgb(245, 112, 89);
+    color:rgb(245, 112, 89);
+}
+
+.buttonConnect .hfDIDp{
+    fill: rgb(112, 112, 112);
+      color: rgb(112,112,112);
+}
+
+.buttonConnect .dGxxRz{
+  border-color:rgb(245, 112, 89);
+}
+
+.buttonConnect .dGxxRz:hover{
+  background-image:radial-gradient(106.45% 108.64% at 32.33% -4.84%, rgba(245, 112, 89, .8) 0.52%, rgb(245, 112, 89) 100%);
+}
+
+.buttonConnect .dGxxRz:hover svg{
+  fill:#fff;
+}
+
+.buttonConnect .jfYPFp:hover{
+  background-color:rgba(245, 112, 89, .2);
+}
+
 .buttonConnect>div{
   height:auto;
   margin:0px;
