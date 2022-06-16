@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { ConnectButton } from "web3uikit";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import logo from "../../assets/img/cryptea-logo.svg";
 
@@ -9,38 +9,29 @@ function Nav() {
     isAuthenticated,
     user,
     authenticate,
-    logout,
-    Moralis,
-    chainId,
-    isWeb3EnableLoading,
-    isWeb3Enabled,
-    enableWeb3,
+    logout
   } = useMoralis();
 
-  let buttonText = useRef("Connect Wallet");
+
 
   useEffect(() => {
+
     if (isAuthenticated) {
-      console.log("Logged in user:", user.get("ethAddress"));
+    if (user.get("email") === undefined) {
+      window.location.href = "/#/signup";
     } else {
-      console.log("Not logged in");
-    }
-
-    if (isAuthenticated) {
-      let address = user.get("ethAddress");
-
-      buttonText.current =
-        address.substring(0, 5) +
-        "...." +
-        address.substring(address.length - 5, address.length);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+      if (!user.get("email").length) {
+        window.location.href = "/#/signup";
+      } else {
+        window.location.href = "/#/dashboard";
+      }
+    }      
+  }
+}, [isAuthenticated, user]);
 
   const logOut = async (redirect = false) => {
     if (isAuthenticated) {
       logout();
-      buttonText.current = "Connect Wallet";
     }
   };
 
@@ -61,56 +52,10 @@ function Nav() {
         .catch(function (error) {
           console.log(error);
         });
+    }else{
+      window.location.href = "/#/dashboard";
     }
   };
-
-  // const wclogin = async () => {
-  //   if (!isAuthenticated) {
-  //     await authenticate({
-  //       signingMessage: "Welcome to Cryptea",
-  //       provider: "walletConnect",
-  //       mobileLinks: [
-  //         "rainbow",
-  //         "metamask",
-  //         "argent",
-  //         "trust",
-  //         "imtoken",
-  //         "pillar",
-  //       ],
-  //     })
-        // .then(function (user) {
-        //   if (user.get("email") === undefined) {
-        //     window.location.href = "/#/signup";
-        //   } else {
-        //     if (!user.get("email").length) {
-        //       window.location.href = "/#/signup";
-        //     } else {
-        //       window.location.href = "/#/dashboard";
-        //     }
-        //   }
-        // })
-  //       .catch(function (error) {
-  //         console.log(error);
-  //       });
-  //   }
-  // };
-
-  // async function wclogin() {
-  //   const e = await Moralis.authenticate({
-  //     signingMessage: "Welcome to Cryptea",
-  //     provider: 'walletConnect',
-  //     mobileLinks: [
-  //       "rainbow",
-  //       "metamask",
-  //       "argent",
-  //       "trust",
-  //       "imtoken",
-  //       "pillar",
-  //     ]
-  //   })
-
-  //   console.log(e);
-  // }
 
   return (
     <div className="nav relative ml-[30px] 2sm:ml-1 z-10">
@@ -142,12 +87,19 @@ function Nav() {
         </div>
         <div className="right mmd:hidden">
           {isAuthenticated ? (
+            <div className="flex">
             <button
               onClick={logOut}
-              className="hover:bg-[#ff320e] transition-all delay-200 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-4"
+              className="hover:bg-[#ff320e] transition-all delay-200 text-sm rounded-lg mr-1 bg-[#F57059] text-white font-semibold py-4 px-4"
             >
               Log Out
             </button>
+
+            <button onClick={login}
+              className="hover:bg-[#ff320e] transition-all delay-200 text-sm rounded-lg bg-[#F57059] ml-1 text-white font-semibold py-4 px-4">
+              {user.get("ethAddress").substring(0, 5) +"...."+user.get("ethAddress").substring(user.get("ethAddress").length - 5, user.get("ethAddress").length)}
+            </button>
+            </div>
           ) : (
             <div className="buttonConnect">
               <ConnectButton signingMessage="Welcome to Cryptea" />
