@@ -1,5 +1,4 @@
 module.exports = function override(config, env) {
-    console.log('override')
     let loaders = config.resolve
     loaders.fallback = {
         zlib: require.resolve("browserify-zlib"),
