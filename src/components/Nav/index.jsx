@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { ConnectButton } from "web3uikit";
 import { useEffect, useRef, useState } from "react";
 import { useMoralis } from "react-moralis";
 import logo from "../../assets/img/cryptea-logo.svg";
@@ -68,7 +69,7 @@ function Nav() {
   //   if (!isAuthenticated) {
   //     await authenticate({
   //       signingMessage: "Welcome to Cryptea",
-  //       provider: "walletconnect",
+  //       provider: "walletConnect",
   //       mobileLinks: [
   //         "rainbow",
   //         "metamask",
@@ -78,39 +79,39 @@ function Nav() {
   //         "pillar",
   //       ],
   //     })
-  //       .then(function (user) {
-  //         if (user.get("email") === undefined) {
-  //           window.location.href = "/#/signup";
-  //         } else {
-  //           if (!user.get("email").length) {
-  //             window.location.href = "/#/signup";
-  //           } else {
-  //             window.location.href = "/#/dashboard";
-  //           }
-  //         }
-  //       })
+        // .then(function (user) {
+        //   if (user.get("email") === undefined) {
+        //     window.location.href = "/#/signup";
+        //   } else {
+        //     if (!user.get("email").length) {
+        //       window.location.href = "/#/signup";
+        //     } else {
+        //       window.location.href = "/#/dashboard";
+        //     }
+        //   }
+        // })
   //       .catch(function (error) {
   //         console.log(error);
   //       });
   //   }
   // };
 
-  async function wclogin() {
-    const e = await Moralis.authenticate({
-      signingMessage: "Welcome to Cryptea",
-      provider: "walletconnect",
-      mobileLinks: [
-        "rainbow",
-        "metamask",
-        "argent",
-        "trust",
-        "imtoken",
-        "pillar",
-      ]
-    })
+  // async function wclogin() {
+  //   const e = await Moralis.authenticate({
+  //     signingMessage: "Welcome to Cryptea",
+  //     provider: 'walletConnect',
+  //     mobileLinks: [
+  //       "rainbow",
+  //       "metamask",
+  //       "argent",
+  //       "trust",
+  //       "imtoken",
+  //       "pillar",
+  //     ]
+  //   })
 
-    console.log(e);
-  }
+  //   console.log(e);
+  // }
 
   return (
     <div className="nav relative ml-[30px] 2sm:ml-1 z-10">
@@ -149,65 +150,7 @@ function Nav() {
               Log Out
             </button>
           ) : (
-            <div>
-              <button
-                className="hover:bg-[#ff320e] transition-all delay-200 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-4 mx-2"
-                onClick={() => setShowModal(true)}
-              >
-                {buttonText.current}
-              </button>
-              {showModal ? (
-                <>
-                  <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                      {/*content*/}
-                      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        {/*header*/}
-                        <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                          <h3 className="text-3xl font-semibold">
-                            Connect Wallet
-                          </h3>
-                          <button
-                            className="p-1 ml-auto bg-transparent border-0 text-black float-right text-4xl leading-none font-semibold outline-none focus:outline-none"
-                            onClick={() => setShowModal(false)}
-                          >
-                            <span className="bg-transparent text-black h-6 w-6 text-4xl block outline-none focus:outline-none">
-                              ×
-                            </span>
-                          </button>
-                        </div>
-                        {/* body */}
-                        <div className="relative p-6 flex-auto">
-                          <button
-                            onClick={login}
-                            className="hover:bg-[#ff320e] transition-all delay-200 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-4 mx-2"
-                          >
-                            MetaMask
-                          </button>
-
-                          <button
-                            onClick={wclogin}
-                            className="hover:bg-[#ff320e] transition-all delay-200 text-sm rounded-lg bg-[#F57059] text-white font-semibold py-4 px-4 mx-2"
-                          >
-                            WalletConnect
-                          </button>
-                        </div>
-                        {/*footer*/}
-                        <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                          <button
-                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                            onClick={() => setShowModal(false)}
-                          >
-                            Close
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              ) : null}
-            </div>
+            <ConnectButton signingMessage="Welcome to Cryptea" />
           )}
         </div>
       </div>
